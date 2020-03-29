@@ -1,0 +1,8 @@
+ansible
+docker
+molecule
+pytest
+ruamel.base
+ruamel.yaml
+takeltest
+testinfra

@@ -1,0 +1,36 @@
+---
+project_my_var_1: my_string_1
+project_template1: "{{ project_my_var_1 }}"
+project_template2: "{{ project_template1 }}"
+project_template3: "{{ project_template1 }}"
+project_template4: "inline+{{ project_my_var_1 }}"
+project_template5: "{{ project_my_var_1 }}+inline"
+project_template6: "inline+{{ project_my_var_1 }}+inline"
+
+project_my_var_2: 99
+project_template7: "{{ project_my_var_2 }}"
+project_template8: "{{ project_template7 }}"
+project_template9: "inline+{{ project_my_var_2 }}"
+project_template10: "{{ project_my_var_2 }}+inline"
+project_template11: "inline+{{ project_my_var_2 }}+inline"
+
+project_special1: "äö(ü'!)§$;~é"
+project_special2: 'ñô‰(„}»")¯]¿¬'
+project_special3: "{{ project_special1 }}"
+project_special4: "{{ project_special2 }}"
+
+project_list1:
+  - first_list_item
+  - second_list_item
+
+project_list2: "{{ project_list1 }}"
+
+project_dict1:
+  first_key: first_value
+  second_key: second_value
+
+project_lookup_flattened: "{{ lookup('flattened', [1,2,3,[4,5,6]]) }}"
+
+project_filter_zip: "{{ project_list1 | zip(anarchism_packages) | list }}"
+
+project_filter_dict2items: "{{ project_dict1 | dict2items }}"

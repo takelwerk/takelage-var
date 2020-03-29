@@ -1,0 +1,5 @@
+desc 'Build takeltest pip package'
+task :prod => %w(test
+                 package:make
+                 git:tag
+                 package:upload)

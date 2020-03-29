@@ -1,0 +1,8 @@
+recursive-include takeltest *.py
+include README.mc
+include pylintrc
+include MANIFEST.in
+include ansible.cfg
+include dev-requirements.txt
+include test-requirements.txt
+include LICENSE

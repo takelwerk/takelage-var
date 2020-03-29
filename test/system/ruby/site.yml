@@ -1,0 +1,15 @@
+---
+- name: converge
+  hosts: all
+  gather_facts: false
+  roles:
+    - gpg
+    - procps
+    - curl
+    - {role: github-rvm_rvm1-ansible,
+       tags: ['github-rvm_rvm1-ansible', 'molecule-idempotence-notest'],
+       rvm1_rubies: ['ruby-2.6.3'],
+       rvm1_install_path: /usr/local/rvm,
+       rvm1_install_flags: '--auto-dotfiles',
+       rvm1_user: 'root'}
+    - vim
