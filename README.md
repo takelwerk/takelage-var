@@ -25,7 +25,7 @@ integration and system test your whole ansible project.
 testinfra wraps 
 [cli](https://philpep.org/blog/infrastructure-testing-with-testinfra) 
 calls to the ansible executable.
-takeltest uses the ansible python +
+takeltest uses the ansible python
 [api](https://docs.ansible.com/ansible/latest/dev_guide/developing_api.html)
 to run ansible playbooks.
 
