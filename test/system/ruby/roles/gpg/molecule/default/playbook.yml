@@ -2,5 +2,11 @@
 - name: converge
   hosts: all
   gather_facts: false
+  pre_tasks:
+    - name: (upgrade) workaround - apt-get update  # noqa 303
+      command: apt-get update
+      args:
+        warn: false
+      changed_when: False
   roles:
     - gpg
