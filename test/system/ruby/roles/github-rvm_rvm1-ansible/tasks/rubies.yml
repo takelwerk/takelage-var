@@ -2,7 +2,7 @@
 
 - name: Detect if rubies are installed
   command: '{{ rvm1_rvm }} {{ item }} do true'
-  changed_when: False
+  changed_when: false
   failed_when: False
   register: detect_rubies
   with_items: '{{ rvm1_rubies }}'
@@ -15,7 +15,7 @@
 
 - name: Detect default ruby version
   command: '{{ rvm1_rvm }} alias list default'
-  changed_when: False
+  changed_when: false
   register: detect_default_ruby_version
 
 - name: Select default ruby
@@ -27,7 +27,7 @@
   shell: >
     {{ rvm1_rvm }} list strings | grep {{ item }} | tail -n 1
   with_items: '{{ rvm1_rubies }}'
-  changed_when: False
+  changed_when: false
   register: ruby_patch
   check_mode: no # Run in normal mode when in --check mode (http://docs.ansible.com/ansible/playbooks_checkmode.html)
 
@@ -64,12 +64,12 @@
 
 - name: Detect if ruby version can be deleted
   command: '{{ rvm1_rvm }} {{ rvm1_delete_ruby }} do true'
-  changed_when: False
+  changed_when: false
   failed_when: False
   register: detect_delete_ruby
   when: rvm1_delete_ruby
 
 - name: Delete ruby version
   command: '{{ rvm1_rvm }} remove {{ rvm1_delete_ruby }}'
-  changed_when: False
+  changed_when: false
   when: rvm1_delete_ruby and detect_delete_ruby.rc == 0

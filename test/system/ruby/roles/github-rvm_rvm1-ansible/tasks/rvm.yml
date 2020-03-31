@@ -10,7 +10,7 @@
 
 - name: Detect current rvm version
   command: '{{ rvm1_rvm}} version'
-  changed_when: False
+  changed_when: false
   register: rvm_current_version
   when: rvm_binary.stat.exists
 
@@ -23,7 +23,7 @@
 
 - name: Import GPG keys from keyservers
   shell: 'gpg --batch --keyserver {{ item }} --recv-keys {{ rvm1_gpg_keys }}'
-  changed_when: False
+  changed_when: false
   check_mode: False
   with_items: '{{ rvm1_gpg_key_servers }}'
   register: gpg_import
@@ -50,7 +50,7 @@
 
 - name: Update rvm
   shell: '{{ rvm1_rvm }} get {{ rvm1_rvm_version }} && {{ rvm1_rvm }} reload'
-  changed_when: False
+  changed_when: false
   when: rvm_binary.stat.exists and rvm1_rvm_check_for_updates
 
 - name: Configure rvm
