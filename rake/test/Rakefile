@@ -8,8 +8,8 @@ cmd_test_system_anarchism_project_default = "cd " +
     'pytest --cache-clear && ' +
     'molecule test'
 
-cmd_test_system_anarchism_role_anarchism_default = "cd " +
-    "test/system/anarchism/roles/anarchism && " +
+cmd_test_system_anarchism_role_takel_anarchism_default = "cd " +
+    "test/system/anarchism/roles/takel-anarchism && " +
     'pytest --cache-clear && ' +
     'molecule test'
 
@@ -72,7 +72,7 @@ namespace :test do
 
       desc 'Run system tests anarchism role default'
       task :role_default do
-        $commands << cmd_test_system_anarchism_role_anarchism_default
+        $commands << cmd_test_system_anarchism_role_takel_anarchism_default
       end
     end
 
