@@ -4,19 +4,13 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: molecule-takeltest-anarchism-role-anarchism
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian10}-ansible:latest"
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: molecule-takel-anarchism
+    image: takelage/takelbase
+    command: /lib/systemd/systemd
     privileged: true
     pre_build_image: true
 provisioner:
   name: ansible
-  inventory:
-    group_vars:
-      all:
-        anarchism_group_vars_all: my_group_vars_all_value
   config_options:
     defaults:
       interpreter_python: auto_silent
@@ -25,7 +19,6 @@ provisioner:
 verifier:
   name: testinfra
   options:
-    # m: debug
     # p: cacheprovider  # enable cache
     s: true  # capture output
   lint:
@@ -33,7 +26,7 @@ verifier:
   additional_files_or_dirs:
     - ../system/test_*.py
 scenario:
-  name: default  # optional
+  name: default
   create_sequence:
     - create
   check_sequence:

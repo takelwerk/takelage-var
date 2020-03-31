@@ -1,5 +1,0 @@
----
-- name: "(install) apt-get install {{ anarchism_packages|join(' ') }}"
-  apt:
-    name: "{{ anarchism_packages }}"
-  when: anarchism_install

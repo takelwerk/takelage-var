@@ -8,7 +8,7 @@ cmd_test_system_anarchism_project_default = "cd " +
     'pytest --cache-clear && ' +
     'molecule test'
 
-cmd_test_system_anarchism_role_default = "cd " +
+cmd_test_system_anarchism_role_anarchism_default = "cd " +
     "test/system/anarchism/roles/anarchism && " +
     'pytest --cache-clear && ' +
     'molecule test'
@@ -28,13 +28,34 @@ cmd_test_system_ruby_project_blacklist_two = "cd " +
     'pytest --cache-clear && ' +
     'molecule test --scenario-name blacklist_two'
 
+cmd_test_system_ruby_role_curl_default = "cd " +
+    "test/system/ruby/roles/curl && " +
+    'pytest --cache-clear && ' +
+    'molecule test'
+
+cmd_test_system_ruby_role_gpg_default = "cd " +
+    "test/system/ruby/roles/gpg && " +
+    'pytest --cache-clear && ' +
+    'molecule test'
+
+cmd_test_system_ruby_role_procps_default = "cd " +
+    "test/system/ruby/roles/procps && " +
+    'pytest --cache-clear && ' +
+    'molecule test'
+
+cmd_test_system_ruby_role_vim_default = "cd " +
+    "test/system/ruby/roles/vim && " +
+    'pytest --cache-clear && ' +
+    'molecule test'
+
 desc 'Run tests'
 task :test => %w(test:unit
                  test:system:anarchism:project_default
                  test:system:anarchism:role_default
                  test:system:ruby:default
                  test:system:ruby:blacklist_one
-                 test:system:ruby:blacklist_two)
+                 test:system:ruby:blacklist_two
+                 test:system:ruby:role_defaults)
 
 namespace :test do
   desc 'Run unit tests'
@@ -49,9 +70,9 @@ namespace :test do
         $commands << cmd_test_system_anarchism_project_default
       end
 
-      desc 'Run system tests anarchism project default'
+      desc 'Run system tests anarchism role default'
       task :role_default do
-        $commands << cmd_test_system_anarchism_role_default
+        $commands << cmd_test_system_anarchism_role_anarchism_default
       end
     end
 
@@ -61,14 +82,22 @@ namespace :test do
         $commands << cmd_test_system_ruby_project_default
       end
 
-      desc 'Run system tests ruby project default'
+      desc 'Run system tests ruby project blacklist one'
       task :blacklist_one do
         $commands << cmd_test_system_ruby_project_blacklist_one
       end
 
-      desc 'Run system tests ruby project default'
+      desc 'Run system tests ruby project blacklist two'
       task :blacklist_two do
         $commands << cmd_test_system_ruby_project_blacklist_two
+      end
+
+      desc 'Run system tests ruby role defaults'
+      task :role_defaults do
+        $commands << cmd_test_system_ruby_role_curl_default
+        $commands << cmd_test_system_ruby_role_gpg_default
+        $commands << cmd_test_system_ruby_role_procps_default
+        $commands << cmd_test_system_ruby_role_vim_default
       end
     end
   end

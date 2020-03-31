@@ -3,15 +3,6 @@ import takeltest
 testinfra_hosts = takeltest.hosts()
 
 
-def test_takeltest_system_varsfiles_role_defaults(host, testvars):
-    assert testvars['anarchism_my_role_defaults_var'] == \
-           'my_role_defaults_value'
-
-
-def test_takeltest_system_varsfiles_role_vars(host, testvars):
-    assert testvars['anarchism_my_role_var'] == 'my_role_value'
-
-
 def test_takeltest_system_varsfiles_project_vars(host, testvars):
     assert testvars['project_my_project_var'] == 'my_project_value'
 

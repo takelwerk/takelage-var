@@ -4,8 +4,8 @@ import takeltest
 testinfra_hosts = takeltest.hosts()
 
 
-def test_takeltest_system_role_fortune_configure(host, testvars):
-    if 'fortune-anarchism' in testvars['anarchism_packages']:
+def test_takel_anarchism_configure_root_bashrc(host, testvars):
+    if 'fortune-anarchism' in testvars['takel_anarchism_deb_install_packages']:
         with host.sudo():
             file = host.file('/root/.bashrc')
             expected = '''

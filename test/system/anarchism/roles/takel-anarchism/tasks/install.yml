@@ -1,0 +1,7 @@
+---
+- name: (install) install packages
+  package:
+    name: "{{ takel_anarchism_deb_install_packages }}"
+    state: present
+    update_cache: true
+  when: takel_anarchism_install

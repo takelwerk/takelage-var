@@ -1,3 +1,6 @@
 ---
 vim_packages:
   - vim
+
+my_role_defaults_var: my_role_defaults_value
+my_role_defaults_reference: "{{ my_role_defaults_var }}"

@@ -9,10 +9,8 @@ lint:
         line-length: disable
 platforms:
   - name: molecule-takeltest-ruby-blacklist-one
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian10}-ansible:latest"
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    image: takelage/takelbase
+    command: /lib/systemd/systemd
     privileged: true
     pre_build_image: true
 provisioner:
