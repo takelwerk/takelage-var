@@ -31,6 +31,6 @@ project_dict1:
 
 project_lookup_flattened: "{{ lookup('flattened', [1,2,3,[4,5,6]]) }}"
 
-project_filter_zip: "{{ project_list1 | zip(anarchism_packages) | list }}"
+project_filter_zip: "{{ project_list1 | zip(takel_anarchism_deb_install_packages) | list }}"
 
 project_filter_dict2items: "{{ project_dict1 | dict2items }}"
