@@ -247,3 +247,10 @@ def test_takeltest_moleculebook(host, moleculebook):
     moleculebook.run()
     assert host.file('/tmp/moleculebook_did_this').exists
 ```
+
+See 
+[takel-gem](https://github.com/geospin-takelage/takelage-dev/blob/master/ansible/roles/takel-gem/molecule/default/system/test_takel-gem_system.py)
+for a real-world example where moleculebook is used 
+to avoid a molecule prepare.yml playbook
+which otherwise needs to be copied 
+to the project's molecule default scenario.
