@@ -1,0 +1,2 @@
+exclude_paths:
+  - roles/github-rvm_rvm1-ansible
