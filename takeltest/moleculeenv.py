@@ -70,7 +70,11 @@ class MoleculeEnv(object):
             if playbook_file is not None:
                 roles = self._read_roles_from_playbook_(playbook_file)
 
-        # try to read roles from default molecule converge playbook
+        # try to read roles from default molecule 3 converge playbook
+        if roles is None:
+            roles = self._read_roles_from_playbook_('converge.yml')
+
+        # try to read roles from default molecule 2 converge playbook
         if roles is None:
             roles = self._read_roles_from_playbook_('playbook.yml')
 
