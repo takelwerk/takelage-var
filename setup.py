@@ -3,7 +3,7 @@ import setuptools
 if __name__ == '__main__':
     setuptools.setup(
         name='takeltest',
-        version='0.1.1',
+        version='0.2.0',
         author='Geospin',
         author_email='takelage@geospin.de',
         description='Fixtures for ansible, testinfra and molecule',
