@@ -83,7 +83,8 @@ class MoleculeEnv(object):
             msd = self.get_molecule_scenario_directory()
             roles_dir = msd / 'roles'
             if roles_dir.exists():
-                roles = sorted([d.name for d in roles_dir.iterdir() if d.is_dir()])
+                roles = \
+                    sorted([d.name for d in roles_dir.iterdir() if d.is_dir()])
 
         # if roles have been selected
         # then apply blacklist

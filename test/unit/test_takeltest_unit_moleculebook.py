@@ -183,6 +183,7 @@ def test_takeltest_unit_get_molecule_scenario_directory(moleculebook):
     assert moleculebook_mcd == moleculeplay_mcd
 
 
-def test_takeltest_unit_moleculebook_testvars_extra_vars_no_files(moleculebook):
+def test_takeltest_unit_moleculebook_testvars_extra_vars_no_files(
+        moleculebook):
     files = moleculebook._get_extra_vars_()
     assert files == []

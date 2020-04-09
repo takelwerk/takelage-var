@@ -32,7 +32,7 @@ def test_takeltest_unit_templates_reset_templates(templates):
 
 
 def test_takeltest_unit_templates_resolve_templates(templates,
-                                                  monkeypatch):
+                                                    monkeypatch):
     playbook_results = [{'ansible_facts': {}},
                         {'msg': '"True"'},
                         {'msg': '""my_value""'}]
@@ -49,7 +49,7 @@ def test_takeltest_unit_templates_resolve_templates(templates,
 
 
 def test_takeltest_unit_templates_resolve_no_string(templates,
-                                                  monkeypatch):
+                                                    monkeypatch):
     playbook_results = [{'ansible_facts': {}},
                         {'msg': '"False"'},
                         {'msg': '"99"'}]

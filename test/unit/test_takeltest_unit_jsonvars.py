@@ -129,7 +129,7 @@ def test_takeltest_unit_jsonvars_set(jsonvars):
 
 
 def test_takeltest_unit_jsonvars_debug(jsonvars,
-                                     monkeypatch):
+                                       monkeypatch):
     jsonvars.reset()
     my_template = {'unresolved': 'my_var',
                    'resolved': 'my_value',
