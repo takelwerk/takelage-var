@@ -1,0 +1,25 @@
+---
+- name: (configure) copy .bashrc file
+  copy:
+    src: bashrc
+    dest: /root/.bashrc
+    owner: root
+    group: root
+    mode: 0644
+
+- name: (bahsrc) create .bashrc.d directory
+  file:
+    path: /root/.bashrc.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: (bashrc) copy .bashrc.d files
+  copy:
+    src: "{{ item.file }}"
+    dest: "/root/.bashrc.d/{{ item.order }}{{ item.file }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ takel_anarchism_bashrc }}"

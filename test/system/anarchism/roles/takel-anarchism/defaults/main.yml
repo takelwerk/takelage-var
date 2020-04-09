@@ -4,3 +4,7 @@ takel_anarchism_deb_install_packages:
   - sudo
 
 takel_anarchism_install: true
+
+takel_anarchism_bashrc:
+  - file: anarchism.sh
+    order: 50
