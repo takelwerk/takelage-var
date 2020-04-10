@@ -33,7 +33,6 @@ verifier:
   env:
     TESTVARS_ROLES_BLACKLIST: github-rvm_rvm1-ansible:vim
 scenario:
-  name: blacklist_two
   create_sequence:
     - create
   check_sequence:

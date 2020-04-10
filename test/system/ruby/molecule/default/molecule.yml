@@ -26,7 +26,6 @@ verifier:
   env:
     TESTVARS_ROLES_WHITELIST: curl:vim
 scenario:
-  name: default  # whitelist
   create_sequence:
     - create
   check_sequence:

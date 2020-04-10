@@ -43,7 +43,6 @@ verifier:
     # system
     - ../../../roles/anarchism/molecule/default/system/test_*.py
 scenario:
-  name: default
   create_sequence:
     - create
   check_sequence:
