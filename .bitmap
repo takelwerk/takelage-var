@@ -87,5 +87,23 @@
         "origin": "IMPORTED",
         "originallySharedDir": "rake/meta"
     },
+    "takelage.rake/rake/rubylint@0.0.1": {
+        "files": [
+            {
+                "name": "README.bit",
+                "relativePath": "README.bit",
+                "test": false
+            },
+            {
+                "name": "Rakefile",
+                "relativePath": "Rakefile",
+                "test": false
+            }
+        ],
+        "mainFile": "README.bit",
+        "rootDir": "rake/rubylint",
+        "origin": "IMPORTED",
+        "originallySharedDir": "rake/rubylint"
+    },
     "version": "14.7.6"
 }
