@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 desc 'Build takeltest pip package'
-task :prod => %w(test
-                 package:make
-                 git:tag
-                 package:upload)
+task prod: %w[rubylint
+              test
+              package:make
+              git:tag
+              package:upload]
