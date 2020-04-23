@@ -1,17 +1,20 @@
+# frozen_string_literal: true
+
+require 'English'
 require 'rake'
 require 'yaml'
 
-$project = YAML.load(`tau project`)
-$base_dir = ENV['TAKELAGE_PROJECT_BASE_DIR'] ? ENV['TAKELAGE_PROJECT_BASE_DIR'] : "/tmp/#{$project['name']}"
+@project = YAML.safe_load `tau project`
+@base_dir = ENV['TAKELAGE_PROJECT_BASE_DIR'] || "/tmp/#{@project['name']}"
 
-# Add run=dry to see shell $commands
+# Add run=dry to see shell @commands
 # Example: rake stage run=dry
 
 #####################################################################
 # Variables
 
 # The tasks will add shell commands to this empty global array
-$commands = []
+@commands = []
 
 #####################################################################
 # Default task
@@ -23,26 +26,21 @@ end
 #####################################################################
 # Import Rakefiles from rake subfolders
 
-Dir.glob("**/Rakefile").each do |rakefile|
-  unless rakefile == 'rake/meta/Rakefile' or rakefile == 'Rakefile'
-    import rakefile
-  end
+Dir.glob('**/Rakefile').each do |rakefile|
+  import rakefile unless %w[rake/meta/Rakefile Rakefile].include? rakefile
 end
 
 #####################################################################
 # Final task
 
 # Detect run=dry command line parameter
-dry_run = false
-if ENV['run'] == 'dry'
-  dry_run = true
-end
+dry_run = ENV['run'] == 'dry'
 
 # if Rakefile is invoked with run=dry
 # then print commands
 # else run commands
 task :finally do
-  $commands.each do |command|
+  @commands.each do |command|
     if dry_run
       puts command
     else
@@ -52,5 +50,5 @@ task :finally do
 end
 
 # Run final task at exit
-at_exit { Rake::Task[:finally].invoke if $!.nil? }
+at_exit { Rake::Task[:finally].invoke if $ERROR_INFO.nil? }
 #####################################################################
