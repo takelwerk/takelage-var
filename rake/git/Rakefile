@@ -1,11 +1,16 @@
+# frozen_string_literal: true
+
 sed_expression = %q!"s/^.*version='\(.*\)',/\1/p"!
 cmd_takeltest_version = "sed -n -e #{sed_expression} setup.py"
-cmd_git_tag = "git tag -s -m '%{version}' %{version} && git push --tags"
+cmd_git_tag = "git tag -s -m '%<version>s' %<version>s && git push --tags"
 
 namespace :git do
   desc 'Create and push git tag'
   task :tag do
     version = `#{cmd_takeltest_version}`.chomp!
-    $commands <<  cmd_git_tag % {version: version}
+    @commandss << format(
+      cmd_git_tag,
+      version: version
+    )
   end
 end

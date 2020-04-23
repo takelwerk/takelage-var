@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rake'
 
 cmd_make = 'make'
@@ -7,11 +9,11 @@ cmd_make_upload = 'make upload'
 namespace :package do
   desc 'Make python package'
   task :make do
-    $commands << cmd_make
+    @commandss << cmd_make
   end
 
   desc 'Make python package'
   task :upload do
-    $commands << cmd_make_upload
+    @commandss << cmd_make_upload
   end
 end
