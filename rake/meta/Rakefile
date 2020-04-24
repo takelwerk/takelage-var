@@ -27,7 +27,9 @@ end
 # Import Rakefiles from rake subfolders
 
 Dir.glob('**/Rakefile').each do |rakefile|
-  import rakefile unless %w[rake/meta/Rakefile Rakefile].include? rakefile
+  next unless rakefile.start_with? 'rake/'
+
+  import rakefile unless rakefile == 'rake/meta/Rakefile'
 end
 
 #####################################################################
