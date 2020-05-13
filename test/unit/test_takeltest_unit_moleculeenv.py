@@ -184,6 +184,58 @@ provisioner:
     assert moleculeenv.get_roles() == ['my_role']
 
 
+def test_takeltest_unit_moleculeenv_roles_from_playboook_expand_path(
+        moleculelog,
+        monkeypatch,
+        tmp_path):
+    monkeypatch.setenv(
+        'TAKELAGE_MOLECULE_CONVERGE_PLAYBOOK',
+        'my_playbook.yml')
+
+    my_molecule_yml = """\
+---
+provisioner:
+    name: ansible
+    playbooks:
+        converge: >-
+          ${TAKELAGE_MOLECULE_CONVERGE_PLAYBOOK:-custom-playbook.yml}
+"""
+    my_playbook = """\
+---
+- name: converge
+  hosts: all
+  gather_facts: false
+  roles:
+    - my_role
+"""
+    med = tmp_path / 'molecule_ephemeral_directory'
+    med.mkdir()
+
+    msd = tmp_path / 'molecule_scenario_directory'
+    msd.mkdir()
+
+    (tmp_path / 'roles' / 'my_role').mkdir(parents=True)
+
+    molecule_yml_path = msd / 'molecule.yml'
+    molecule_yml_path.write_text(my_molecule_yml)
+
+    playbook_path = msd / 'my_playbook.yml'
+    playbook_path.write_text(my_playbook)
+
+    gather_roles = True
+    testvars_roles_blacklist = []
+    testvars_roles_whitelist = []
+
+    moleculeenv = MoleculeEnv(moleculelog,
+                              med,
+                              msd,
+                              gather_roles,
+                              testvars_roles_blacklist,
+                              testvars_roles_whitelist)
+
+    assert moleculeenv.get_roles() == ['my_role']
+
+
 def test_takeltest_unit_moleculeenv_roles_from_default_converge_playboook(
         moleculelog,
         tmp_path):
