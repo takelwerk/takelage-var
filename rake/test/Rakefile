@@ -63,43 +63,43 @@ task test: %w[test:unit
 namespace :test do
   desc 'Run unit tests'
   task :unit do
-    @commandss << cmd_test_unit
+    @commands << cmd_test_unit
   end
   namespace :system do
     namespace :anarchism do
       desc 'Run system tests anarchism project default'
       task :project_default do
-        @commandss << cmd_test_system_anarchism_project_default
+        @commands << cmd_test_system_anarchism_project_default
       end
 
       desc 'Run system tests anarchism role default'
       task :role_default do
-        @commandss << cmd_test_system_anarchism_role_takel_anarchism_default
+        @commands << cmd_test_system_anarchism_role_takel_anarchism_default
       end
     end
 
     namespace :ruby do
       desc 'Run system tests ruby project default'
       task :default do
-        @commandss << cmd_test_system_ruby_project_default
+        @commands << cmd_test_system_ruby_project_default
       end
 
       desc 'Run system tests ruby project blacklist one'
       task :blacklist_one do
-        @commandss << cmd_test_system_ruby_project_blacklist_one
+        @commands << cmd_test_system_ruby_project_blacklist_one
       end
 
       desc 'Run system tests ruby project blacklist two'
       task :blacklist_two do
-        @commandss << cmd_test_system_ruby_project_blacklist_two
+        @commands << cmd_test_system_ruby_project_blacklist_two
       end
 
       desc 'Run system tests ruby role defaults'
       task :role_defaults do
-        @commandss << cmd_test_system_ruby_role_curl_default
-        @commandss << cmd_test_system_ruby_role_gpg_default
-        @commandss << cmd_test_system_ruby_role_procps_default
-        @commandss << cmd_test_system_ruby_role_vim_default
+        @commands << cmd_test_system_ruby_role_curl_default
+        @commands << cmd_test_system_ruby_role_gpg_default
+        @commands << cmd_test_system_ruby_role_procps_default
+        @commands << cmd_test_system_ruby_role_vim_default
       end
     end
   end

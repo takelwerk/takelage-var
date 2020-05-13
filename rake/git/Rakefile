@@ -8,7 +8,7 @@ namespace :git do
   desc 'Create and push git tag'
   task :tag do
     version = `#{cmd_takeltest_version}`.chomp!
-    @commandss << format(
+    @commands << format(
       cmd_git_tag,
       version: version
     )
