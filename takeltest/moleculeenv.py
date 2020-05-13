@@ -1,6 +1,7 @@
 from pathlib import Path
 from ruamel.yaml import YAML
 from ruamel.yaml.scanner import ScannerError
+import subprocess
 
 
 class MoleculeEnv(object):
@@ -156,6 +157,16 @@ class MoleculeEnv(object):
             molecule_yml = yaml.load(molecule_yml_path)
             playbook_file = \
                 molecule_yml['provisioner']['playbooks']['converge']
+            command = [
+                'bash',
+                '-c',
+                f"echo {playbook_file}"
+            ]
+            result = subprocess.run(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE).stdout.decode('UTF-8').strip()
+            playbook_file = Path(result)
             return playbook_file
         except (FileNotFoundError, ScannerError, KeyError):
             return None
