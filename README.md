@@ -11,7 +11,7 @@ The pytest plugin
 allows to write unit tests in python to test
 your servers configured by the management tool 
 [ansible](https://www.ansible.com/).
-testinfra is the default 
+testinfra is a
 [verifier](https://molecule.readthedocs.io/en/stable/configuration.html#testinfra)
 of the [molecule]( https://molecule.readthedocs.io/)
 testing environment.
