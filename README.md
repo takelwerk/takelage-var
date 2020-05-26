@@ -66,7 +66,7 @@ Have a look at
 [anarchism](test/system/anarchism) and
 [ruby](test/system/ruby)
 system test directories for examples
-of molecule projects using ansible, testinfra and takeletst.
+of molecule projects using ansible, testinfra and takeltest.
 
 ## Boilerplate
 
