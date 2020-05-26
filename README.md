@@ -19,7 +19,7 @@ testing environment.
 The pytest plugin takeltest provides helper functions
 and fixtures to facilitate the use of molecule and testinfra.
 It provides access to variables and secrets and helps to not only 
-to unit test your ansible roles but to
+unit test your ansible roles but to
 integration and system test your whole ansible project.
 
 testinfra wraps 
