@@ -9,4 +9,5 @@ dist
 __pycache__
 .pytest_cache
 pytestdebug.log
+takelage.yml
 .tox
