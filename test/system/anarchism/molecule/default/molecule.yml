@@ -27,7 +27,7 @@ provisioner:
 verifier:
   name: testinfra
   options:
-    testvars-debug-jsonvars: true
+    # testvars-debug-jsonvars: true
     # testvars-no-gather-facts: true
     # testvars-no-gather-molecule: true
     # testvars-no-extra-vars: true
