@@ -6,7 +6,9 @@ class MoleculeBook(object):
 
     def __init__(self,
                  testvars_extra_vars,
+                 ansibleinventory,
                  moleculeplay):
+        self._hosts = ansibleinventory.hosts
         self._moleculeplay = moleculeplay
         self._testvars_extra_vars = testvars_extra_vars
         self._playbook = dict()
@@ -27,11 +29,11 @@ class MoleculeBook(object):
                host=None):
         '''Create an ansible playbook using the ansible python api.'''
         if host is None:
-            host = self._moleculeplay.get_host()
+            host = next(iter(self._hosts))
 
         playbook = dict(
             name="ansible playbook",
-            hosts=str(host),
+            hosts=host,
             gather_facts=str(gather_facts),
             vars_files=list(),
             roles=list(),
@@ -61,7 +63,11 @@ class MoleculeBook(object):
         task = dict(action=dict(module='include_vars', args=args))
         self._playbook['tasks'].append(task)
 
-    def get_vars(self, gather_facts=True, extra_vars=True):
+    def get_vars(
+            self,
+            gather_facts=True,
+            extra_vars=True,
+            host=None):
         '''Return ansible facts and vars of a molecule host.
 
         Args:
@@ -72,6 +78,7 @@ class MoleculeBook(object):
                 Defaults to True.
                 An include_vars task will be added to include extra vars files
                 specified in the environment variable TESTVARS_EXTRA_VARS
+            host (string)
 
         Returns:
             vars (dict): resolved ansible variables and facts
@@ -80,7 +87,10 @@ class MoleculeBook(object):
 
         # self.create sets gather_facts=True by default so the ansible facts
         # of the default molecule host will be in result[0]['ansible_facts']
-        self.create(gather_facts=gather_facts, extra_vars=extra_vars)
+        self.create(
+            gather_facts=gather_facts,
+            extra_vars=extra_vars,
+            host=host)
 
         # the ansible variables will be in result[1]['msg']
         self.add_task_debug('{{ vars }}')
@@ -108,12 +118,6 @@ class MoleculeBook(object):
         except (IndexError, KeyError):
             pass
 
-        return vars
-
-    def read_vars(self):
-        '''Return ansible variables without running a playbook.'''
-        self.create(gather_facts=False, host='localhost')
-        vars = self._moleculeplay.read_vars(self._playbook)
         return vars
 
     def run(self):

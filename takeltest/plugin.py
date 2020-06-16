@@ -1,19 +1,16 @@
 import os
 from pathlib import Path
 import pytest
-from takeltest.ansibleres import AnsibleLoader
 from takeltest.ansibleres import AnsibleInventory
-from takeltest.ansibleres import AnsibleVarsManager
-from takeltest.ansibleres import AnsibleHost
 from takeltest.moleculeenv import MoleculeEnv
 from takeltest.moleculelog import MoleculeLog
 from takeltest.moleculeplay import MoleculePlay
 from takeltest.moleculebook import MoleculeBook
+from takeltest.multitestvars import MultiTestVars
 from takeltest.templates import Templates
 from takeltest.jsonvars import JsonVars
 from takeltest.pathlist import PathList
 from takeltest.testpass import TestPass
-from takeltest.testvars import TestVars
 
 
 ###########################################################
@@ -36,30 +33,30 @@ def pytest_addoption(parser):
     parser.addini('log', 'test')
     testvars_optiongroup = parser.getgroup("testvars")
     testvars_optiongroup.addoption(
-                     "--testvars-debug-jsonvars",
-                     action="store_true",
-                     default=False,
-                     help="print jsonvars debug information")
+        "--testvars-debug-jsonvars",
+        action="store_true",
+        default=False,
+        help="print jsonvars debug information")
     testvars_optiongroup.addoption(
-                     "--testvars-no-gather-facts",
-                     action="store_false",
-                     default=True,
-                     help="do not gather ansible_facts")
+        "--testvars-no-gather-facts",
+        action="store_false",
+        default=True,
+        help="do not gather ansible_facts")
     testvars_optiongroup.addoption(
-                     "--testvars-no-gather-molecule",
-                     action="store_false",
-                     default=True,
-                     help="do not resolve molecule vars")
+        "--testvars-no-gather-molecule",
+        action="store_false",
+        default=True,
+        help="do not resolve molecule vars")
     testvars_optiongroup.addoption(
-                     "--testvars-no-gather-roles",
-                     action="store_false",
-                     default=True,
-                     help="do not gather vars from roles")
+        "--testvars-no-gather-roles",
+        action="store_false",
+        default=True,
+        help="do not gather vars from roles")
     testvars_optiongroup.addoption(
-                     "--testvars-no-extra-vars",
-                     action="store_false",
-                     default=True,
-                     help="do not include extra vars")
+        "--testvars-no-extra-vars",
+        action="store_false",
+        default=True,
+        help="do not include extra vars")
 
 
 ###########################################################
@@ -129,8 +126,9 @@ def testvars_extra_vars(molecule_scenario_directory):
         extra_vars = Path(os.environ['TESTVARS_EXTRA_VARS'])
     except KeyError:
         return list()
-    return PathList(extra_vars,
-                    molecule_scenario_directory).get()
+    return PathList(
+        extra_vars,
+        molecule_scenario_directory).get()
 
 
 ###########################################################
@@ -139,27 +137,9 @@ def testvars_extra_vars(molecule_scenario_directory):
 
 
 @pytest.fixture(scope='session')
-def ansibleloader():
-    return AnsibleLoader().get()
-
-
-@pytest.fixture(scope='session')
-def ansibleinventory(ansibleloader,
-                     inventory_file):
-    return AnsibleInventory(ansibleloader,
-                            inventory_file).get()
-
-
-@pytest.fixture(scope='session')
-def ansiblevarsmanager(ansibleloader,
-                       ansibleinventory):
-    return AnsibleVarsManager(ansibleloader,
-                              ansibleinventory).get()
-
-
-@pytest.fixture(scope='session')
-def ansiblehost(ansibleinventory):
-    return AnsibleHost(ansibleinventory).get()
+def ansibleinventory(inventory_file):
+    return AnsibleInventory(
+        inventory_file).get()
 
 
 ###########################################################
@@ -206,18 +186,20 @@ def inventory_file(molecule_ephemeral_directory):
 
 
 @pytest.fixture(scope='session')
-def moleculeenv(moleculelog,
-                molecule_ephemeral_directory,
-                molecule_scenario_directory,
-                gather_roles,
-                testvars_roles_blacklist,
-                testvars_roles_whitelist):
-    return MoleculeEnv(moleculelog,
-                       molecule_ephemeral_directory,
-                       molecule_scenario_directory,
-                       gather_roles,
-                       testvars_roles_blacklist,
-                       testvars_roles_whitelist)
+def moleculeenv(
+        moleculelog,
+        molecule_ephemeral_directory,
+        molecule_scenario_directory,
+        gather_roles,
+        testvars_roles_blacklist,
+        testvars_roles_whitelist):
+    return MoleculeEnv(
+        moleculelog,
+        molecule_ephemeral_directory,
+        molecule_scenario_directory,
+        gather_roles,
+        testvars_roles_blacklist,
+        testvars_roles_whitelist)
 
 
 ###########################################################
@@ -226,25 +208,25 @@ def moleculeenv(moleculelog,
 
 
 @pytest.fixture(scope='session')
-def moleculeplay(ansibleloader,
-                 ansibleinventory,
-                 ansiblevarsmanager,
-                 ansiblehost,
-                 moleculeenv):
+def moleculeplay(
+        ansibleinventory,
+        moleculeenv):
     '''Expose ansible python api to run playbooks against a molecule host.'''
-    return MoleculePlay(ansibleloader,
-                        ansibleinventory,
-                        ansiblevarsmanager,
-                        ansiblehost,
-                        moleculeenv)
+    return MoleculePlay(
+        ansibleinventory,
+        moleculeenv)
 
 
 @pytest.fixture(scope='session')
-def moleculebook(testvars_extra_vars,
-                 moleculeplay):
+def moleculebook(
+        testvars_extra_vars,
+        ansibleinventory,
+        moleculeplay):
     '''Run an ansible playbook against a molecule host.'''
-    return MoleculeBook(testvars_extra_vars,
-                        moleculeplay)
+    return MoleculeBook(
+        testvars_extra_vars,
+        ansibleinventory,
+        moleculeplay)
 
 
 ###########################################################
@@ -258,16 +240,18 @@ def templates(moleculebook):
 
 
 @pytest.fixture(scope='session')
-def jsonvars(templates,
-             gather_molecule):
-    return JsonVars(templates,
-                    gather_molecule)
+def jsonvars(
+        templates,
+        gather_molecule):
+    return JsonVars(
+        templates,
+        gather_molecule)
 
 
 @pytest.fixture(scope='session')
 def cache_key(molecule_ephemeral_directory):
     # molecule_ephemeral_directory should be unique for each scenario
-    return 'testvars' + str(molecule_ephemeral_directory)
+    return 'multitestvars' + str(molecule_ephemeral_directory)
 
 
 ###########################################################
@@ -282,24 +266,33 @@ def testpass(moleculebook):
 
 
 @pytest.fixture(scope='session')
-def testvars(request,
-             moleculelog,
-             debug_jsonvars,
-             moleculebook,
-             jsonvars,
-             gather_facts,
-             extra_vars,
-             cache_key):
+def multitestvars(
+        request,
+        ansibleinventory,
+        moleculelog,
+        debug_jsonvars,
+        moleculebook,
+        jsonvars,
+        gather_facts,
+        extra_vars,
+        cache_key):
     '''Expose ansible variables and facts of a molecule test scenario.'''
-    testvars = TestVars.get_cache(request, cache_key)
-    if testvars is None:
-        testvars_object = TestVars(
-                 moleculelog,
-                 debug_jsonvars,
-                 moleculebook,
-                 jsonvars,
-                 gather_facts,
-                 extra_vars)
-        testvars = testvars_object.get_testvars()
-        testvars_object.set_cache(request, cache_key)
-    return testvars
+    multitestvars = MultiTestVars.get_cache(request, cache_key)
+    if multitestvars is None:
+        multitestvars_object = MultiTestVars(
+            ansibleinventory,
+            moleculelog,
+            debug_jsonvars,
+            moleculebook,
+            jsonvars,
+            gather_facts,
+            extra_vars)
+        multitestvars = multitestvars_object.get_multitestvars()
+        multitestvars_object.set_cache(request, cache_key)
+    return multitestvars
+
+
+@pytest.fixture(scope='session')
+def testvars(multitestvars):
+    '''Expose ansible variables and facts of a molecule test scenario.'''
+    return multitestvars[next(iter(multitestvars))]
