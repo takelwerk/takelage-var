@@ -7,10 +7,6 @@ def test_takeltest_unit_moleculeplay_is_not_none(moleculeplay):
     assert moleculeplay is not None
 
 
-def test_takeltest_unit_moleculeplay_get_host(moleculeplay):
-    assert moleculeplay.get_host() == moleculeplay._host
-
-
 def test_takeltest_unit_moleculeplay_exception_moleculeplayrunerror():
     label = 'my_label'
     result = ['my_result']

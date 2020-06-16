@@ -7,10 +7,11 @@ from takeltest.exceptions import AnsibleRunError
 
 class AnsibleRun(object):
 
-    def __init__(self,
-                 inventory,
-                 variable_manager,
-                 loader):
+    def __init__(
+            self,
+            inventory,
+            variable_manager,
+            loader):
         self._inventory = inventory
         self._variable_manager = variable_manager
         self._loader = loader
@@ -19,11 +20,12 @@ class AnsibleRun(object):
         tqm = None
         rc = ResultCallback()
         try:
-            tqm = TaskQueueManager(inventory=self._inventory,
-                                   variable_manager=self._variable_manager,
-                                   loader=self._loader,
-                                   passwords=dict(),
-                                   stdout_callback=rc)
+            tqm = TaskQueueManager(
+                inventory=self._inventory,
+                variable_manager=self._variable_manager,
+                loader=self._loader,
+                passwords=dict(),
+                stdout_callback=rc)
             tqm.run(play)
         finally:
             if tqm is not None:

@@ -10,6 +10,6 @@ import takeltest.moleculeplay
 import takeltest.plugin
 import takeltest.templates
 import takeltest.testpass
-import takeltest.testvars  # noqa F401
+import takeltest.multitestvars  # noqa F401
 
 name = "takeltest"

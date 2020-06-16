@@ -4,10 +4,17 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint playbook*.yml
+  ansible-lint site.yml
   flake8
 platforms:
-  - name: molecule-takeltest-anarchism-default
+  - name: molecule-takeltest-multi-first
+    image: takelage/takelbase
+    command: /lib/systemd/systemd
+    privileged: true
+    pre_build_image: true
+    groups:
+      - private
+  - name: molecule-takeltest-multi-second
     image: takelage/takelbase
     command: /lib/systemd/systemd
     privileged: true
@@ -20,8 +27,11 @@ provisioner:
     defaults:
       interpreter_python: auto_silent
   inventory:
-    links:
-      group_vars: ../../group_vars/
+    host_vars:
+      molecule-takeltest-multi-first:
+        example_var: false
+      molecule-takeltest-multi-second:
+        example_var: true
   playbooks:
     converge: ../../site.yml
 verifier:

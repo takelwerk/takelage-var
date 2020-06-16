@@ -6,13 +6,14 @@ import subprocess
 
 class MoleculeEnv(object):
 
-    def __init__(self,
-                 moleculelog,
-                 molecule_ephemeral_directory,
-                 molecule_scenario_directory,
-                 gather_roles,
-                 testvars_roles_blacklist,
-                 testvars_roles_whitelist):
+    def __init__(
+            self,
+            moleculelog,
+            molecule_ephemeral_directory,
+            molecule_scenario_directory,
+            gather_roles,
+            testvars_roles_blacklist,
+            testvars_roles_whitelist):
         self._molecule_ephemeral_directory = molecule_ephemeral_directory
         self._molecule_scenario_directory = molecule_scenario_directory
         self._gather_roles = gather_roles

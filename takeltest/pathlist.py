@@ -1,8 +1,9 @@
 class PathList(object):
 
-    def __init__(self,
-                 pathstring,
-                 molecule_scenario_directory):
+    def __init__(
+            self,
+            pathstring,
+            molecule_scenario_directory):
         self._molecule_scenario_directory = molecule_scenario_directory
         self._pathlist = self._pathstring_to_pathlist_(pathstring)
 
