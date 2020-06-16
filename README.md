@@ -89,27 +89,37 @@ def test_mytest(testpass):
     my_password = testpass('my_project/my_password')
 ```
 
-## Fixture testvars
+## Fixtures multitestvars and testvars
 
 Arguably the most useful feature of the takeltest plugin
-is the *testvars* fixture.
-The *testvars* fixture resolves and exposes 
+are the *multitestvars* and *testvars* fixture.
+The fixtures resolve and expose 
 ansible variables as a python dict:
+
+```python
+def test_mytest(multitestvars):
+
+    my_python_variable = multitestvars['my_host']['my_ansible_variable']
+```
+
+*testvars* is a list containing the ansible variables 
+of the first molecule host:
 
 ```python
 def test_mytest(testvars):
 
-    my_variable = testvars['my_variable']
+    my_python_variable = testvars['my_ansible_variable']
 ```
 
-*testvars* runs a playbook against the molecule host using the ansible python api.
+*multitestvars* runs a playbook against the molecule hosts 
+using the ansible python api.
 
-*testvars* creates a symbolic link to the roles directory of your ansible project
-in the ephemeral playbook environment which molecule sets up.
+*multitestvars* creates a symbolic link to the roles directory of your 
+ansible project in the ephemeral playbook environment which molecule sets up.
 It then runs a playbook with ``gather_facts:true`` and a debug task 
 to get the ansible variables and the ansible facts of the play and host.
 
-*testvars* uses the ansible 
+*multitestvars* uses the ansible 
 [VariableManager](https://github.com/ansible/ansible/blob/93ea9612057d47b28c9c42d439ef5679351b762b/lib/ansible/vars/manager.py#L74)
 so the usual ansible variable 
 [precedence rules](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable)
@@ -118,7 +128,8 @@ apply. Internally, the fixture uses the ansible
 to resolve templates which have not been resolved by the
 [setup module](https://docs.ansible.com/ansible/latest/modules/setup_module.html)
 through the gather facts task.
-Thus, it can resolve any kind of template that the debug module can resolve including
+Thus, it can resolve any kind of template
+which the debug module can resolve including
 [jinja2](http://jinja.pocoo.org/) code and calls to 
 [lookup plugins](https://docs.ansible.com/ansible/latest/plugins/lookup.html).
 
@@ -152,7 +163,8 @@ Roles blacklisted in ``TESTVARS_ROLES_BLACKLIST`` won't be included.
 
 ### options
 
-testvars is a session scope fixture so its configuration is done in
+*multitestvars* and *testvars* are session scope fixtures
+so their configuration is done in
 ``molecule.yml`` by using pytest command line options.
 You can add a couple of options in the options dictionary
 of the verifier section:
@@ -164,7 +176,8 @@ verifier:
     testvars-no-gather-facts: true
 ```
 
-By default, testvars runs a playbook to gather ansible variables and facts.
+By default, *multitestvars* runs a playbook
+to gather ansible variables and facts.
 It then runs a playbook to resolve the variables.
 
 You can change the default behaviour with these options:
@@ -183,7 +196,7 @@ You can change the default behaviour with these options:
 
 ### caching
 
-Hopefully the testvars fixture allows fast test-driven development.
+Hopefully the *multitestvars* fixture allows fast test-driven development.
 It has `session` scope so variables are collected and resolved only once
 per testrun as pytest caches the result.
 If this is still too slow for you then you can enable the pytest 
@@ -219,19 +232,23 @@ pytest --cache-show
 The takeltest plugin provides four main pytest fixtures
 (and a couple of command line, environment variables and helper fixtures):
 
-- testpass – exposes the ansible 
+- *testpass* – exposes the ansible 
 [passwordstore plugin](https://docs.ansible.com/ansible/latest/plugins/lookup/passwordstore.html)
-- testvars – resolves and exposes ansible vars and facts
-- moleculebook – api to run playbooks against a molecule host
-- moleculeplay – api to leverage the ansible python api
+- *multitestvars* – resolves and exposes ansible vars and facts 
+    of all molecule hosts
+- *testvars* – resolves and exposes ansible vars and facts 
+    of one molecule host
+- *moleculebook* – api to run playbooks against a molecule host
+- *moleculeplay* – api to leverage the ansible python api
 
-The testvars and testpass fixtures use the moleculebook fixture which in turn
-uses the moleculeplay fixture. moleculeplay makes low-level calls to the
+The *multitestvars*, *testvars* and *testpass* fixtures use the 
+*moleculebook* fixture which in turn uses the *moleculeplay* fixture. 
+*moleculeplay* makes low-level calls to the
 [ansible python api](https://docs.ansible.com/ansible/latest/dev_guide/developing_api.html)
-and uses the moleculeenv fixture to
+and uses the *moleculeenv* fixture to
 handle the sysadmin tasks of setting the right symlinks.
-moleculeplay and moleculeenv will probably not be very useful on their own
-but moleculebook might be handy in those situations where you know you
+*moleculeplay* and *moleculeenv* will probably not be very useful on their own
+but *moleculebook* might be handy in those situations where you know you
 shouldn't implement a hackaround. ;-)
 
 Here is how you could run an ansible playbook programmatically from 
@@ -252,6 +269,6 @@ def test_takeltest_moleculebook(host, moleculebook):
 See 
 [takel-gem](https://github.com/geospin-takelage/takelage-dev/blob/master/ansible/roles/takel-gem/molecule/default/system/test_takel-gem_system.py)
 for a real-world example where moleculebook is used 
-to avoid a molecule prepare.yml playbook
+to avoid a molecule ``prepare.yml`` playbook
 which otherwise needs to be copied 
 to the project's molecule default scenario.
