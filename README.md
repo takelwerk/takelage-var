@@ -155,7 +155,7 @@ Which roles are included is determined in this order:
 
 - List of roles separated by colon specified in the
   ``TESTVARS_ROLES_WHITELIST`` environment variable
-- List of roles specified in playbook speciied in ``molecule.yml``
+- List of roles specified in playbook specified in ``molecule.yml``
 - List of roles specified in default playbook ``playbook.yml``
 - All roles in ``roles`` directory in project directory
 
