@@ -40,6 +40,11 @@ cmd_test_system_ruby_role_gpg_default = 'cd ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
+cmd_test_system_ruby_project_include = 'cd ' \
+  'test/system/ruby && ' \
+  'pytest --cache-clear && ' \
+  'molecule test --scenario-name include'
+
 cmd_test_system_ruby_role_procps_default = 'cd ' \
   'test/system/ruby/roles/procps && ' \
   'pytest --cache-clear && ' \
@@ -92,6 +97,11 @@ namespace :test do
       desc 'Run system tests ruby project blacklist two'
       task :blacklist_two do
         @commands << cmd_test_system_ruby_project_blacklist_two
+      end
+
+      desc 'Run system tests ruby project include'
+      task :include do
+        @commands << cmd_test_system_ruby_project_include
       end
 
       desc 'Run system tests ruby role defaults'
