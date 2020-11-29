@@ -151,15 +151,20 @@ the paths to ``vars_files`` (as opposed to adding ``include_vars`` tasks).
 
 ### roles
 
-Which roles are included is determined in this order:
+Which roles are included is determined in the following order:
 
 - List of roles separated by colon specified in the
-  ``TESTVARS_ROLES_WHITELIST`` environment variable
+  ``TESTVARS_ROLES_WHITELIST`` environment variable.
+  This is exclusive, so only the whitelisted roles will be chosen.
 - List of roles specified in playbook specified in ``molecule.yml``
 - List of roles specified in default playbook ``playbook.yml``
 - All roles in ``roles`` directory in project directory
 
+Roles included in ``TESTVARS_ROLES_INCLUDED`` will be included.
 Roles blacklisted in ``TESTVARS_ROLES_BLACKLIST`` won't be included.
+
+You may want to include roles which are 
+[loaded as a task](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/import_role_module.html).
 
 ### options
 

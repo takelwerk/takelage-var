@@ -13,12 +13,14 @@ class MoleculeEnv(object):
             molecule_scenario_directory,
             gather_roles,
             testvars_roles_blacklist,
-            testvars_roles_whitelist):
+            testvars_roles_whitelist,
+            testvars_roles_include):
         self._molecule_ephemeral_directory = molecule_ephemeral_directory
         self._molecule_scenario_directory = molecule_scenario_directory
         self._gather_roles = gather_roles
         self._testvars_roles_blacklist = testvars_roles_blacklist
         self._testvars_roles_whitelist = testvars_roles_whitelist
+        self._testvars_roles_include = testvars_roles_include
         self._configure_roles_()
         self._moleculelog = moleculelog
         self._moleculelog.debug(self._get_molecule_vars_config_())
@@ -81,12 +83,16 @@ class MoleculeEnv(object):
             roles = self._read_roles_from_playbook_('playbook.yml')
 
         # fallback: select all roles
-        if roles is not None:
+        if roles is None:
             msd = self.get_molecule_scenario_directory()
             roles_dir = msd / 'roles'
             if roles_dir.exists():
                 roles = \
                     sorted([d.name for d in roles_dir.iterdir() if d.is_dir()])
+
+        # apply include
+        # by now, roles is a list
+        roles = self._roles_apply_include_(roles)
 
         # if roles have been selected
         # then apply blacklist
@@ -150,6 +156,9 @@ class MoleculeEnv(object):
     def _get_testvars_roles_whitelist_(self):
         return self._testvars_roles_whitelist
 
+    def _get_testvars_roles_include_(self):
+        return self._testvars_roles_include
+
     def _read_playbook_file_from_molecule_yml_(self):
         molecule_yml_path = self.get_molecule_scenario_directory() / \
                             'molecule.yml'
@@ -193,3 +202,10 @@ class MoleculeEnv(object):
             if role not in self._get_testvars_roles_blacklist_():
                 roles_not_blacklisted.append(role)
         return roles_not_blacklisted
+
+    def _roles_apply_include_(self, roles):
+        roles_include = self._get_testvars_roles_include_()
+        for role in roles_include:
+            if role not in roles:
+                roles.append(role)
+        return roles

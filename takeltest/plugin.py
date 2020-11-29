@@ -120,6 +120,16 @@ def testvars_roles_whitelist(molecule_scenario_directory):
 
 
 @pytest.fixture(scope='session')
+def testvars_roles_include(molecule_scenario_directory):
+    '''environment variable TESTVARS_ROLES_INCLUDE'''
+    try:
+        whitelist = os.environ['TESTVARS_ROLES_INCLUDE']
+    except KeyError:
+        return list()
+    return whitelist.split(':')
+
+
+@pytest.fixture(scope='session')
 def testvars_extra_vars(molecule_scenario_directory):
     '''environment variable TESTVARS_EXTRA_VARS'''
     try:
@@ -192,14 +202,16 @@ def moleculeenv(
         molecule_scenario_directory,
         gather_roles,
         testvars_roles_blacklist,
-        testvars_roles_whitelist):
+        testvars_roles_whitelist,
+        testvars_roles_include):
     return MoleculeEnv(
         moleculelog,
         molecule_ephemeral_directory,
         molecule_scenario_directory,
         gather_roles,
         testvars_roles_blacklist,
-        testvars_roles_whitelist)
+        testvars_roles_whitelist,
+        testvars_roles_include)
 
 
 ###########################################################

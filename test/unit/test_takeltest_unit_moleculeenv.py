@@ -127,13 +127,15 @@ def test_takeltest_unit_moleculeenv_no_gather_roles(
     gather_roles = False
     testvars_roles_blacklist = []
     testvars_roles_whitelist = []
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     assert moleculeenv.get_roles() == []
 
@@ -173,13 +175,15 @@ provisioner:
     gather_roles = True
     testvars_roles_blacklist = []
     testvars_roles_whitelist = []
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     assert moleculeenv.get_roles() == ['my_role']
 
@@ -225,13 +229,15 @@ provisioner:
     gather_roles = True
     testvars_roles_blacklist = []
     testvars_roles_whitelist = []
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     assert moleculeenv.get_roles() == ['my_role']
 
@@ -261,13 +267,15 @@ def test_takeltest_unit_moleculeenv_roles_from_default_converge_playboook(
     gather_roles = True
     testvars_roles_blacklist = []
     testvars_roles_whitelist = []
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     assert moleculeenv.get_roles() == ['my_role']
 
@@ -304,13 +312,15 @@ def test_takeltest_unit_moleculeenv_get_roles_not_blacklisted(
     gather_roles = True
     testvars_roles_blacklist = ['my_role_1']
     testvars_roles_whitelist = []
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     assert moleculeenv.get_roles() == my_roles
 
@@ -347,13 +357,59 @@ def test_takeltest_unit_moleculeenv_get_roles_whitelisted(
     gather_roles = True
     testvars_roles_blacklist = []
     testvars_roles_whitelist = ['my_role_2']
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
+
+    assert moleculeenv.get_roles() == my_roles
+
+
+def test_takeltest_unit_moleculeenv_get_roles_included(
+        moleculelog,
+        tmp_path):
+    my_playbook = """\
+---
+- name: converge
+  hosts: all
+  gather_facts: false
+  roles:
+    - my_role_1
+"""
+    my_roles = ['my_role_1', 'my_role_2']
+
+    med = tmp_path / 'molecule_ephemeral_directory'
+    med.mkdir()
+
+    msd = tmp_path / 'molecule_scenario_directory'
+    msd.mkdir()
+
+    my_role_1 = tmp_path / 'roles' / 'my_role_1'
+    my_role_1.mkdir(parents=True)
+
+    my_role_2 = tmp_path / 'roles' / 'my_role_2'
+    my_role_2.mkdir()
+
+    playbook_path = msd / 'playbook.yml'
+    playbook_path.write_text(my_playbook)
+
+    gather_roles = True
+    testvars_roles_blacklist = []
+    testvars_roles_whitelist = []
+    testvars_roles_include = ['my_role_2']
+
+    moleculeenv = MoleculeEnv(moleculelog,
+                              med,
+                              msd,
+                              gather_roles,
+                              testvars_roles_blacklist,
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     assert moleculeenv.get_roles() == my_roles
 
@@ -370,13 +426,15 @@ def test_takeltest_unit_moleculeenv_vars_config_molecule_yml(
     gather_roles = True
     testvars_roles_blacklist = []
     testvars_roles_whitelist = []
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     expected_config = 'Using variables defined in ' + str(msd / 'molecule.yml')
     molecule_vars_config = moleculeenv._get_molecule_vars_config_()
@@ -404,13 +462,15 @@ def test_takeltest_unit_moleculeenv_vars_config_group_vars(
     gather_roles = True
     testvars_roles_blacklist = []
     testvars_roles_whitelist = []
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     expected_config = 'Using group_vars symlink to ' + str(group_vars_target)
     molecule_vars_config = moleculeenv._get_molecule_vars_config_()
@@ -438,13 +498,15 @@ def test_takeltest_unit_moleculeenv_vars_config_host_vars(
     gather_roles = True
     testvars_roles_blacklist = []
     testvars_roles_whitelist = []
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     expected_config = 'Using host_vars symlink to ' + str(host_vars_target)
     molecule_vars_config = moleculeenv._get_molecule_vars_config_()
@@ -478,13 +540,15 @@ def test_takeltest_unit_moleculeenv_vars_config_host_vars_and_group_vars(
     gather_roles = True
     testvars_roles_blacklist = []
     testvars_roles_whitelist = []
+    testvars_roles_include = []
 
     moleculeenv = MoleculeEnv(moleculelog,
                               med,
                               msd,
                               gather_roles,
                               testvars_roles_blacklist,
-                              testvars_roles_whitelist)
+                              testvars_roles_whitelist,
+                              testvars_roles_include)
 
     expected_config = 'Using group_vars symlink to ' + str(group_vars_target)
     expected_config += '\n'
