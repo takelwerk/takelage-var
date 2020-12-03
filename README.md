@@ -160,7 +160,7 @@ Which roles are included is determined in the following order:
 - List of roles specified in default playbook ``playbook.yml``
 - All roles in ``roles`` directory in project directory
 
-Roles included in ``TESTVARS_ROLES_INCLUDED`` will be included.
+Roles included in ``TESTVARS_ROLES_INCLUDE`` will be included.
 Roles blacklisted in ``TESTVARS_ROLES_BLACKLIST`` won't be included.
 
 You may want to include roles which are 
