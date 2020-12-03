@@ -92,7 +92,7 @@ def test_mytest(testpass):
 ## Fixtures multitestvars and testvars
 
 Arguably the most useful feature of the takeltest plugin
-are the *multitestvars* and *testvars* fixture.
+are the *multitestvars* and *testvars* fixtures.
 The fixtures resolve and expose 
 ansible variables as a python dict:
 
@@ -103,7 +103,7 @@ def test_mytest(multitestvars):
 ```
 
 *testvars* is a list containing the ansible variables 
-of the first molecule host:
+of the first molecule host. Use this if you only have one host:
 
 ```python
 def test_mytest(testvars):
