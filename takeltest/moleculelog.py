@@ -25,10 +25,11 @@ class MoleculeLog(object):
             {k: v for (k, v) in os.environ.items() if 'TESTVARS_' in k}
         if takeltest_env:
             print('\n')
-            util.print_debug('TESTVARS ENVIRONMENT',
-                             util.safe_dump(takeltest_env))
+            print('TESTVARS ENVIRONMENT')
+            print(takeltest_env)
         log = self.get_log()
         if log:
             if not takeltest_env:
                 print('\n')
-            util.print_debug('TESTVARS LOG', log)
+            print('TESTVARS LOG')
+            print(log)
