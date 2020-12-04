@@ -151,20 +151,65 @@ the paths to ``vars_files`` (as opposed to adding ``include_vars`` tasks).
 
 ### roles
 
-Which roles are included is determined in the following order:
+Which roles are included is determined in the following order,
+the first match wins:
 
 - List of roles separated by colon specified in the
-  ``TESTVARS_ROLES_WHITELIST`` environment variable.
-  This is exclusive, so only the whitelisted roles will be chosen.
-- List of roles specified in playbook specified in ``molecule.yml``
-- List of roles specified in default playbook ``playbook.yml``
+  ``TESTVARS_ROLES_EXCLUSIVE`` environment variable.
+- List of roles specified in playbook specified in 
+  ``TESTVARS_ROLES_PLAYBOOK`` environment variable.
+- List of roles specified in playbook specified in 
+  ``molecule.yml``
+- List of roles specified in default playbook 
+  ``playbook.yml``
 - All roles in ``roles`` directory in project directory
 
 Roles included in ``TESTVARS_ROLES_INCLUDE`` will be included.
-Roles blacklisted in ``TESTVARS_ROLES_BLACKLIST`` won't be included.
+Roles blocked in ``TESTVARS_ROLES_BLOCK`` won't be included.
 
 You may want to include roles which are 
-[loaded as a task](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/import_role_module.html).
+[omported by task](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/import_role_module.html)
+and not by playbook.
+
+You can find the source code in the function ``_configure_roles_`` in
+[moleculeenv.py](https://github.com/geospin-takelage/takelage-var/blob/master/takeltest/moleculeenv.py).
+
+### example: testing packer images
+
+By specifying a playbook via ``TESTVARS_ROLES_PLAYBOOK``
+you are able to test your packer images with molecule.
+Let's assume your local docker image is called
+``packer_local/my_image``. 
+Then you can start this image within a molecule scenario:
+
+```yaml
+platforms:
+- name: molecule-my-image
+  image: packer_local/my_image
+```
+
+Make the group_vars (and host_vars, if you wish so) available to takeltest:
+
+```yaml
+provisioner:
+  name: ansible
+  inventory:
+    links:
+      group_vars: ../../group_vars/
+```
+
+Now you don't want to run your playbook on that packer image again.
+But you still want to have access to all the role defaults variables
+of those roles defined in your playbook so that your tests will pass.
+This can be achieved with the 
+``TESTVARS_ROLES_PLAYBOOK`` environment variable:
+
+```yaml
+verifier:
+  name: testinfra
+  env:
+    TESTVARS_ROLES_PLAYBOOK: ../../site.yml
+```
 
 ### options
 

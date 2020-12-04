@@ -7,7 +7,7 @@ lint: |
   ansible-lint playbook*.yml
   flake8
 platforms:
-  - name: molecule-takeltest-ruby-blacklist-one
+  - name: molecule-takeltest-ruby-blocklist-one
     image: takelage/takelbase
     command: /lib/systemd/systemd
     privileged: true
@@ -31,7 +31,7 @@ verifier:
     - ../system/test_*.py
     - ../../../roles/*/molecule/default/system/test_*.py
   env:
-    TESTVARS_ROLES_BLACKLIST: github-rvm_rvm1-ansible
+    TESTVARS_ROLES_BLOCK: github-rvm_rvm1-ansible
 scenario:
   create_sequence:
     - create

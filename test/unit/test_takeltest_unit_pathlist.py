@@ -2,12 +2,12 @@ from pathlib import Path
 from takeltest.pathlist import PathList
 
 
-def test_takeltest_unit_pathlist_roles_blacklist(testvars_roles_blacklist):
-    assert testvars_roles_blacklist is not None
+def test_takeltest_unit_pathlist_roles_blocklist(testvars_roles_blocklist):
+    assert testvars_roles_blocklist is not None
 
 
-def test_takeltest_unit_pathlist_roles_whitelist(testvars_roles_whitelist):
-    assert testvars_roles_whitelist is not None
+def test_takeltest_unit_pathlist_roles_exclusivelist(testvars_roles_exclusivelist):
+    assert testvars_roles_exclusivelist is not None
 
 
 def test_takeltest_unit_pathlist_get(tmp_path):

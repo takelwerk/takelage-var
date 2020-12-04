@@ -24,7 +24,7 @@ verifier:
   options:
     s: true  # capture output
   env:
-    TESTVARS_ROLES_WHITELIST: curl:vim
+    TESTVARS_ROLES_EXCLUSIVE: curl:vim
 scenario:
   create_sequence:
     - create

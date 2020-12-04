@@ -12,14 +12,14 @@ class MoleculeEnv(object):
             molecule_ephemeral_directory,
             molecule_scenario_directory,
             gather_roles,
-            testvars_roles_blacklist,
-            testvars_roles_whitelist,
+            testvars_roles_blocklist,
+            testvars_roles_exclusivelist,
             testvars_roles_include):
         self._molecule_ephemeral_directory = molecule_ephemeral_directory
         self._molecule_scenario_directory = molecule_scenario_directory
         self._gather_roles = gather_roles
-        self._testvars_roles_blacklist = testvars_roles_blacklist
-        self._testvars_roles_whitelist = testvars_roles_whitelist
+        self._testvars_roles_blocklist = testvars_roles_blocklist
+        self._testvars_roles_exclusivelist = testvars_roles_exclusivelist
         self._testvars_roles_include = testvars_roles_include
         self._configure_roles_()
         self._moleculelog = moleculelog
@@ -64,9 +64,9 @@ class MoleculeEnv(object):
 
         roles = None
 
-        # whitelist selects roles directly
-        if self._get_testvars_roles_whitelist_():
-            roles = self._get_testvars_roles_whitelist_()
+        # exclusivelist selects roles directly
+        if self._get_testvars_roles_exclusivelist_():
+            roles = self._get_testvars_roles_exclusivelist_()
 
         # try to read roles from custom molecule converge playbook
         if roles is None:
@@ -95,11 +95,11 @@ class MoleculeEnv(object):
         roles = self._roles_apply_include_(roles)
 
         # if roles have been selected
-        # then apply blacklist
+        # then apply blocklist
         # then create symlinks
         # then return
         if roles is not None:
-            roles = self._roles_apply_blacklist_(roles)
+            roles = self._roles_apply_blocklist_(roles)
             self._create_roles_symlinks_(roles)
             return
 
@@ -150,11 +150,11 @@ class MoleculeEnv(object):
 
         return molecule_vars_config
 
-    def _get_testvars_roles_blacklist_(self):
-        return self._testvars_roles_blacklist
+    def _get_testvars_roles_blocklist_(self):
+        return self._testvars_roles_blocklist
 
-    def _get_testvars_roles_whitelist_(self):
-        return self._testvars_roles_whitelist
+    def _get_testvars_roles_exclusivelist_(self):
+        return self._testvars_roles_exclusivelist
 
     def _get_testvars_roles_include_(self):
         return self._testvars_roles_include
@@ -196,12 +196,12 @@ class MoleculeEnv(object):
 
         return roles
 
-    def _roles_apply_blacklist_(self, roles):
-        roles_not_blacklisted = list()
+    def _roles_apply_blocklist_(self, roles):
+        roles_not_blocklisted = list()
         for role in roles:
-            if role not in self._get_testvars_roles_blacklist_():
-                roles_not_blacklisted.append(role)
-        return roles_not_blacklisted
+            if role not in self._get_testvars_roles_blocklist_():
+                roles_not_blocklisted.append(role)
+        return roles_not_blocklisted
 
     def _roles_apply_include_(self, roles):
         roles_include = self._get_testvars_roles_include_()

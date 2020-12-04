@@ -20,15 +20,15 @@ cmd_test_system_ruby_project_default = 'cd ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
-cmd_test_system_ruby_project_blacklist_one = 'cd ' \
+cmd_test_system_ruby_project_blocklist_one = 'cd ' \
   'test/system/ruby && ' \
   'pytest --cache-clear && ' \
-  'molecule test --scenario-name blacklist_one'
+  'molecule test --scenario-name blocklist_one'
 
-cmd_test_system_ruby_project_blacklist_two = 'cd ' \
+cmd_test_system_ruby_project_blocklist_two = 'cd ' \
   'test/system/ruby && ' \
   'pytest --cache-clear && ' \
-  'molecule test --scenario-name blacklist_two'
+  'molecule test --scenario-name blocklist_two'
 
 cmd_test_system_ruby_role_curl_default = 'cd ' \
   'test/system/ruby/roles/curl && ' \
@@ -60,8 +60,8 @@ task test: %w[test:unit
               test:system:anarchism:project_default
               test:system:anarchism:role_default
               test:system:ruby:default
-              test:system:ruby:blacklist_one
-              test:system:ruby:blacklist_two
+              test:system:ruby:blocklist_one
+              test:system:ruby:blocklist_two
               test:system:ruby:role_defaults]
 
 # rubocop:disable Metrics/BlockLength
@@ -89,14 +89,14 @@ namespace :test do
         @commands << cmd_test_system_ruby_project_default
       end
 
-      desc 'Run system tests ruby project blacklist one'
-      task :blacklist_one do
-        @commands << cmd_test_system_ruby_project_blacklist_one
+      desc 'Run system tests ruby project blocklist one'
+      task :blocklist_one do
+        @commands << cmd_test_system_ruby_project_blocklist_one
       end
 
-      desc 'Run system tests ruby project blacklist two'
-      task :blacklist_two do
-        @commands << cmd_test_system_ruby_project_blacklist_two
+      desc 'Run system tests ruby project blocklist two'
+      task :blocklist_two do
+        @commands << cmd_test_system_ruby_project_blocklist_two
       end
 
       desc 'Run system tests ruby project include'

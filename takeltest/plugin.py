@@ -100,33 +100,33 @@ def extra_vars(request):
 
 
 @pytest.fixture(scope='session')
-def testvars_roles_blacklist(molecule_scenario_directory):
-    '''environment variable TESTVARS_ROLES_BLACKLIST'''
+def testvars_roles_blocklist(molecule_scenario_directory):
+    '''environment variable TESTVARS_ROLES_BLOCK'''
     try:
-        blacklist = os.environ['TESTVARS_ROLES_BLACKLIST']
+        blocklist = os.environ['TESTVARS_ROLES_BLOCK']
     except KeyError:
         return list()
-    return blacklist.split(':')
+    return blocklist.split(':')
 
 
 @pytest.fixture(scope='session')
-def testvars_roles_whitelist(molecule_scenario_directory):
-    '''environment variable TESTVARS_ROLES_WHITELIST'''
+def testvars_roles_exclusivelist(molecule_scenario_directory):
+    '''environment variable TESTVARS_ROLES_EXCLUSIVE'''
     try:
-        whitelist = os.environ['TESTVARS_ROLES_WHITELIST']
+        exclusivelist = os.environ['TESTVARS_ROLES_EXCLUSIVE']
     except KeyError:
         return list()
-    return whitelist.split(':')
+    return exclusivelist.split(':')
 
 
 @pytest.fixture(scope='session')
 def testvars_roles_include(molecule_scenario_directory):
     '''environment variable TESTVARS_ROLES_INCLUDE'''
     try:
-        whitelist = os.environ['TESTVARS_ROLES_INCLUDE']
+        exclusivelist = os.environ['TESTVARS_ROLES_INCLUDE']
     except KeyError:
         return list()
-    return whitelist.split(':')
+    return exclusivelist.split(':')
 
 
 @pytest.fixture(scope='session')
@@ -201,16 +201,16 @@ def moleculeenv(
         molecule_ephemeral_directory,
         molecule_scenario_directory,
         gather_roles,
-        testvars_roles_blacklist,
-        testvars_roles_whitelist,
+        testvars_roles_blocklist,
+        testvars_roles_exclusivelist,
         testvars_roles_include):
     return MoleculeEnv(
         moleculelog,
         molecule_ephemeral_directory,
         molecule_scenario_directory,
         gather_roles,
-        testvars_roles_blacklist,
-        testvars_roles_whitelist,
+        testvars_roles_blocklist,
+        testvars_roles_exclusivelist,
         testvars_roles_include)
 
 

@@ -31,7 +31,7 @@ verifier:
     - ../system/test_*.py
     - ../../../roles/*/molecule/default/system/test_*.py
   env:
-    TESTVARS_ROLES_BLACKLIST: github-rvm_rvm1-ansible
+    TESTVARS_ROLES_BLOCK: github-rvm_rvm1-ansible
     TESTVARS_ROLES_INCLUDE: curl:vim
 scenario:
   create_sequence:
