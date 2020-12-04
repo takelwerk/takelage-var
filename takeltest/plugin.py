@@ -120,7 +120,7 @@ def testvars_roles_exclusivelist(molecule_scenario_directory):
 
 
 @pytest.fixture(scope='session')
-def testvars_roles_include(molecule_scenario_directory):
+def testvars_roles_includelist(molecule_scenario_directory):
     '''environment variable TESTVARS_ROLES_INCLUDE'''
     try:
         includelist = os.environ['TESTVARS_ROLES_INCLUDE']
