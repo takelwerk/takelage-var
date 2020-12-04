@@ -123,10 +123,20 @@ def testvars_roles_exclusivelist(molecule_scenario_directory):
 def testvars_roles_include(molecule_scenario_directory):
     '''environment variable TESTVARS_ROLES_INCLUDE'''
     try:
-        exclusivelist = os.environ['TESTVARS_ROLES_INCLUDE']
+        includelist = os.environ['TESTVARS_ROLES_INCLUDE']
     except KeyError:
         return list()
-    return exclusivelist.split(':')
+    return includelist.split(':')
+
+
+@pytest.fixture(scope='session')
+def testvars_roles_playbook(molecule_scenario_directory):
+    '''environment variable TESTVARS_ROLES_PLAYBOOK'''
+    try:
+        playbook = os.environ['TESTVARS_ROLES_PLAYBOOK']
+    except KeyError:
+        return ''
+    return playbook
 
 
 @pytest.fixture(scope='session')
@@ -203,7 +213,8 @@ def moleculeenv(
         gather_roles,
         testvars_roles_blocklist,
         testvars_roles_exclusivelist,
-        testvars_roles_include):
+        testvars_roles_includelist,
+        testvars_roles_playbook):
     return MoleculeEnv(
         moleculelog,
         molecule_ephemeral_directory,
@@ -211,7 +222,8 @@ def moleculeenv(
         gather_roles,
         testvars_roles_blocklist,
         testvars_roles_exclusivelist,
-        testvars_roles_include)
+        testvars_roles_includelist,
+        testvars_roles_playbook)
 
 
 ###########################################################
