@@ -160,7 +160,9 @@ the first match wins:
   ``TESTVARS_ROLES_PLAYBOOK`` environment variable.
 - List of roles specified in playbook specified in 
   ``molecule.yml``
-- List of roles specified in default playbook 
+- List of roles specified in default playbook
+  ``converge.yml``
+- List of roles specified in old default playbook
   ``playbook.yml``
 - All roles in ``roles`` directory in project directory
 
