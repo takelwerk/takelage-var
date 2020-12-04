@@ -135,7 +135,7 @@ def testvars_roles_playbook(molecule_scenario_directory):
     try:
         playbook = os.environ['TESTVARS_ROLES_PLAYBOOK']
     except KeyError:
-        return ''
+        return None
     return playbook
 
 
