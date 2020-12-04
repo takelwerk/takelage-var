@@ -10,6 +10,11 @@ cmd_test_system_anarchism_project_default = 'cd ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
+cmd_test_system_anarchism_project_bitboard = 'cd ' \
+  'test/system/anarchism && ' \
+  'pytest --cache-clear && ' \
+  'molecule test --scenario-name bitboard'
+
 cmd_test_system_anarchism_role_takel_anarchism_default = 'cd ' \
   'test/system/anarchism/roles/takel-anarchism && ' \
   'pytest --cache-clear && ' \
@@ -58,10 +63,12 @@ cmd_test_system_ruby_role_vim_default = 'cd ' \
 desc 'Run tests'
 task test: %w[test:unit
               test:system:anarchism:project_default
+              test:system:anarchism:project_bitboard
               test:system:anarchism:role_default
               test:system:ruby:default
               test:system:ruby:blocklist_one
               test:system:ruby:blocklist_two
+              test:system:ruby:include
               test:system:ruby:role_defaults]
 
 # rubocop:disable Metrics/BlockLength
@@ -75,6 +82,11 @@ namespace :test do
       desc 'Run system tests anarchism project default'
       task :project_default do
         @commands << cmd_test_system_anarchism_project_default
+      end
+
+      desc 'Run system tests anarchism project bitboard'
+      task :project_bitboard do
+        @commands << cmd_test_system_anarchism_project_bitboard
       end
 
       desc 'Run system tests anarchism role default'

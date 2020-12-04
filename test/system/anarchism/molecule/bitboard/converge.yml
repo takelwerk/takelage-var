@@ -1,0 +1,4 @@
+---
+- name: custom
+  hosts: all
+  gather_facts: false

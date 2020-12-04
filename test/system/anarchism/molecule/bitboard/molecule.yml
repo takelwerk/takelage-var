@@ -7,13 +7,13 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: molecule-takeltest-anarchism-default
-    image: takelage/takelbase
+  - name: molecule-takeltest-anarchism-takel-anarchism
+    image: takelage/bitboard
     command: /lib/systemd/systemd
     privileged: true
     pre_build_image: true
     groups:
-      - private
+      - bitboard
 provisioner:
   name: ansible
   config_options:
@@ -22,8 +22,6 @@ provisioner:
   inventory:
     links:
       group_vars: ../../group_vars/
-  playbooks:
-    converge: ../../site.yml
 verifier:
   name: testinfra
   options:
@@ -36,12 +34,12 @@ verifier:
     s: true  # capture output
     # v: true
   env:
-    TESTVARS_EXTRA_VARS: "../../vars:../../extra_vars/extra_vars.yml"
+    TESTVARS_ROLES_PLAYBOOK: "custom.yml"
   additional_files_or_dirs:
     # integration
-    - ../../roles/takel-anarchism/molecule/default/tests/test_*.py
+    - ../../../roles/takel-anarchism/molecule/default/tests/test_*.py
     # system
-    - ../../roles/takel-anarchism/molecule/default/system/test_*.py
+    - ../../../roles/takel-anarchism/molecule/default/system/test_*.py
 scenario:
   create_sequence:
     - create

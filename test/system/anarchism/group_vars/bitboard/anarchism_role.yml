@@ -1,0 +1,4 @@
+---
+takel_anarchism_deb_install_packages:
+  - fortune-anarchism
+  - sudo
