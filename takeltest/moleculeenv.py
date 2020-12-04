@@ -14,13 +14,15 @@ class MoleculeEnv(object):
             gather_roles,
             testvars_roles_blocklist,
             testvars_roles_exclusivelist,
-            testvars_roles_include):
+            testvars_roles_includelist,
+            testvars_roles_playbook):
         self._molecule_ephemeral_directory = molecule_ephemeral_directory
         self._molecule_scenario_directory = molecule_scenario_directory
         self._gather_roles = gather_roles
         self._testvars_roles_blocklist = testvars_roles_blocklist
         self._testvars_roles_exclusivelist = testvars_roles_exclusivelist
-        self._testvars_roles_include = testvars_roles_include
+        self._testvars_roles_includelist = testvars_roles_includelist
+        self._testvars_roles_playbook = testvars_roles_playbook
         self._configure_roles_()
         self._moleculelog = moleculelog
         self._moleculelog.debug(self._get_molecule_vars_config_())
@@ -68,6 +70,12 @@ class MoleculeEnv(object):
         if self._get_testvars_roles_exclusivelist_():
             roles = self._get_testvars_roles_exclusivelist_()
 
+        # try to read roles from custom playbook
+        if roles is None:
+            playbook_file = self._get_testvars_roles_playbook_()
+            if playbook_file is not None:
+                roles = self._read_roles_from_playbook_(playbook_file)
+
         # try to read roles from custom molecule converge playbook
         if roles is None:
             playbook_file = self._read_playbook_file_from_molecule_yml_()
@@ -92,7 +100,7 @@ class MoleculeEnv(object):
 
         # apply include
         # by now, roles is a list
-        roles = self._roles_apply_include_(roles)
+        roles = self._roles_apply_includelist_(roles)
 
         # if roles have been selected
         # then apply blocklist
@@ -156,8 +164,11 @@ class MoleculeEnv(object):
     def _get_testvars_roles_exclusivelist_(self):
         return self._testvars_roles_exclusivelist
 
-    def _get_testvars_roles_include_(self):
-        return self._testvars_roles_include
+    def _get_testvars_roles_includelist_(self):
+        return self._testvars_roles_includelist
+
+    def _get_testvars_roles_playbook_(self):
+        return self._testvars_roles_playbook
 
     def _read_playbook_file_from_molecule_yml_(self):
         molecule_yml_path = self.get_molecule_scenario_directory() / \
@@ -203,8 +214,8 @@ class MoleculeEnv(object):
                 roles_not_blocklisted.append(role)
         return roles_not_blocklisted
 
-    def _roles_apply_include_(self, roles):
-        roles_include = self._get_testvars_roles_include_()
+    def _roles_apply_includelist_(self, roles):
+        roles_include = self._get_testvars_roles_includelist_()
         for role in roles_include:
             if role not in roles:
                 roles.append(role)
