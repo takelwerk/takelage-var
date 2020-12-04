@@ -35,12 +35,8 @@ def test_takeltest_unit_moleculelog_print_debug_os(
                         'get_log',
                         lambda x: '')
     expected_out = '\n\n' \
-                   '\x1b[47m\x1b[1m\x1b[30m' \
-                   'DEBUG: TESTVARS ENVIRONMENT' \
-                   '\x1b[39m\x1b[49m\x1b[0m\n' \
-                   '\x1b[30m\x1b[1m---\n' \
-                   'TESTVARS_TESTENV: testvalue\n' \
-                   '\x1b[0m\x1b[39m\n'
+                   'TESTVARS ENVIRONMENT\n' \
+                   "{'TESTVARS_TESTENV': 'testvalue'}\n"
     moleculelog.print_debug()
     captured = capsys.readouterr()
     assert captured.out == expected_out
@@ -53,13 +49,8 @@ def test_takeltest_unit_moleculelog_print_debug_log(
     monkeypatch.setattr(takeltest.moleculelog.MoleculeLog,
                         'get_log',
                         lambda x: 'my_log_message\n')
-    expected_out = '\n\n' \
-                   '\x1b[47m\x1b[1m\x1b[30m' \
-                   'DEBUG: TESTVARS LOG' \
-                   '\x1b[39m\x1b[49m\x1b[0m\n' \
-                   '\x1b[30m\x1b[1m' \
-                   'my_log_message\n' \
-                   '\x1b[0m\x1b[39m\n'
+    expected_out = '\n\nTESTVARS LOG' \
+                   '\nmy_log_message\n\n'
     moleculelog.print_debug()
     captured = capsys.readouterr()
     assert captured.out == expected_out
@@ -74,17 +65,11 @@ def test_takeltest_unit_moleculelog_print_debug_os_and_log(
                         'get_log',
                         lambda x: 'my_log_message\n')
     expected_out = '\n\n' \
-                   '\x1b[47m\x1b[1m\x1b[30m' \
-                   'DEBUG: TESTVARS ENVIRONMENT' \
-                   '\x1b[39m\x1b[49m\x1b[0m\n\x1b[30m\x1b[1m' \
-                   '---\n' \
-                   'TESTVARS_TESTENV: testvalue\n' \
-                   '\x1b[0m\x1b[39m\n\x1b[47m\x1b[1m\x1b[30m' \
-                   'DEBUG: TESTVARS LOG' \
-                   '\x1b[39m\x1b[49m\x1b[0m\n' \
-                   '\x1b[30m\x1b[1m' \
-                   'my_log_message\n' \
-                   '\x1b[0m\x1b[39m\n'
+                   'TESTVARS ENVIRONMENT\n' \
+                   "{'TESTVARS_TESTENV': 'testvalue'}\n" \
+                   'TESTVARS LOG\n' \
+                   'my_log_message\n\n'
+
     moleculelog.print_debug()
     captured = capsys.readouterr()
     assert captured.out == expected_out
