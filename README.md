@@ -213,6 +213,15 @@ verifier:
     TESTVARS_ROLES_PLAYBOOK: ../../site.yml
 ```
 
+A code example is the 
+[bitboard scenario](test/system/anarchism/molecule/bitboard)
+of the anarchism project.
+The bitboard server happens to be built with the same role
+[takel-anarchism](test/system/anarchism/roles/takel-anarchism)
+whose unit tests are applied in this scenario to the
+[bitboard server](https://github.com/geospin-takelage/takelage-bit)
+docker image.
+
 ### options
 
 *multitestvars* and *testvars* are session scope fixtures
