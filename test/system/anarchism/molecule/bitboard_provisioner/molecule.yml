@@ -22,8 +22,6 @@ provisioner:
   inventory:
     links:
       group_vars: ../../group_vars/
-  playbooks:
-    converge: converge.yml
 verifier:
   name: testinfra
   options:
@@ -48,7 +46,7 @@ scenario:
   test_sequence:
     - lint
     - destroy
-    - syntax
     - create
     - verify
+    - syntax
     - destroy

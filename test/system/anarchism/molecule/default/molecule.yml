@@ -27,14 +27,7 @@ provisioner:
 verifier:
   name: testinfra
   options:
-    # testvars-debug-jsonvars: true
-    # testvars-no-gather-facts: true
-    # testvars-no-gather-molecule: true
-    # testvars-no-extra-vars: true
-    # m: debug
-    # p: cacheprovider  # enable cache
     s: true  # capture output
-    # v: true
   env:
     TESTVARS_EXTRA_VARS: "../../vars:../../extra_vars/extra_vars.yml"
   additional_files_or_dirs:
