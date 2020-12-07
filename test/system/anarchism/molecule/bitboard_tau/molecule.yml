@@ -28,11 +28,7 @@ verifier:
     s: true  # capture output
   env:
     TESTVARS_ROLES_PLAYBOOK: "custom.yml"
-  additional_files_or_dirs:
-    # integration
-    - ../../../roles/takel-anarchism/molecule/default/tests/test_*.py
-    # system
-    - ../../../roles/takel-anarchism/molecule/default/system/test_*.py
+  additional_files_or_dirs: ${TAKELAGE_VERIFIER_TESTS:-[]}
 scenario:
   create_sequence:
     - create

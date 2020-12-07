@@ -93,8 +93,8 @@ class MoleculeEnv(object):
         # fallback: select all roles
         if roles is None:
             msd = self.get_molecule_scenario_directory()
-            roles_dir = msd / 'roles'
-            if roles_dir.exists():
+            roles_dir = msd / '../../roles'
+            if roles_dir.is_dir():
                 roles = \
                     sorted([d.name for d in roles_dir.iterdir() if d.is_dir()])
 
@@ -194,6 +194,9 @@ class MoleculeEnv(object):
 
     def _read_roles_from_playbook_(self, playbook_file):
         playbook_path = self.get_molecule_scenario_directory() / playbook_file
+        if not playbook_path.is_file():
+            return None
+
         yaml = YAML(typ='safe')
         try:
             playbook = yaml.load(playbook_path)

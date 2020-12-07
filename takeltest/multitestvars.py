@@ -24,7 +24,6 @@ class MultiTestVars(object):
 
         for ansiblehost in ansibleinventory.hosts:
             host = str(ansiblehost)
-            testvars = dict()
 
             # get ansible variables
             testvars_unresolved = moleculebook.get_vars(
