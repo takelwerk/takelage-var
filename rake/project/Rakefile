@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
-desc 'Build takeltest pip package'
-task prod: %w[rubylint
+require 'rake'
+
+namespace :project do
+  desc 'Build takeltest pip package'
+  task prod: %w[rubylint
               test
               package:make
               git:tag
               package:upload]
+end
