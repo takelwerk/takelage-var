@@ -10,10 +10,15 @@ cmd_test_system_anarchism_project_default = 'cd ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
-cmd_test_system_anarchism_project_bitboard = 'cd ' \
+cmd_test_system_anarchism_project_bitboard_provisioner = 'cd ' \
   'test/system/anarchism && ' \
   'pytest --cache-clear && ' \
-  'molecule test --scenario-name bitboard'
+  'molecule test --scenario-name bitboard_provisioner'
+
+cmd_test_system_anarchism_project_bitboard_verifier = 'cd ' \
+  'test/system/anarchism && ' \
+  'pytest --cache-clear && ' \
+  'molecule test --scenario-name bitboard_verifier'
 
 cmd_test_system_anarchism_role_takel_anarchism_default = 'cd ' \
   'test/system/anarchism/roles/takel-anarchism && ' \
@@ -63,7 +68,8 @@ cmd_test_system_ruby_role_vim_default = 'cd ' \
 desc 'Run tests'
 task test: %w[test:unit
               test:system:anarchism:project_default
-              test:system:anarchism:project_bitboard
+              test:system:anarchism:project_bitboard_provisioner
+              test:system:anarchism:project_bitboard_verifier
               test:system:anarchism:role_default
               test:system:ruby:default
               test:system:ruby:blocklist_one
@@ -84,9 +90,14 @@ namespace :test do
         @commands << cmd_test_system_anarchism_project_default
       end
 
-      desc 'Run system tests anarchism project bitboard'
-      task :project_bitboard do
-        @commands << cmd_test_system_anarchism_project_bitboard
+      desc 'Run system tests anarchism project bitboard provisioner'
+      task :project_bitboard_provisioner do
+        @commands << cmd_test_system_anarchism_project_bitboard_provisioner
+      end
+
+      desc 'Run system tests anarchism project bitboard verifier'
+      task :project_bitboard_verifier do
+        @commands << cmd_test_system_anarchism_project_bitboard_verifier
       end
 
       desc 'Run system tests anarchism role default'

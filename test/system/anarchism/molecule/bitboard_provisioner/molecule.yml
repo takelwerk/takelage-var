@@ -7,7 +7,7 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: molecule-takeltest-anarchism-takel-anarchism
+  - name: molecule-takeltest-anarchism-bitboard-provisioner
     image: takelage/bitboard
     command: /lib/systemd/systemd
     privileged: true
@@ -22,12 +22,12 @@ provisioner:
   inventory:
     links:
       group_vars: ../../group_vars/
+  playbooks:
+    converge: converge.yml
 verifier:
   name: testinfra
   options:
     s: true  # capture output
-  env:
-    TESTVARS_ROLES_PLAYBOOK: "custom.yml"
   additional_files_or_dirs:
     # integration
     - ../../../roles/takel-anarchism/molecule/default/tests/test_*.py
@@ -39,12 +39,10 @@ scenario:
   check_sequence:
     - destroy
     - create
-    - converge
     - check
     - destroy
   converge_sequence:
     - create
-    - converge
   destroy_sequence:
     - destroy
   test_sequence:
@@ -52,7 +50,5 @@ scenario:
     - destroy
     - syntax
     - create
-    - converge
-    - idempotence
     - verify
     - destroy

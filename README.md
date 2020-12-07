@@ -202,9 +202,9 @@ provisioner:
 
 Now you don't want to run your playbook on that packer image again.
 But you still want to have access to all the role defaults variables
-of those roles defined in your playbook so that your tests will pass.
-This can be achieved with the 
-``TESTVARS_ROLES_PLAYBOOK`` environment variable:
+of those roles defined in your playbook so that your tests will pass.´
+Either you do not run ``molecule converge`` and ``molecule idempotence``
+on your image or you set the ``TESTVARS_ROLES_PLAYBOOK`` environment variable:
 
 ```yaml
 verifier:
@@ -213,12 +213,15 @@ verifier:
     TESTVARS_ROLES_PLAYBOOK: ../../site.yml
 ```
 
-A code example is the 
-[bitboard scenario](test/system/anarchism/molecule/bitboard)
-of the anarchism project.
+Code examples are the
+[bitboard_provisioner scenario](test/system/anarchism/molecule/bitboard_provisioner)
+and the
+[bitboard_verifier scenario](test/system/anarchism/molecule/bitboard_verifier)
+of the anarchism project. 
+Both scenarios achieve the same thing but they use different methods.
 The bitboard server happens to be built with the same role
 [takel-anarchism](test/system/anarchism/roles/takel-anarchism)
-whose unit tests are applied in this scenario to the
+whose unit tests are applied in this scenarios to the
 [bitboard server](https://github.com/geospin-takelage/takelage-bit)
 docker image.
 
