@@ -202,7 +202,7 @@ provisioner:
 
 Now you don't want to run your playbook on that packer image again.
 But you still want to have access to all the role defaults variables
-of those roles defined in your playbook so that your tests will pass.´
+of those roles defined in your playbook so that your tests will pass.
 Either you do not run ``molecule converge`` and ``molecule idempotence``
 on your image or you set the ``TESTVARS_ROLES_PLAYBOOK`` environment variable:
 
@@ -218,6 +218,9 @@ Code examples are the
 and the
 [bitboard_verifier scenario](test/system/anarchism/molecule/bitboard_verifier)
 of the anarchism project. 
+Omitting ``molecule converge`` and ``molecule idempotence`` has the
+advantage that your pytests are automagically included.
+
 Both scenarios achieve the same thing but they use different methods.
 The bitboard server happens to be built with the same role
 [takel-anarchism](test/system/anarchism/roles/takel-anarchism)
