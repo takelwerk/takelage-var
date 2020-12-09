@@ -170,7 +170,7 @@ Roles included in ``TESTVARS_ROLES_INCLUDE`` will be included.
 Roles blocked in ``TESTVARS_ROLES_BLOCK`` won't be included.
 
 You may want to include roles which are 
-[omported by task](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/import_role_module.html)
+[imported by task](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/import_role_module.html)
 and not by playbook.
 
 You can find the source code in the function ``_configure_roles_`` in
