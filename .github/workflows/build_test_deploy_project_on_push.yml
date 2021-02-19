@@ -12,13 +12,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      - name: Set pypi credentials
+        run: echo -e '[pypi]\nusername = __token__\npassword = "${{ secrets.PIP_PASSWORD }}"' > .pypirc
+
       - name: Install prerequisites
         run: sudo apt-get install --yes twine
 
-      - name: Update pip
+      - name: Upgrade pip
         run: sudo pip install --upgrade pip
 
-      - name: Install cryptography pip package
+      - name: Upgrade cryptography
         run: sudo pip install --upgrade cryptography
 
       - name: Set up ruby
@@ -50,7 +53,4 @@ jobs:
         run: tau docker container command "rake package:make"
 
       - name: Upload pip package
-        uses: onichandame/pip-upload-action@master
-        with:
-          username: '__token__'
-          password: ${{ secrets.PIP_PASSWORD }}
+        run: tau docker container command "rake package:upload"
