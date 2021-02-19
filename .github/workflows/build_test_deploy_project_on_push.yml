@@ -12,7 +12,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Set pypi credentials
+      - name: Create pypi config file
         run: echo -e '[pypi]\nusername = __token__\npassword = "${{ secrets.PIP_PASSWORD }}"' > .pypirc
 
       - name: Install prerequisites
@@ -42,6 +42,9 @@ jobs:
 
       - name: Start an instance of takelage
         run: tau docker container daemon
+
+      - name: Move pypi config file
+        run: tau docker container command "mv /project/.pypirc $HOME"
 
       - name: Lint ruby
         run: tau docker container command "rake rubylint"
