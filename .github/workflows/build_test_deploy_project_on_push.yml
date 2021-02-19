@@ -12,8 +12,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Install twine
-        run: sudo apt-get install --yes twine
+      - name: Install prerequisites
+        run: sudo apt-get install --yes rustc twine
 
       - name: Update pip
         run: sudo pip install --upgrade pip
