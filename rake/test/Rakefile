@@ -25,43 +25,43 @@ cmd_test_system_anarchism_role_takel_anarchism_default = 'cd ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
-cmd_test_system_ruby_project_default = 'cd ' \
-  'test/system/ruby && ' \
+cmd_test_system_env_project_default = 'cd ' \
+  'test/system/env && ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
-cmd_test_system_ruby_project_blocklist_one = 'cd ' \
-  'test/system/ruby && ' \
+cmd_test_system_env_project_blocklist_one = 'cd ' \
+  'test/system/env && ' \
   'pytest --cache-clear && ' \
   'molecule test --scenario-name blocklist_one'
 
-cmd_test_system_ruby_project_blocklist_two = 'cd ' \
-  'test/system/ruby && ' \
+cmd_test_system_env_project_blocklist_two = 'cd ' \
+  'test/system/env && ' \
   'pytest --cache-clear && ' \
   'molecule test --scenario-name blocklist_two'
 
-cmd_test_system_ruby_role_curl_default = 'cd ' \
-  'test/system/ruby/roles/curl && ' \
+cmd_test_system_env_role_curl_default = 'cd ' \
+  'test/system/env/roles/curl && ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
-cmd_test_system_ruby_role_gpg_default = 'cd ' \
-  'test/system/ruby/roles/gpg && ' \
+cmd_test_system_env_role_gpg_default = 'cd ' \
+  'test/system/env/roles/gpg && ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
-cmd_test_system_ruby_project_include = 'cd ' \
-  'test/system/ruby && ' \
+cmd_test_system_env_project_include = 'cd ' \
+  'test/system/env && ' \
   'pytest --cache-clear && ' \
   'molecule test --scenario-name include'
 
-cmd_test_system_ruby_role_procps_default = 'cd ' \
-  'test/system/ruby/roles/procps && ' \
+cmd_test_system_env_role_procps_default = 'cd ' \
+  'test/system/env/roles/procps && ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
-cmd_test_system_ruby_role_vim_default = 'cd ' \
-  'test/system/ruby/roles/vim && ' \
+cmd_test_system_env_role_vim_default = 'cd ' \
+  'test/system/env/roles/vim && ' \
   'pytest --cache-clear && ' \
   'molecule test'
 
@@ -71,11 +71,11 @@ task test: %w[test:unit
               test:system:anarchism:project_bitboard_provisioner
               test:system:anarchism:project_bitboard_verifier
               test:system:anarchism:role_default
-              test:system:ruby:default
-              test:system:ruby:blocklist_one
-              test:system:ruby:blocklist_two
-              test:system:ruby:include
-              test:system:ruby:role_defaults]
+              test:system:env:default
+              test:system:env:blocklist_one
+              test:system:env:blocklist_two
+              test:system:env:include
+              test:system:env:role_defaults]
 
 # rubocop:disable Metrics/BlockLength
 namespace :test do
@@ -106,33 +106,33 @@ namespace :test do
       end
     end
 
-    namespace :ruby do
-      desc 'Run system tests ruby project default'
+    namespace :env do
+      desc 'Run system tests env project default'
       task :default do
-        @commands << cmd_test_system_ruby_project_default
+        @commands << cmd_test_system_env_project_default
       end
 
-      desc 'Run system tests ruby project blocklist one'
+      desc 'Run system tests env project blocklist one'
       task :blocklist_one do
-        @commands << cmd_test_system_ruby_project_blocklist_one
+        @commands << cmd_test_system_env_project_blocklist_one
       end
 
-      desc 'Run system tests ruby project blocklist two'
+      desc 'Run system tests env project blocklist two'
       task :blocklist_two do
-        @commands << cmd_test_system_ruby_project_blocklist_two
+        @commands << cmd_test_system_env_project_blocklist_two
       end
 
-      desc 'Run system tests ruby project include'
+      desc 'Run system tests env project include'
       task :include do
-        @commands << cmd_test_system_ruby_project_include
+        @commands << cmd_test_system_env_project_include
       end
 
-      desc 'Run system tests ruby role defaults'
+      desc 'Run system tests env role defaults'
       task :role_defaults do
-        @commands << cmd_test_system_ruby_role_curl_default
-        @commands << cmd_test_system_ruby_role_gpg_default
-        @commands << cmd_test_system_ruby_role_procps_default
-        @commands << cmd_test_system_ruby_role_vim_default
+        @commands << cmd_test_system_env_role_curl_default
+        @commands << cmd_test_system_env_role_gpg_default
+        @commands << cmd_test_system_env_role_procps_default
+        @commands << cmd_test_system_env_role_vim_default
       end
     end
   end

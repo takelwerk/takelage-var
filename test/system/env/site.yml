@@ -1,0 +1,9 @@
+---
+- name: converge
+  hosts: all
+  gather_facts: false
+  roles:
+    - gpg
+    - procps
+    - curl
+    - vim

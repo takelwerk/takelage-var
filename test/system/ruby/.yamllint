@@ -1,8 +1,0 @@
----
-extends: default
-
-ignore: |
-  roles/github-rvm_rvm1-ansible/
-
-rules:
-  line-length: disable

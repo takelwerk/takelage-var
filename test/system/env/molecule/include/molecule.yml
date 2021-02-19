@@ -1,0 +1,57 @@
+---
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
+platforms:
+  - name: molecule-takeltest-env-include
+    image: takelage/takelbase
+    command: /lib/systemd/systemd
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+  env:
+    ANSIBLE_ROLES_PATH: ../../roles
+verifier:
+  name: testinfra
+  options:
+    s: true  # capture output
+  additional_files_or_dirs:
+    # integgration
+    # exclude
+    - ../../../roles/((?!vim).)*/molecule/default/tests/test_*.py
+    # system
+    - ../system/test_*.py
+    - ../../../roles/*/molecule/default/system/test_*.py
+  env:
+    TESTVARS_ROLES_INCLUDE: curl:vim
+scenario:
+  create_sequence:
+    - create
+  check_sequence:
+    - destroy
+    - create
+    - converge
+    - check
+    - destroy
+  converge_sequence:
+    - create
+    - converge
+  destroy_sequence:
+    - destroy
+  test_sequence:
+    - lint
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy
