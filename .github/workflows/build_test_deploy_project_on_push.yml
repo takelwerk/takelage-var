@@ -15,15 +15,6 @@ jobs:
       - name: Create pypi config file
         run: echo -e '[pypi]\nusername = __token__\npassword = "${{ secrets.PIP_PASSWORD }}"' > .pypirc
 
-      - name: Install prerequisites
-        run: sudo apt-get install --yes twine
-
-      - name: Upgrade pip
-        run: sudo pip install --upgrade pip
-
-      - name: Upgrade cryptography
-        run: sudo pip install --upgrade cryptography
-
       - name: Set up ruby
         uses: ruby/setup-ruby@v1.61.1
         with:
@@ -46,11 +37,14 @@ jobs:
       - name: Move pypi config file
         run: tau docker container command "mv /project/.pypirc $HOME"
 
+      - name: Cat pypi config file
+        run: tau docker container command "cat $HOME/.pypirc"
+
       - name: Lint ruby
         run: tau docker container command "rake rubylint"
 
-#      - name: Run tests
-#        run: tau docker container command "rake test"
+      - name: Run tests
+        run: tau docker container command "rake test"
 
       - name: Build pip package
         run: tau docker container command "rake package:make"
