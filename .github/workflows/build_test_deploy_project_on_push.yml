@@ -15,6 +15,9 @@ jobs:
       - name: Install twine
         run: sudo apt-get install --yes twine
 
+      - name: Update pip
+        run: sudo pip install --upgrade pip
+
       - name: Set up ruby
         uses: ruby/setup-ruby@v1.61.1
         with:
@@ -37,8 +40,8 @@ jobs:
       - name: Lint ruby
         run: tau docker container command "rake rubylint"
 
-      - name: Run tests
-        run: tau docker container command "rake test"
+#      - name: Run tests
+#        run: tau docker container command "rake test"
 
       - name: Build pip package
         run: tau docker container command "rake package:make"
