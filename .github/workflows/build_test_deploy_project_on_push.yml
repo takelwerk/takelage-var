@@ -12,6 +12,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      - name: Install twine
+        run: sudo apt-get install --yes twine
+
       - name: Set up ruby
         uses: ruby/setup-ruby@v1.61.1
         with:
