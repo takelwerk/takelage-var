@@ -1,3 +1,5 @@
+![takelage image](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_project_nightly.yml/badge.svg)
+
 # takelage-var
 
 *takelage-var* provides the [pytest](https://pytest.org/)
