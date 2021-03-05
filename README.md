@@ -42,6 +42,9 @@ The takelage devops framework consists of these projects:
 | *[takelage-var](https://github.com/geospin-takelage/takelage-var)* | takelage test plugin |
 | *[takelage-cli](https://github.com/geospin-takelage/takelage-cli)* | takelage command line interface |
 | *[takelage-bit](https://github.com/geospin-takelage/takelage-bit)* | takelage bit server | 
+| *[takelage-img-takelbase](https://github.com/geospin-takelage/takelage-img-takelbase)* | takelage takelbase image | 
+| *[takelage-img-takelslim](https://github.com/geospin-takelage/takelage-img-takelslim)* | takelage takelbase image | 
+| *[takelage-img-multipostgres](https://github.com/geospin-takelage/takelage-img-multipostgres)* | takelage multipostgres image | 
 
 ## Installation
 
