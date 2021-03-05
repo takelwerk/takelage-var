@@ -1,4 +1,5 @@
-![takelage image](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_project_nightly.yml/badge.svg)
+[![pypi package](https://img.shields.io/pypi/v/takeltest?label=pypi.org)](https://pypi.org/project/takeltest/)
+[![takelage image](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_project_nightly.yml/badge.svg)](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_project_nightly.yml)
 
 # takelage-var
 
