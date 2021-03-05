@@ -1,6 +1,6 @@
 [![takelage image](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_project_nightly.yml/badge.svg)](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_project_nightly.yml)
 [![pypi package](https://img.shields.io/pypi/v/takeltest?label=pypi.org&color=blue)](https://pypi.org/project/takeltest/)
-[![license](https://img.shields.io/github/license/geospin-takelage/takelage-var?color=blueviolet)](https://github.com/geospin-takelage/takelage-var/blob/main/LICENSE)
+[![license](https://img.shields.io/github/license/geospin-takelage/takelage-var?label=License&color=blueviolet)](https://github.com/geospin-takelage/takelage-var/blob/main/LICENSE)
 
 # takelage-var
 
