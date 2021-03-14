@@ -249,7 +249,7 @@ docker image.
 ### options
 
 *multitestvars* and *testvars* are session scope fixtures
-so their configuration is done in
+so they are configured in
 ``molecule.yml`` by using pytest command line options.
 You can add a couple of options in the options dictionary
 of the verifier section:
