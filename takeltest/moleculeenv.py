@@ -103,9 +103,8 @@ class MoleculeEnv(object):
                 # roles dir viewed from a role molecule scenario
                 roles_dir = roles_dir / '../../roles'
                 if roles_dir.is_dir():
-                    roles = \
-                        sorted([d.name for d in roles_dir.iterdir()
-                                if d.is_dir()])
+                    roles = sorted([d.name for d in roles_dir.iterdir()
+                                    if d.is_dir()])
 
         # apply include
         # by now, roles is a list
