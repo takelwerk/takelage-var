@@ -7,75 +7,75 @@ cmd_test_unit = 'cd test/unit && ' \
 
 cmd_test_system_anarchism_project_default = 'cd ' \
   'test/system/anarchism && ' \
-  'pytest --cache-clear && ' \
   'molecule test'
 
 cmd_test_system_anarchism_project_bitboard_provisioner = 'cd ' \
   'test/system/anarchism && ' \
-  'pytest --cache-clear && ' \
   'molecule test --scenario-name bitboard_provisioner'
 
 cmd_test_system_anarchism_project_bitboard_verifier = 'cd ' \
   'test/system/anarchism && ' \
-  'pytest --cache-clear && ' \
   'molecule test --scenario-name bitboard_verifier'
 
 cmd_test_system_anarchism_role_takel_anarchism_default = 'cd ' \
   'test/system/anarchism/roles/takel-anarchism && ' \
-  'pytest --cache-clear && ' \
   'molecule test'
 
 cmd_test_system_env_project_default = 'cd ' \
   'test/system/env && ' \
-  'pytest --cache-clear && ' \
   'molecule test'
 
 cmd_test_system_env_project_blocklist_one = 'cd ' \
   'test/system/env && ' \
-  'pytest --cache-clear && ' \
   'molecule test --scenario-name blocklist_one'
 
 cmd_test_system_env_project_blocklist_two = 'cd ' \
   'test/system/env && ' \
-  'pytest --cache-clear && ' \
   'molecule test --scenario-name blocklist_two'
 
 cmd_test_system_env_role_curl_default = 'cd ' \
   'test/system/env/roles/curl && ' \
-  'pytest --cache-clear && ' \
   'molecule test'
 
 cmd_test_system_env_role_gpg_default = 'cd ' \
   'test/system/env/roles/gpg && ' \
-  'pytest --cache-clear && ' \
   'molecule test'
 
 cmd_test_system_env_project_include = 'cd ' \
   'test/system/env && ' \
-  'pytest --cache-clear && ' \
   'molecule test --scenario-name include'
 
 cmd_test_system_env_role_procps_default = 'cd ' \
   'test/system/env/roles/procps && ' \
-  'pytest --cache-clear && ' \
   'molecule test'
 
 cmd_test_system_env_role_vim_default = 'cd ' \
   'test/system/env/roles/vim && ' \
-  'pytest --cache-clear && ' \
+  'molecule test'
+
+cmd_test_system_multi_default = 'cd ' \
+  'test/system/multi && ' \
+  'molecule test'
+
+cmd_test_system_sidecar_molecule_role_default = 'cd ' \
+  'test/system/sidecar/molecule/playbooks/roles/my_sidecar_role && ' \
   'molecule test'
 
 desc 'Run tests'
-task test: %w[test:unit
-              test:system:anarchism:project_default
-              test:system:anarchism:project_bitboard_provisioner
-              test:system:anarchism:project_bitboard_verifier
-              test:system:anarchism:role_default
-              test:system:env:default
-              test:system:env:blocklist_one
-              test:system:env:blocklist_two
-              test:system:env:include
-              test:system:env:role_defaults]
+task test: %w[
+  test:unit
+  test:system:anarchism:project_default
+  test:system:anarchism:project_bitboard_provisioner
+  test:system:anarchism:project_bitboard_verifier
+  test:system:anarchism:role_default
+  test:system:env:default
+  test:system:env:blocklist_one
+  test:system:env:blocklist_two
+  test:system:env:include
+  test:system:env:role_defaults
+  test:system:multivars:default
+  test:system:sidecar:default
+]
 
 # rubocop:disable Metrics/BlockLength
 namespace :test do
@@ -133,6 +133,20 @@ namespace :test do
         @commands << cmd_test_system_env_role_gpg_default
         @commands << cmd_test_system_env_role_procps_default
         @commands << cmd_test_system_env_role_vim_default
+      end
+    end
+
+    namespace :multi do
+      desc 'Run system tests multi'
+      task :default do
+        @commands << cmd_test_system_multi_default
+      end
+    end
+
+    namespace :sidecar do
+      desc 'Run system tests molecule sidecar'
+      task :default do
+        @commands << cmd_test_system_sidecar_molecule_role_default
       end
     end
   end
