@@ -50,11 +50,8 @@ jobs:
       - name: Lint ruby
         run: tau docker container command "rake rubylint"
 
-#      - name: Run tests
-#        run: tau docker container command "rake test"
-
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
+      - name: Run tests
+        run: tau docker container command "rake test"
 
       - name: Build pip package
         run: tau docker container command "rake package:make"
