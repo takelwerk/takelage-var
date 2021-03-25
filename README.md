@@ -172,8 +172,8 @@ the first match wins:
 
 - List of roles separated by colon specified in the
   ``TESTVARS_ROLES_EXCLUSIVE`` environment variable.
-- List of roles specified in playbook specified in 
-  ``TESTVARS_ROLES_PLAYBOOK`` environment variable.
+- List of roles specified in playbooks separated by colon specified in 
+  ``TESTVARS_ROLES_PLAYBOOKS`` environment variable.
 - List of roles specified in playbook specified in 
   ``molecule.yml``
 - List of roles specified in default playbook
@@ -194,7 +194,7 @@ You can find the source code in the function ``_configure_roles_`` in
 
 ### example: testing packer images
 
-By specifying a playbook via ``TESTVARS_ROLES_PLAYBOOK``
+By specifying playbooks via ``TESTVARS_ROLES_PLAYBOOKS``
 you are able to test your packer images with molecule.
 Let's assume your local docker image is called
 ``packer_local/my_image``. 
@@ -220,13 +220,13 @@ Now you don't want to run your playbook on that packer image again.
 But you still want to have access to all the role defaults variables
 of those roles defined in your playbook so that your tests will pass.
 Either you do not run ``molecule converge`` and ``molecule idempotence``
-on your image or you set the ``TESTVARS_ROLES_PLAYBOOK`` environment variable:
+on your image or you set the ``TESTVARS_ROLES_PLAYBOOKS`` environment variable:
 
 ```yaml
 verifier:
   name: testinfra
   env:
-    TESTVARS_ROLES_PLAYBOOK: ../../site.yml
+    TESTVARS_ROLES_PLAYBOOKS: ../../site.yml:../../my_layer.yml
 ```
 
 Code examples are the

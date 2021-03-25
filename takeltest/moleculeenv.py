@@ -15,14 +15,14 @@ class MoleculeEnv(object):
             testvars_roles_blocklist,
             testvars_roles_exclusivelist,
             testvars_roles_includelist,
-            testvars_roles_playbook):
+            testvars_roles_playbooks):
         self._molecule_ephemeral_directory = molecule_ephemeral_directory
         self._molecule_scenario_directory = molecule_scenario_directory
         self._gather_roles = gather_roles
         self._testvars_roles_blocklist = testvars_roles_blocklist
         self._testvars_roles_exclusivelist = testvars_roles_exclusivelist
         self._testvars_roles_includelist = testvars_roles_includelist
-        self._testvars_roles_playbook = testvars_roles_playbook
+        self._testvars_roles_playbooks = testvars_roles_playbooks
         self._configure_roles_()
         self._moleculelog = moleculelog
         self._moleculelog.debug(self._get_molecule_vars_config_())
@@ -70,11 +70,14 @@ class MoleculeEnv(object):
         if self._get_testvars_roles_exclusivelist_():
             roles = self._get_testvars_roles_exclusivelist_()
 
-        # try to read roles from custom playbook
+        # try to read roles from custom playbooks
         if roles is None:
-            playbook_file = self._get_testvars_roles_playbook_()
-            if playbook_file is not None:
-                roles = self._read_roles_from_playbook_(playbook_file)
+            playbook_files = self._get_testvars_roles_playbooks_()
+            if playbook_files is not None:
+                for playbook_file in playbook_files:
+                    if roles is None:
+                        roles = []
+                    roles += self._read_roles_from_playbook_(playbook_file)
 
         # try to read roles from custom molecule converge playbook
         if roles is None:
@@ -175,8 +178,8 @@ class MoleculeEnv(object):
     def _get_testvars_roles_includelist_(self):
         return self._testvars_roles_includelist
 
-    def _get_testvars_roles_playbook_(self):
-        return self._testvars_roles_playbook
+    def _get_testvars_roles_playbooks_(self):
+        return self._testvars_roles_playbooks
 
     def _read_playbook_file_from_molecule_yml_(self):
         molecule_yml_path = self.get_molecule_scenario_directory() / \

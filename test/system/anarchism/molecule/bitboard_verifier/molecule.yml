@@ -27,7 +27,7 @@ verifier:
   options:
     s: true  # capture output
   env:
-    TESTVARS_ROLES_PLAYBOOK: "custom.yml"
+    TESTVARS_ROLES_PLAYBOOKS: "custom.yml"
   additional_files_or_dirs:
     # integration
     - ../../../roles/takel-anarchism/molecule/default/tests/test_*.py
