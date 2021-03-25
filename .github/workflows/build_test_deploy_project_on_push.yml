@@ -42,6 +42,11 @@ jobs:
       - name: Move pypi config file
         run: tau docker container command "mv /project/.pypirc $HOME"
 
+      - name: Install dev version of takeltest
+        run: |
+          tau docker container command "sudo pip3 uninstall --yes takeltest"
+          tau docker container command "sudo pip3 install --editable /project"
+
       - name: Lint ruby
         run: tau docker container command "rake rubylint"
 
