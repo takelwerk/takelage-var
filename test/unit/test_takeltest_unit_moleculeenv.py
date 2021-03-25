@@ -471,7 +471,7 @@ def test_takeltest_unit_moleculeenv_get_roles_playbook(
     assert moleculeenv.get_roles() == my_roles
 
 
-def test_takeltest_unit_moleculeenv_get_roles_fallback(
+def test_takeltest_unit_moleculeenv_get_roles_fallback_project(
         moleculelog,
         tmp_path):
     my_roles = ['my_role_1']
@@ -484,6 +484,36 @@ def test_takeltest_unit_moleculeenv_get_roles_fallback(
 
     my_role_1 = tmp_path / 'roles' / 'my_role_1'
     my_role_1.mkdir(parents=True)
+
+    gather_roles = True
+    testvars_roles_blocklist = []
+    testvars_roles_exclusivelist = []
+    testvars_roles_includelist = []
+    testvars_roles_playbook = ''
+
+    moleculeenv = MoleculeEnv(moleculelog,
+                              med,
+                              msd,
+                              gather_roles,
+                              testvars_roles_blocklist,
+                              testvars_roles_exclusivelist,
+                              testvars_roles_includelist,
+                              testvars_roles_playbook)
+
+    assert moleculeenv.get_roles() == my_roles
+
+
+def test_takeltest_unit_moleculeenv_get_roles_fallback_molecule(
+        moleculelog,
+        tmp_path):
+    my_roles = ['my_role_1']
+
+    med = tmp_path / 'molecule_ephemeral_directory'
+    med.mkdir()
+
+    msd = tmp_path / 'molecule/playbooks/roles' \
+          / 'my_role_1/molecule/molecule_scenario_directory'
+    msd.mkdir(parents=True)
 
     gather_roles = True
     testvars_roles_blocklist = []
