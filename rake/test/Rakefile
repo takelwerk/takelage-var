@@ -73,7 +73,7 @@ task test: %w[
   test:system:env:blocklist_two
   test:system:env:include
   test:system:env:role_defaults
-  test:system:multivars:default
+  test:system:multi:default
   test:system:sidecar:default
 ]
 
