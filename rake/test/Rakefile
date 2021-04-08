@@ -19,7 +19,7 @@ cmd_test_system_anarchism_project_bitboard_verifier = 'cd ' \
 
 cmd_test_system_anarchism_role_takel_anarchism_default = 'cd ' \
   'test/system/anarchism/roles/takel-anarchism && ' \
-  'molecule test'
+  'ANSIBLE_ROLES_PATH=../ molecule test'
 
 cmd_test_system_env_project_default = 'cd ' \
   'test/system/env && ' \
