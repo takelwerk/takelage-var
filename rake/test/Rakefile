@@ -35,11 +35,11 @@ cmd_test_system_env_project_blocklist_two = 'cd ' \
 
 cmd_test_system_env_role_curl_default = 'cd ' \
   'test/system/env/roles/curl && ' \
-  'molecule test'
+  'ANSIBLE_ROLES_PATH=../ molecule test'
 
 cmd_test_system_env_role_gpg_default = 'cd ' \
   'test/system/env/roles/gpg && ' \
-  'molecule test'
+  'ANSIBLE_ROLES_PATH=../ molecule test'
 
 cmd_test_system_env_project_include = 'cd ' \
   'test/system/env && ' \
@@ -47,11 +47,11 @@ cmd_test_system_env_project_include = 'cd ' \
 
 cmd_test_system_env_role_procps_default = 'cd ' \
   'test/system/env/roles/procps && ' \
-  'molecule test'
+  'ANSIBLE_ROLES_PATH=../ molecule test'
 
 cmd_test_system_env_role_vim_default = 'cd ' \
   'test/system/env/roles/vim && ' \
-  'molecule test'
+  'ANSIBLE_ROLES_PATH=../ molecule test'
 
 cmd_test_system_multi_default = 'cd ' \
   'test/system/multi && ' \

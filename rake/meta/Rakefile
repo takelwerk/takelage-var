@@ -31,6 +31,13 @@ Dir.glob('rake/**/Rakefile').each do |rakefile|
 end
 
 #####################################################################
+# Import library files from rake subfolders
+
+Dir.glob('rake/**/lib/*.rb').each do |libfile|
+  load libfile
+end
+
+#####################################################################
 # Final task
 
 # Detect run=dry command line parameter

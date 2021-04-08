@@ -9,7 +9,7 @@ def test_takel_anarchism_bashrc_source(host, testvars):
             file = host.file('/root/.bashrc')
             expected = '''\
 if [ -d .bashrc.d ]; then
-  for i in .bashrc.d/*.sh; do
+  for i in .bashrc.d/*; do
     if [ -r $i ]; then
       . $i
     fi
@@ -37,9 +37,7 @@ def test_takel_anarchism_bashrc_files(host, testvars):
         bashrc_files = testvars['takel_anarchism_bashrc']
         for bashrc_file in bashrc_files:
             with host.sudo():
-                file = host.file('/root/.bashrc.d/' +
-                                 str(bashrc_file['order']) +
-                                 bashrc_file['file'])
+                file = host.file(f"/root/.bashrc.d/{bashrc_file}")
                 assert file.exists
                 assert file.is_file
                 assert file.user == 'root'

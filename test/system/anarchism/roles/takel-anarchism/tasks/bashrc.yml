@@ -17,8 +17,8 @@
 
 - name: (bashrc) copy .bashrc.d files
   copy:
-    src: "{{ item.file }}"
-    dest: "/root/.bashrc.d/{{ item.order }}{{ item.file }}"
+    src: "{{ item }}"
+    dest: "/root/.bashrc.d/{{ item }}"
     owner: root
     group: root
     mode: 0644
