@@ -59,7 +59,7 @@ cmd_test_system_multi_default = 'cd ' \
 
 cmd_test_system_sidecar_molecule_role_default = 'cd ' \
   'test/system/sidecar/molecule/playbooks/roles/my_sidecar_role && ' \
-  'molecule test'
+  'ANSIBLE_ROLES_PATH=../ molecule test'
 
 desc 'Run tests'
 task test: %w[
