@@ -1,4 +1,5 @@
 import takeltest
+import pytest
 
 testinfra_hosts = takeltest.hosts()
 
@@ -32,6 +33,7 @@ def test_takel_anarchism_bashrc_directory(host, testvars):
             assert dir.mode == 0o755
 
 
+@pytest.mark.xfail
 def test_takel_anarchism_bashrc_files(host, testvars):
     if 'fortune-anarchism' in testvars['takel_anarchism_deb_install_packages']:
         bashrc_files = testvars['takel_anarchism_bashrc']
