@@ -8,8 +8,8 @@ def test_takel_anarchism_bashrc_source(host, testvars):
         with host.sudo():
             file = host.file('/root/.bashrc')
             expected = '''\
-if [ -d .bashrc.d ]; then
-  for i in .bashrc.d/*; do
+if [ -d ~/.bashrc.d ]; then
+  for i in ~/.bashrc.d/*; do
     if [ -r $i ]; then
       . $i
     fi

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Add run=dry to see shell @commands
+# Example: rake prod run=dry
+
 require 'English'
 require 'rake'
 require 'yaml'
@@ -7,20 +10,39 @@ require 'yaml'
 @project = YAML.safe_load `tau project`
 @base_dir = ENV['TAKELAGE_PROJECT_BASE_DIR'] || "/tmp/#{@project['name']}"
 
-# Add run=dry to see shell @commands
-# Example: rake stage run=dry
-
 #####################################################################
 # Variables
 
 # The tasks will add shell commands to this empty global array
 @commands = []
 
+# Used by task :default and by function subtasks
+@overview = ENV['overview'] == 'true'
+
+# Used by function subtasks
+@subtasks = ENV['subtasks'] || ''
+
 #####################################################################
 # Default task
 
 task :default do
-  sh 'rake --tasks', verbose: false
+  sh "rake overview=#{@overview} --tasks", verbose: false
+end
+
+#####################################################################
+# Add a subtasks block
+
+def subtasks(scope)
+  # show desciption? (no description creates hidden task)
+  desc "Show subtasks of #{scope}" if @overview && !@subtasks.eql?(scope)
+
+  # register task!
+  task :tasks do
+    sh "rake overview=true subtasks=#{scope} --tasks", verbose: false
+  end
+
+  # show subtasks?
+  yield unless @overview && !@subtasks.eql?(scope)
 end
 
 #####################################################################
@@ -51,7 +73,12 @@ task :finally do
     if dry_run
       puts command
     else
-      sh command
+      begin
+        sh command
+      rescue RuntimeError
+        # do not show backtrace
+        exit 1
+      end
     end
   end
 end
