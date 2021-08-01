@@ -9,7 +9,7 @@ def test_takel_anarchism_bashrc_source(host, testvars):
             file = host.file('/root/.bashrc')
             expected = '''\
 if [ -d ~/.bashrc.d ]; then
-  for i in ~/.bashrc.d/*; do
+  for i in ~/.bashrc.d/*.sh; do
     if [ -r $i ]; then
       . $i
     fi
