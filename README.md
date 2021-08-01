@@ -1,12 +1,12 @@
-[![license](https://img.shields.io/github/license/geospin-takelage/takelage-var?color=blueviolet)](https://github.com/geospin-takelage/takelage-var/blob/main/LICENSE)
-[![pypi,org](https://img.shields.io/pypi/v/takeltest?label=pypi.org&color=blue)](https://pypi.org/project/takeltest/)
-[![deploy project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-var/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_deploy_project_on_push.yml)
-[![test project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-var/Build%20and%20test%20project?label=test%20project)](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_project_nightly.yml)
+[![license](https://img.shields.io/github/license/takelwerk/takelage-var?color=blueviolet)](https://github.com/takelwerk/takelage-var/blob/main/LICENSE)
+[![pypi,org](https://img.shields.io/pypi/v/pytest-takeltest?label=pypi.org&color=blue)](https://pypi.org/project/pytest-takeltest/)
+[![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-var/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/takelwerk/takelage-var/actions/workflows/build_test_deploy_project_on_push.yml)
+[![test project](https://img.shields.io/github/workflow/status/takelwerk/takelage-var/Build%20and%20test%20project?label=test%20project)](https://github.com/takelwerk/takelage-var/actions/workflows/build_test_project_nightly.yml)
 
 # takelage-var
 
 *takelage-var* provides the [pytest](https://pytest.org/)
-plugin [takeltest](https://pypi.org/project/takeltest/)
+plugin [python-takeltest](https://pypi.org/project/pytest-takeltest/)
 for the takelage devops workflow.
 The takelage devops workflow helps devops engineers
 build, test and deploy os images.
@@ -21,7 +21,7 @@ testinfra is a
 of the [molecule]( https://molecule.readthedocs.io/)
 testing environment.
 
-The pytest plugin takeltest provides helper functions
+The pytest plugin pytest-takeltest provides helper functions
 and fixtures to facilitate the use of molecule and testinfra.
 It provides access to variables and secrets and helps to not only 
 unit test your ansible roles but to
@@ -30,7 +30,7 @@ integration and system test your whole ansible project.
 testinfra wraps 
 [cli](https://philpep.org/blog/infrastructure-testing-with-testinfra) 
 calls to the ansible executable.
-takeltest uses the ansible python
+pytest-takeltest uses the ansible python
 [api](https://docs.ansible.com/ansible/latest/dev_guide/developing_api.html)
 to run ansible playbooks.
 
@@ -38,33 +38,33 @@ to run ansible playbooks.
 
 | App | Artifact |
 | --- | -------- |
-| *[takelage-doc](https://github.com/geospin-takelage/takelage-doc)* | [![License](https://img.shields.io/github/license/geospin-takelage/takelage-doc?color=blueviolet)](https://github.com/geospin-takelage/takelage-doc/blob/main/LICENSE) |
-| *[takelage-dev](https://github.com/geospin-takelage/takelage-dev)* | [![hub.docker.com](https://img.shields.io/docker/v/takelage/takelage/latest?label=hub.docker.com&sort=semver&color=blue)](https://hub.docker.com/r/takelage/takelage) |
-| *[takelage-cli](https://github.com/geospin-takelage/takelage-cli)* | [![rubygems.org](https://img.shields.io/gem/v/takelage?label=rubygems.org&color=blue)](https://rubygems.org/gems/takelage) |
-| *[takelage-var](https://github.com/geospin-takelage/takelage-var)* | [![pypi,org](https://img.shields.io/pypi/v/takeltest?label=pypi.org&color=blue)](https://pypi.org/project/takeltest/) |
-| *[takelage-bit](https://github.com/geospin-takelage/takelage-bit)* | [![hub.docker.com](https://img.shields.io/docker/v/takelage/bitboard/latest?label=hub.docker.com&sort=semver&color=blue)](https://hub.docker.com/r/takelage/bitboard) | 
-| *[takelage-img-takelslim](https://github.com/geospin-takelage/takelage-img-takelslim)* | [![hub.docker.com](https://img.shields.io/docker/v/takelage/takelslim/latest?label=hub.docker.com&color=blue)](https://hub.docker.com/r/takelage/takelslim) | 
-| *[takelage-img-takelbase](https://github.com/geospin-takelage/takelage-img-takelbase)* | [![hub.docker.com](https://img.shields.io/docker/v/takelage/takelbase/latest?label=hub.docker.com&color=blue)](https://hub.docker.com/r/takelage/takelbase) | 
+| *[takelage-doc](https://github.com/takelwerk/takelage-doc)* | [![License](https://img.shields.io/github/license/takelwerk/takelage-doc?color=blueviolet)](https://github.com/takelwerk/takelage-doc/blob/main/LICENSE) |
+| *[takelage-dev](https://github.com/takelwerk/takelage-dev)* | [![hub.docker.com](https://img.shields.io/docker/v/takelage/takelage/latest?label=hub.docker.com&sort=semver&color=blue)](https://hub.docker.com/r/takelage/takelage) |
+| *[takelage-cli](https://github.com/takelwerk/takelage-cli)* | [![rubygems.org](https://img.shields.io/gem/v/takelage?label=rubygems.org&color=blue)](https://rubygems.org/gems/takelage) |
+| *[takelage-var](https://github.com/takelwerk/takelage-var)* | [![pypi,org](https://img.shields.io/pypi/v/pytest-takeltest?label=pypi.org&color=blue)](https://pypi.org/project/pytest-takeltest/) |
+| *[takelage-bit](https://github.com/takelwerk/takelage-bit)* | [![hub.docker.com](https://img.shields.io/docker/v/takelage/bitboard/latest?label=hub.docker.com&sort=semver&color=blue)](https://hub.docker.com/r/takelage/bitboard) | 
+| *[takelage-img-takelslim](https://github.com/takelwerk/takelage-img-takelslim)* | [![hub.docker.com](https://img.shields.io/docker/v/takelage/takelslim/latest?label=hub.docker.com&color=blue)](https://hub.docker.com/r/takelage/takelslim) | 
+| *[takelage-img-takelbase](https://github.com/takelwerk/takelage-img-takelbase)* | [![hub.docker.com](https://img.shields.io/docker/v/takelage/takelbase/latest?label=hub.docker.com&color=blue)](https://hub.docker.com/r/takelage/takelbase) | 
 
 ## Framework Status
 
 | App | Deploy project | Test project | Test roles |
 | --- | -------------- | ------------ | ---------- |
-| *[takelage-dev](https://github.com/geospin-takelage/takelage-dev)* | [![deploy project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-dev/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/geospin-takelage/takelage-dev/actions/workflows/build_test_deploy_project_on_push.yml) | [![test project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-dev/Build%20and%20test%20project?label=test%20project)](https://github.com/geospin-takelage/takelage-dev/actions/workflows/build_test_project_nightly.yml) | [![test roles](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-dev/Test%20roles?label=test%20roles)](https://github.com/geospin-takelage/takelage-dev/actions/workflows/build_test_roles_nightly.yml) |
-| *[takelage-cli](https://github.com/geospin-takelage/takelage-cli)* | [![deploy project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-cli/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/geospin-takelage/takelage-cli/actions/workflows/build_test_deploy_project_on_push.yml) | [![test project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-cli/Test%20project?label=test%20project)](https://github.com/geospin-takelage/takelage-cli/actions/workflows/test_project_nightly.yml) |
-| *[takelage-var](https://github.com/geospin-takelage/takelage-var)* | [![deploy project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-var/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_deploy_project_on_push.yml) | [![test project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-var/Build%20and%20test%20project?label=test%20project)](https://github.com/geospin-takelage/takelage-var/actions/workflows/build_test_project_nightly.yml) |
-| *[takelage-bit](https://github.com/geospin-takelage/takelage-bit)* | [![deploy project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-bit/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/geospin-takelage/takelage-bit/actions/workflows/build_test_deploy_project_on_push.yml) | [![test project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-bit/Build%20and%20test%20project?label=test%20project)](https://github.com/geospin-takelage/takelage-bit/actions/workflows/build_test_project_nightly.yml) | [![test roles](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-bit/Test%20roles?label=test%20roles)](https://github.com/geospin-takelage/takelage-bit/actions/workflows/build_test_roles_nightly.yml) |
-| *[takelage-img-takelslim](https://github.com/geospin-takelage/takelage-img-takelslim)* | [![deploy project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-img-takelslim/Build%20and%20deploy%20takelslim?label=deploy%20project)](https://github.com/geospin-takelage/takelage-img-takelslim/actions/workflows/build_deploy_takelslim_nightly.yml) |
-| *[takelage-img-takelbase](https://github.com/geospin-takelage/takelage-img-takelbase)* | [![deploy project](https://img.shields.io/github/workflow/status/geospin-takelage/takelage-img-takelbase/Build%20and%20deploy%20takelbase?label=deploy%20project)](https://github.com/geospin-takelage/takelage-img-takelbase/actions/workflows/build_deploy_takelbase_nightly.yml) |
+| *[takelage-dev](https://github.com/takelwerk/takelage-dev)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-dev/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/takelwerk/takelage-dev/actions/workflows/build_test_deploy_project_on_push.yml) | [![test project](https://img.shields.io/github/workflow/status/takelwerk/takelage-dev/Build%20and%20test%20project?label=test%20project)](https://github.com/takelwerk/takelage-dev/actions/workflows/build_test_project_nightly.yml) | [![test roles](https://img.shields.io/github/workflow/status/takelwerk/takelage-dev/Test%20roles?label=test%20roles)](https://github.com/takelwerk/takelage-dev/actions/workflows/build_test_roles_nightly.yml) |
+| *[takelage-cli](https://github.com/takelwerk/takelage-cli)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-cli/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/takelwerk/takelage-cli/actions/workflows/build_test_deploy_project_on_push.yml) | [![test project](https://img.shields.io/github/workflow/status/takelwerk/takelage-cli/Test%20project?label=test%20project)](https://github.com/takelwerk/takelage-cli/actions/workflows/test_project_nightly.yml) |
+| *[takelage-var](https://github.com/takelwerk/takelage-var)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-var/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/takelwerk/takelage-var/actions/workflows/build_test_deploy_project_on_push.yml) | [![test project](https://img.shields.io/github/workflow/status/takelwerk/takelage-var/Build%20and%20test%20project?label=test%20project)](https://github.com/takelwerk/takelage-var/actions/workflows/build_test_project_nightly.yml) |
+| *[takelage-bit](https://github.com/takelwerk/takelage-bit)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-bit/Build,%20test%20and%20deploy%20project?label=deploy%20project)](https://github.com/takelwerk/takelage-bit/actions/workflows/build_test_deploy_project_on_push.yml) | [![test project](https://img.shields.io/github/workflow/status/takelwerk/takelage-bit/Build%20and%20test%20project?label=test%20project)](https://github.com/takelwerk/takelage-bit/actions/workflows/build_test_project_nightly.yml) | [![test roles](https://img.shields.io/github/workflow/status/takelwerk/takelage-bit/Test%20roles?label=test%20roles)](https://github.com/takelwerk/takelage-bit/actions/workflows/build_test_roles_nightly.yml) |
+| *[takelage-img-takelslim](https://github.com/takelwerk/takelage-img-takelslim)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-img-takelslim/Build%20and%20deploy%20takelslim?label=deploy%20project)](https://github.com/takelwerk/takelage-img-takelslim/actions/workflows/build_deploy_takelslim_nightly.yml) |
+| *[takelage-img-takelbase](https://github.com/takelwerk/takelage-img-takelbase)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-img-takelbase/Build%20and%20deploy%20takelbase?label=deploy%20project)](https://github.com/takelwerk/takelage-img-takelbase/actions/workflows/build_deploy_takelbase_nightly.yml) |
 
 ## Installation
 
-Install the takeltest pytest 
+Install the pytest-takeltest pytest 
 [plugin](https://pypi.org/project/takeltest/)
 using [pip](https://packaging.python.org/tutorials/installing-packages/):
 
 ```bash
-pip install takeltest
+pip install pytest-takeltest
 ```
 
 ## Tests
@@ -82,14 +82,14 @@ Have a look at
 [anarchism](test/system/anarchism) and
 [env](test/system/env)
 system test directories for examples
-of molecule projects using ansible, testinfra and takeltest.
+of molecule projects using ansible, pytest-testinfra and pytest-takeltest.
 
 ## Boilerplate
 
 As a boilerplate for testinfra tests it is enough to do:
 
 ```python
-import takeltest
+import pytest-takeltest
 
 testinfra_hosts = takeltest.hosts()
 ``` 
@@ -107,7 +107,7 @@ def test_mytest(testpass):
 
 ## Fixtures multitestvars and testvars
 
-Arguably the most useful feature of the takeltest plugin
+Arguably the most useful feature of the pytest-takeltest plugin
 are the *multitestvars* and *testvars* fixtures.
 The fixtures resolve and expose 
 ansible variables as a python dict:
@@ -190,7 +190,7 @@ You may want to include roles which are
 and not by playbook.
 
 You can find the source code in the function ``_configure_roles_`` in
-[moleculeenv.py](https://github.com/geospin-takelage/takelage-var/blob/master/takeltest/moleculeenv.py).
+[moleculeenv.py](https://github.com/takelwerk/takelage-var/blob/master/takeltest/moleculeenv.py).
 
 ### example: testing packer images
 
@@ -206,7 +206,7 @@ platforms:
   image: packer_local/my_image
 ```
 
-Make the group_vars (and host_vars, if you wish so) available to takeltest:
+Make the group_vars (and host_vars, if you wish so) available to pytest-takeltest:
 
 ```yaml
 provisioner:
@@ -241,7 +241,7 @@ Both scenarios achieve the same thing but they use different methods.
 The bitboard server happens to be built with the same role
 [takel-anarchism](test/system/anarchism/roles/takel-anarchism)
 whose unit tests are applied in this scenarios to the
-[bitboard server](https://github.com/geospin-takelage/takelage-bit)
+[bitboard server](https://github.com/takelwerk/takelage-bit)
 docker image.
 
 ### options
@@ -293,7 +293,7 @@ verifier:
     p: cacheprovider
 ```
 
-You should use the takeltest boilerplate code to be able to run pytest directly.
+You should use the pytest-takeltest boilerplate code to be able to run pytest directly.
 Otherwise testinfra will complain about missing environment variables.
 
 Remember to clear the cache when you add or change an ansible variable::
@@ -312,7 +312,7 @@ pytest --cache-show
 
 ## Ansible Python API
 
-The takeltest plugin provides four main pytest fixtures
+The pytest-takeltest plugin provides four main pytest fixtures
 (and a couple of command line, environment variables and helper fixtures):
 
 - *testpass* – exposes the ansible 
@@ -350,7 +350,7 @@ def test_takeltest_moleculebook(host, moleculebook):
 ```
 
 See 
-[takel-gem](https://github.com/geospin-takelage/takelage-dev/blob/master/ansible/roles/takel-gem/molecule/default/system/test_takel-gem_system.py)
+[takel-gem](https://github.com/takelwerk/takelage-dev/blob/master/ansible/roles/takel-gem/molecule/default/system/test_takel-gem_system.py)
 for a real-world example where moleculebook is used 
 to avoid a molecule ``prepare.yml`` playbook
 which otherwise needs to be copied 
