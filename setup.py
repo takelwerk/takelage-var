@@ -2,21 +2,21 @@ import setuptools
 
 if __name__ == '__main__':
     setuptools.setup(
-        name='takeltest',
-        version='0.8.0',
-        author='Geospin',
-        author_email='takelage@geospin.de',
+        name='pytest-takeltest',
+        version='0.9.0',
+        author='Takelwerk',
+        author_email='takeltest@takelwerk.net',
         description='Fixtures for ansible, testinfra and molecule',
         long_description='See takelage-var at github: '
-                         'https://github.com/geospin-takelage/takelage-var',
-        url='https://github.com/geospin-takelage/takelage-var',
+                         'https://github.com/takelwerk/takelage-var',
+        url='https://github.com/takelwerk/takelage-var',
         license='GPLv3',
         packages=setuptools.find_packages(),
         package_data={
             '': ['*.md'],
         },
         entry_points={
-            'pytest11': ['takeltest=takeltest.plugin']
+            'pytest11': ['pytest-takeltest=pytest-takeltest.plugin']
         },
         install_requires=[
             'ansible>=2.8',
