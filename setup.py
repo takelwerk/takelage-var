@@ -16,7 +16,7 @@ if __name__ == '__main__':
             '': ['*.md'],
         },
         entry_points={
-            'pytest11': ['pytest-takeltest=pytest-takeltest.plugin']
+            'pytest11': ['takeltest=takeltest.plugin']
         },
         install_requires=[
             'ansible>=2.8',
