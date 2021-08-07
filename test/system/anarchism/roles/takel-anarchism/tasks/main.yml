@@ -1,0 +1,15 @@
+---
+- name: (main) include install tasks
+  import_tasks: install.yml
+  tags:
+    - takel
+    - takel_anarchism
+    - takel_anarchism_install
+
+- name: (main) include bashrc tasks
+  import_tasks: bashrc.yml
+  tags:
+    - takel
+    - takel_anarchism
+    - takel_anarchism_bashrc
+  when: "'fortune-anarchism' in takel_anarchism_deb_install_packages"
