@@ -1,6 +1,0 @@
----
-- name: converge
-  hosts: all
-  gather_facts: false
-  roles:
-    - takel-anarchism
