@@ -8,7 +8,7 @@ lint: |
   flake8
 platforms:
   - name: molecule-takeltest-env-role-curl
-    image: takelage/takelbase
+    image: takelwerk/takelbase
     command: /lib/systemd/systemd
     privileged: true
     pre_build_image: true

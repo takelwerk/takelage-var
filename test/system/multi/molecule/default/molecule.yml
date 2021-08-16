@@ -8,12 +8,12 @@ lint: |
   flake8
 platforms:
   - name: molecule-takeltest-multi-first
-    image: takelage/takelslim
+    image: takelwerk/takelslim
     command: /usr/bin/tail -f /dev/null
     privileged: false
     pre_build_image: true
   - name: molecule-takeltest-multi-second
-    image: takelage/takelslim
+    image: takelwerk/takelslim
     command: /usr/bin/tail -f /dev/null
     privileged: false
     pre_build_image: true
