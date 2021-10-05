@@ -230,18 +230,18 @@ verifier:
 ```
 
 Code examples are the
-[bitboard_provisioner scenario](test/system/anarchism/molecule/bitboard_provisioner)
+[takelbuild_provisioner scenario](test/system/anarchism/molecule/takelbuild_provisioner)
 and the
-[bitboard_verifier scenario](test/system/anarchism/molecule/bitboard_verifier)
+[takelbuild_verifier scenario](test/system/anarchism/molecule/takelbuild_verifier)
 of the anarchism project. 
 Omitting ``molecule converge`` and ``molecule idempotence`` has the
 advantage that your pytests are automagically included.
 
-Both scenarios achieve the same thing but they use different methods.
-The bitboard server happens to be built with the same role
-[takel-anarchism](test/system/anarchism/roles/takel-anarchism)
-whose unit tests are applied in this scenarios to the
-[bitboard server](https://github.com/takelwerk/takelage-bit)
+Both scenarios achieve the same but use different methods.
+The takelbuild server happens to be built with the same role
+[takel_anarchism](test/system/anarchism/roles/takel_anarchism)
+whose unit tests are applied in these scenarios to the
+[takelbuild server](https://github.com/takelwerk/takelage-dev)
 docker image.
 
 ### options

@@ -4,13 +4,13 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint
+  ansible-lint .
   flake8
 platforms:
-  - name: molecule-takeltest-anarchism-default
-    image: takelwerk/takelbase
-    command: /lib/systemd/systemd
-    privileged: true
+  - name: molecule_takeltest_anarchism_default
+    image: takelwerk/takelslim
+    command: /usr/bin/tail -f /dev/null
+    privileged: false
     pre_build_image: true
     groups:
       - private
@@ -27,7 +27,7 @@ provisioner:
 verifier:
   name: testinfra
   options:
-    s: true  # capture output
+    s: true
   env:
     TESTVARS_EXTRA_VARS: "../../vars:../../extra_vars/extra_vars.yml"
   additional_files_or_dirs:

@@ -4,16 +4,16 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint
+  ansible-lint .
   flake8
 platforms:
-  - name: molecule-takeltest-anarchism-bitboard-provisioner
-    image: takelwerk/bitboard
-    command: /lib/systemd/systemd
-    privileged: true
+  - name: molecule_takeltest_anarchism_takelbuild_verifier
+    image: takelwerk/takelslim
+    command: /usr/bin/tail -f /dev/null
+    privileged: false
     pre_build_image: true
     groups:
-      - bitboard
+      - takelbuild
 provisioner:
   name: ansible
   config_options:
@@ -25,7 +25,9 @@ provisioner:
 verifier:
   name: testinfra
   options:
-    s: true  # capture output
+    s: true
+  env:
+    TESTVARS_ROLES_PLAYBOOKS: "custom.yml"
   additional_files_or_dirs:
     # integration
     - ../../../roles/takel-anarchism/molecule/default/tests/test_*.py
@@ -37,16 +39,20 @@ scenario:
   check_sequence:
     - destroy
     - create
+    - converge
     - check
     - destroy
   converge_sequence:
     - create
+    - converge
   destroy_sequence:
     - destroy
   test_sequence:
     - lint
     - destroy
-    - create
-    - verify
     - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
     - destroy

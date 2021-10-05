@@ -9,13 +9,13 @@ cmd_test_system_anarchism_project_default = 'cd ' \
   'test/system/anarchism && ' \
   'molecule test'
 
-cmd_test_system_anarchism_project_bitboard_provisioner = 'cd ' \
+cmd_test_system_anarchism_project_takelbuild_provisioner = 'cd ' \
   'test/system/anarchism && ' \
-  'molecule test --scenario-name bitboard_provisioner'
+  'molecule test --scenario-name takelbuild_provisioner'
 
-cmd_test_system_anarchism_project_bitboard_verifier = 'cd ' \
+cmd_test_system_anarchism_project_takelbuild_verifier = 'cd ' \
   'test/system/anarchism && ' \
-  'molecule test --scenario-name bitboard_verifier'
+  'molecule test --scenario-name takelbuild_verifier'
 
 cmd_test_system_anarchism_role_takel_anarchism_default = 'cd ' \
   'test/system/anarchism/roles/takel-anarchism && ' \
@@ -65,8 +65,8 @@ desc 'Run tests'
 task test: %w[
   test:unit
   test:system:anarchism:project_default
-  test:system:anarchism:project_bitboard_provisioner
-  test:system:anarchism:project_bitboard_verifier
+  test:system:anarchism:project_takelbuild_provisioner
+  test:system:anarchism:project_takelbuild_verifier
   test:system:anarchism:role_default
   test:system:env:default
   test:system:env:blocklist_one
@@ -90,14 +90,14 @@ namespace :test do
         @commands << cmd_test_system_anarchism_project_default
       end
 
-      desc 'Run system tests anarchism project bitboard provisioner'
-      task :project_bitboard_provisioner do
-        @commands << cmd_test_system_anarchism_project_bitboard_provisioner
+      desc 'Run system tests anarchism project takelbuild provisioner'
+      task :project_takelbuild_provisioner do
+        @commands << cmd_test_system_anarchism_project_takelbuild_provisioner
       end
 
-      desc 'Run system tests anarchism project bitboard verifier'
-      task :project_bitboard_verifier do
-        @commands << cmd_test_system_anarchism_project_bitboard_verifier
+      desc 'Run system tests anarchism project takelbuild verifier'
+      task :project_takelbuild_verifier do
+        @commands << cmd_test_system_anarchism_project_takelbuild_verifier
       end
 
       desc 'Run system tests anarchism role default'
