@@ -9,8 +9,8 @@ lint: |
 platforms:
   - name: molecule_takeltest_anarchism_takelbuild_provisioner
     image: takelwerk/takelbuild
-    command: /lib/systemd/systemd
-    privileged: true
+    command: /usr/bin/tail -f /dev/null
+    privileged: false
     pre_build_image: true
     groups:
       - takelbuild
