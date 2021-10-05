@@ -1,5 +1,0 @@
-{
-    "env": {},
-    "componentsDefaultDirectory": "components/{name}",
-    "packageManager": "npm"
-}
