@@ -32,9 +32,9 @@ verifier:
     TESTVARS_EXTRA_VARS: "../../vars:../../extra_vars/extra_vars.yml"
   additional_files_or_dirs:
     # integration
-    - ../../roles/takel-anarchism/molecule/default/tests/test_*.py
+    - ../../roles/takel_anarchism/molecule/default/tests/test_*.py
     # system
-    - ../../roles/takel-anarchism/molecule/default/system/test_*.py
+    - ../../roles/takel_anarchism/molecule/default/system/test_*.py
 scenario:
   create_sequence:
     - create

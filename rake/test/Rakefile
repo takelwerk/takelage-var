@@ -18,7 +18,7 @@ cmd_test_system_anarchism_project_takelbuild_verifier = 'cd ' \
   'molecule test --scenario-name takelbuild_verifier'
 
 cmd_test_system_anarchism_role_takel_anarchism_default = 'cd ' \
-  'test/system/anarchism/roles/takel-anarchism && ' \
+  'test/system/anarchism/roles/takel_anarchism && ' \
   'ANSIBLE_ROLES_PATH=../ molecule test'
 
 cmd_test_system_env_project_default = 'cd ' \
