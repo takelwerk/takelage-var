@@ -90,14 +90,14 @@ namespace :test do
         @commands << cmd_test_system_anarchism_project_default
       end
 
-      desc 'Run system tests anarchism project takelbuild provisioner'
-      task :project_takelbuild_provisioner do
-        @commands << cmd_test_system_anarchism_project_takelbuild_provisioner
+      desc 'Run system tests anarchism project takelbuild converge'
+      task :project_takelbuild_converge do
+        @commands << cmd_test_system_anarchism_project_takelbuild_converge
       end
 
-      desc 'Run system tests anarchism project takelbuild verifier'
-      task :project_takelbuild_verifier do
-        @commands << cmd_test_system_anarchism_project_takelbuild_verifier
+      desc 'Run system tests anarchism project takelbuild custom'
+      task :project_takelbuild_custom do
+        @commands << cmd_test_system_anarchism_project_takelbuild_custom
       end
 
       desc 'Run system tests anarchism role default'

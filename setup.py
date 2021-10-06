@@ -3,7 +3,7 @@ import setuptools
 if __name__ == '__main__':
     setuptools.setup(
         name='pytest-takeltest',
-        version='0.9.6',
+        version='0.9.7',
         author='Takelwerk',
         author_email='takeltest@takelwerk.net',
         description='Fixtures for ansible, testinfra and molecule',
