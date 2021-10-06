@@ -230,9 +230,9 @@ verifier:
 ```
 
 Code examples are the
-[takelbuild_provisioner scenario](test/system/anarchism/molecule/takelbuild_provisioner)
+[takelbuild_converge scenario](test/system/anarchism/molecule/takelbuild_converge)
 and the
-[takelbuild_verifier scenario](test/system/anarchism/molecule/takelbuild_verifier)
+[takelbuild_custom scenario](test/system/anarchism/molecule/takelbuild_custom)
 of the anarchism project. 
 Omitting ``molecule converge`` and ``molecule idempotence`` has the
 advantage that your pytests are automagically included.
