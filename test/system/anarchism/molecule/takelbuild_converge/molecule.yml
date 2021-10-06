@@ -8,7 +8,7 @@ lint: |
   flake8
 platforms:
   - name: molecule_takeltest_anarchism_takelbuild_converge
-    image: takelwerk/takelbuild2
+    image: takelwerk/takelbuild
     command: /usr/bin/tail -f /dev/null
     privileged: false
     pre_build_image: true
