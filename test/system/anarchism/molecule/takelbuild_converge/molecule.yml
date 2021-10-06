@@ -7,8 +7,8 @@ lint: |
   ansible-lint .
   flake8
 platforms:
-  - name: molecule_takeltest_anarchism_takelbuild_verifier
-    image: takelwerk/takelslim
+  - name: molecule_takeltest_anarchism_takelbuild_converge
+    image: takelwerk/takelbuild2
     command: /usr/bin/tail -f /dev/null
     privileged: false
     pre_build_image: true
@@ -26,8 +26,6 @@ verifier:
   name: testinfra
   options:
     s: true
-  env:
-    TESTVARS_ROLES_PLAYBOOKS: "custom.yml"
   additional_files_or_dirs:
     # integration
     - ../../../roles/takel_anarchism/molecule/default/tests/test_*.py
@@ -39,20 +37,16 @@ scenario:
   check_sequence:
     - destroy
     - create
-    - converge
     - check
     - destroy
   converge_sequence:
     - create
-    - converge
   destroy_sequence:
     - destroy
   test_sequence:
     - lint
     - destroy
-    - syntax
     - create
-    - converge
-    - idempotence
     - verify
+    - syntax
     - destroy

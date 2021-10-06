@@ -4,6 +4,7 @@ dist
 *.egg-info
 *.egg
 .eggs
+**/.hg/cache/*
 *.py~
 *.pyc
 __pycache__

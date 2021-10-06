@@ -9,13 +9,13 @@ cmd_test_system_anarchism_project_default = 'cd ' \
   'test/system/anarchism && ' \
   'molecule test'
 
-cmd_test_system_anarchism_project_takelbuild_provisioner = 'cd ' \
+cmd_test_system_anarchism_project_takelbuild_converge = 'cd ' \
   'test/system/anarchism && ' \
-  'molecule test --scenario-name takelbuild_provisioner'
+  'molecule test --scenario-name takelbuild_converge'
 
-cmd_test_system_anarchism_project_takelbuild_verifier = 'cd ' \
+cmd_test_system_anarchism_project_takelbuild_custom = 'cd ' \
   'test/system/anarchism && ' \
-  'molecule test --scenario-name takelbuild_verifier'
+  'molecule test --scenario-name takelbuild_custom'
 
 cmd_test_system_anarchism_role_takel_anarchism_default = 'cd ' \
   'test/system/anarchism/roles/takel_anarchism && ' \
@@ -65,8 +65,8 @@ desc 'Run tests'
 task test: %w[
   test:unit
   test:system:anarchism:project_default
-  test:system:anarchism:project_takelbuild_provisioner
-  test:system:anarchism:project_takelbuild_verifier
+  test:system:anarchism:project_takelbuild_converge
+  test:system:anarchism:project_takelbuild_custom
   test:system:anarchism:role_default
   test:system:env:default
   test:system:env:blocklist_one
