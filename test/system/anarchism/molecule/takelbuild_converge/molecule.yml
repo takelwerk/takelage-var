@@ -7,7 +7,7 @@ lint: |
   ansible-lint .
   flake8
 platforms:
-  - name: molecule_takeltest_anarchism_takelbuild_converge
+  - name: molecule-takeltest-anarchism-takelbuild-converge
     image: takelwerk/takelbuild
     command: /usr/bin/tail -f /dev/null
     privileged: false

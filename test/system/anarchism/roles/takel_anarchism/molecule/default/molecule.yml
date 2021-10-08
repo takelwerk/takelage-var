@@ -7,7 +7,7 @@ lint: |
   ansible-lint .
   flake8
 platforms:
-  - name: molecule_takel_anarchism
+  - name: molecule-takel-anarchism
     image: takelwerk/takelslim
     command: /usr/bin/tail -f /dev/null
     privileged: false
