@@ -1,0 +1,17 @@
+---
+- name: "(configure: {{ takel_user_name }}) copy .vimrc template"
+  copy:
+    src: vimrc
+    dest: "{{ takel_user_home }}/.vimrc"
+    owner: "{{ takel_user_name }}"
+    group: "{{ takel_user_group }}"
+    mode: 0644
+
+- name: "(configure: {{ takel_user_name }}) add ssh key to authorized keys"
+  authorized_key:
+    user: "{{ takel_user_name }}"
+    key: "{{ takel_user_sshpubkeys | join('\n') }}"
+    exclusive: true
+  when:
+    - takel_user_sshpubkeys | length > 0
+    - takel_user_sshpubkeys | join('\n') | regex_search("^ssh")

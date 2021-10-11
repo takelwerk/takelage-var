@@ -1,0 +1,25 @@
+---
+- name: "(bashrc: {{ takel_user_name }}) copy .bashrc file"
+  copy:
+    src: bashrc
+    dest: "{{ takel_user_home }}/.bashrc"
+    owner: "{{ takel_user_name }}"
+    group: "{{ takel_user_group }}"
+    mode: 0644
+
+- name: "(bashrc: {{ takel_user_name }}) create .bashrc.d directory"
+  file:
+    dest: "{{ takel_user_home }}/.bashrc.d"
+    state: directory
+    owner: "{{ takel_user_name }}"
+    group: "{{ takel_user_group }}"
+    mode: 0755
+
+- name: "(bashrc: {{ takel_user_name }}) copy .bashrc.d files"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ takel_user_home }}/.bashrc.d/{{ item }}"
+    owner: "{{ takel_user_name }}"
+    group: "{{ takel_user_group }}"
+    mode: 0644
+  loop: "{{ takel_user_bashrc_d }}"

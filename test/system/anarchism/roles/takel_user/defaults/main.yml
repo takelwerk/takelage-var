@@ -1,0 +1,17 @@
+---
+# takel_user_name: ansible
+# takel_user_uid: 3000
+# takel_user_comment: Ansible default user
+# takel_user_group: "{{ takel_user_name }}"
+# takel_user_home: "/home/{{ takel_user_name }}"
+# takel_user_gid: "{{ takel_user_uid }}"
+takel_user_groups: []
+takel_user_shell: /bin/false
+takel_user_password: '*'
+takel_user_sshpubkeys: []
+
+takel_user_create: true
+
+takel_user_bashrc_d:
+  - bash_aliases
+  - profile
