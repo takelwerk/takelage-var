@@ -3,5 +3,7 @@ takel_anarchism_deb_install_packages:
   - fortune-anarchism
   - sudo
 
-takel_anarchism_bashrc_d: >-
-  {{ [anarchism] + takel_user_bashrc_d }}
+takel_anarchism_bashrc_d:
+  - anarchism
+  - bash_aliases
+  - profile

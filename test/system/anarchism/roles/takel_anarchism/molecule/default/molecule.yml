@@ -23,6 +23,8 @@ verifier:
     s: true
   additional_files_or_dirs:
     - ../system/test_*.py
+  env:
+    TESTVARS_ROLES_INCLUDE: takel_user
 scenario:
   create_sequence:
     - create
