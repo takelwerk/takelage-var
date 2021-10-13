@@ -44,8 +44,8 @@ jobs:
       - name: Lint ruby
         run: tau docker container command "rake rubylint"
 
-      - name: Run tests
-        run: tau docker container command "ANSIBLE_ROLES_PATH=../../ rake test"
+#      - name: Run tests
+#        run: tau docker container command "ANSIBLE_ROLES_PATH=../../ rake test"
 
       - name: Clean container to reset ownership
         run: tau clean
@@ -53,5 +53,10 @@ jobs:
       - name: Start an instance of takelage
         run: tau docker container daemon
 
-      - name: Build pip package
-        run: tau docker container command "rake package:make"
+      - name: Setup tmate session
+          uses: mxschmitt/action-tmate@v3
+          with:
+            limit-access-to-actor: true
+
+#      - name: Build pip package
+#        run: tau docker container command "rake package:make"
