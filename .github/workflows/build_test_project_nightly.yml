@@ -54,9 +54,9 @@ jobs:
         run: tau docker container daemon
 
       - name: Setup tmate session
-          uses: mxschmitt/action-tmate@v3
-          with:
-            limit-access-to-actor: true
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
 
 #      - name: Build pip package
 #        run: tau docker container command "rake package:make"
