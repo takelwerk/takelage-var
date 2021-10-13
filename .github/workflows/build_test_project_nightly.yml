@@ -47,5 +47,11 @@ jobs:
       - name: Run tests
         run: tau docker container command "ANSIBLE_ROLES_PATH=../../ rake test"
 
+      - name: Clean container to reset ownership
+        run: tau clean
+
+      - name: Start an instance of takelage
+        run: tau docker container daemon
+
       - name: Build pip package
         run: tau docker container command "rake package:make"
