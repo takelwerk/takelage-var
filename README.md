@@ -46,7 +46,7 @@ to run ansible playbooks.
 | *[takelage-img-takelslim](https://github.com/takelwerk/takelage-img-takelslim)* | [![hub.docker.com](https://img.shields.io/docker/v/takelwerk/takelslim/latest?label=hub.docker.com&color=blue)](https://hub.docker.com/r/takelwerk/takelslim) | 
 | *[takelage-img-takelbase](https://github.com/takelwerk/takelage-img-takelbase)* | [![hub.docker.com](https://img.shields.io/docker/v/takelwerk/takelbase/latest?label=hub.docker.com&color=blue)](https://hub.docker.com/r/takelwerk/takelbase) | 
 | *[takelage-img-takelruby](https://github.com/takelwerk/takelage-img-takelruby)* | [![hub.docker.com](https://img.shields.io/docker/v/takelwerk/takelruby/latest?label=hub.docker.com&color=blue)](https://hub.docker.com/r/takelwerk/takelruby) | 
-| *[takelage-vbox-takelbase](https://github.com/takelwerk/takelage-vbox-takelbase)* | [![vagrantup.com](https://img.shields.io/badge/vagrantup.com-debian--bullseye-blue)](https://app.vagrantup.com/takelwerk/boxes/takelbase) | 
+| *[takelage-vagrant-takelbase](https://github.com/takelwerk/takelage-vagrant-takelbase)* | [![vagrantup.com](https://img.shields.io/badge/vagrantup.com-debian--bullseye-blue)](https://app.vagrantup.com/takelwerk/boxes/takelbase) | 
 
 ## Framework Status
 
@@ -59,7 +59,7 @@ to run ansible playbooks.
 | *[takelage-img-takelslim](https://github.com/takelwerk/takelage-img-takelslim)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-img-takelslim/Build%20and%20deploy%20takelslim?label=deploy%20project)](https://github.com/takelwerk/takelage-img-takelslim/actions/workflows/build_deploy_takelslim_nightly.yml) |
 | *[takelage-img-takelbase](https://github.com/takelwerk/takelage-img-takelbase)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-img-takelbase/Build%20and%20deploy%20takelbase?label=deploy%20project)](https://github.com/takelwerk/takelage-img-takelbase/actions/workflows/build_deploy_takelbase_nightly.yml) |
 | *[takelage-img-takelruby](https://github.com/takelwerk/takelage-img-takelruby)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-img-takelruby/Build%20and%20deploy%20takelruby%20latest?label=deploy%20project)](https://github.com/takelwerk/takelage-img-takelruby/actions/workflows/build_deploy_takelruby_nightly.yml) |
-| *[takelage-vbox-takelbase](https://github.com/takelwerk/takelage-vbox-takelbase)* | [![deploy project](https://img.shields.io/github/workflow/status/takelwerk/takelage-vbox-takelbase/Build%20and%20deploy%20project?label=deploy%20project)](https://github.com/takelwerk/takelage-vbox-takelbase/actions/workflows/build_and_deploy_project_nightly.yml) | | | [![deploy vbox](https://img.shields.io/github/workflow/status/takelwerk/takelage-vbox-takelbase/Build%20and%20deploy%20project?label=deploy%20vbox)](https://github.com/takelwerk/takelage-vbox-takelbase/actions/workflows/build_and_deploy_project_nightly.yml) |
+| *[takelage-vagrant-takelbase](https://github.com/takelwerk/takelage-vagrant-takelbase)* | [![deploy vbox](https://img.shields.io/github/workflow/status/takelwerk/takelage-vagrant-takelbase/Build%20and%20deploy%20virtualbox?label=deploy%20vbox)](https://github.com/takelwerk/takelage-vagrant-takelbase/actions/workflows/build_and_deploy_virtualbox_nightly.yml) |
 
 ## Installation
 
