@@ -4,7 +4,8 @@ from ansible.parsing.dataloader import DataLoader
 from ansible.playbook.play import Play
 from ansible.vars.manager import VariableManager
 from takeltest.ansiblerun import AnsibleRun
-
+from ansible.parsing.vault import PromptVaultSecret, get_file_vault_secret
+import os
 
 class MoleculePlay(object):
     '''Run ansible playbooks against molecule host using the ansible python api.
@@ -31,10 +32,18 @@ class MoleculePlay(object):
             become_user=None,
             check=False,
             diff=False)
-        self._loader = DataLoader()
+        loader = DataLoader()
+        # Load ansible vault secrets
+        if os.getenv('ANSIBLE_VAULT_PASSWORD_FILE') :
+            vault_password_file = os.getenv('ANSIBLE_VAULT_PASSWORD_FILE')
+            vault_id_name = 'default'
+            file_vault_secret = get_file_vault_secret(filename=vault_password_file,vault_id=vault_id_name,loader=loader)
+            file_vault_secret.load()
+            loader.set_vault_secrets([(vault_password_file,file_vault_secret)])
+        self._loader = loader
         self._inventory = ansibleinventory
         self._variable_manager = VariableManager(
-            loader=DataLoader(),
+            loader=loader,
             inventory=ansibleinventory)
 
     def get_molecule_scenario_directory(self):
