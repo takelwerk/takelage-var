@@ -1,11 +1,10 @@
 from ansible import context
 from ansible.module_utils.common.collections import ImmutableDict
 from ansible.parsing.dataloader import DataLoader
+from ansible.parsing.vault import PromptVaultSecret, get_file_vault_secret
 from ansible.playbook.play import Play
 from ansible.vars.manager import VariableManager
 from takeltest.ansiblerun import AnsibleRun
-from ansible.parsing.vault import PromptVaultSecret, get_file_vault_secret
-import os
 
 class MoleculePlay(object):
     '''Run ansible playbooks against molecule host using the ansible python api.
@@ -14,6 +13,7 @@ class MoleculePlay(object):
     def __init__(
             self,
             ansibleinventory,
+            ansible_vault_password_file,
             moleculeenv):
         # Leverage the ansible python api
         # to run a playbook against a molecule host.
@@ -36,16 +36,15 @@ class MoleculePlay(object):
         loader = DataLoader()
 
         # Load ansible vault secrets if environment variable is set
-        vault_password_file = os.getenv('ANSIBLE_VAULT_PASSWORD_FILE')
-        if vault_password_file:
+        if ansible_vault_password_file:
             vault_id_name = 'default'
             file_vault_secret = get_file_vault_secret(
-                filename=vault_password_file,
+                filename=ansible_vault_password_file,
                 vault_id=vault_id_name,
                 loader=loader)
             file_vault_secret.load()
             loader.set_vault_secrets(
-                [(vault_password_file, file_vault_secret)])
+                [(ansible_vault_password_file, file_vault_secret)])
 
         self._loader = loader
         self._inventory = ansibleinventory
