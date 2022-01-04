@@ -32,14 +32,20 @@ class MoleculePlay(object):
             become_user=None,
             check=False,
             diff=False)
+
         loader = DataLoader()
-        # Load ansible vault secrets
+
+        # Load ansible vault secrets if environment variable is set
         vault_password_file = os.getenv('ANSIBLE_VAULT_PASSWORD_FILE')
-        if vault_password_file :
+        if vault_password_file:
             vault_id_name = 'default'
-            file_vault_secret = get_file_vault_secret(filename=vault_password_file,vault_id=vault_id_name,loader=loader)
+            file_vault_secret = get_file_vault_secret(
+                filename=vault_password_file,
+                vault_id=vault_id_name,
+                loader=loader)
             file_vault_secret.load()
-            loader.set_vault_secrets([(vault_password_file,file_vault_secret)])
+            loader.set_vault_secrets(
+                [(vault_password_file, file_vault_secret)])
 
         self._loader = loader
         self._inventory = ansibleinventory
