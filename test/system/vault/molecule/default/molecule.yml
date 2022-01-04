@@ -1,0 +1,52 @@
+---
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
+  flake8
+platforms:
+  - name: molecule-takeltest-vault-default
+    image: takelwerk/takelbase
+    command: /lib/systemd/systemd
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+  playbooks:
+    converge: ../../site.yml
+  env:
+    ANSIBLE_VAULT_PASSWORD_FILE: molecule/default/my_ansible_vault_password_file
+verifier:
+  name: testinfra
+  options:
+    s: true
+  env:
+    ANSIBLE_VAULT_PASSWORD_FILE: molecule/default/my_ansible_vault_password_file
+scenario:
+  create_sequence:
+    - create
+  check_sequence:
+    - destroy
+    - create
+    - converge
+    - check
+    - destroy
+  converge_sequence:
+    - create
+    - converge
+  destroy_sequence:
+    - destroy
+  test_sequence:
+    - lint
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy

@@ -95,12 +95,22 @@ def extra_vars(request):
 
 
 ###########################################################
-# fixtures: testvars option lists
+# fixtures: testvars option lists and other env vars
 ###########################################################
 
 
 @pytest.fixture(scope='session')
-def testvars_roles_blocklist(molecule_scenario_directory):
+def ansible_vault_password_file():
+    '''environment variable ANSIBLE_VAULT_PASSWORD_FILE'''
+    try:
+        ansible_vault_password_file = os.environ['ANSIBLE_VAULT_PASSWORD_FILE']
+    except KeyError:
+        return ''
+    return ansible_vault_password_file
+
+
+@pytest.fixture(scope='session')
+def testvars_roles_blocklist():
     '''environment variable TESTVARS_ROLES_BLOCK'''
     try:
         blocklist = os.environ['TESTVARS_ROLES_BLOCK']
@@ -120,7 +130,7 @@ def testvars_roles_exclusivelist(molecule_scenario_directory):
 
 
 @pytest.fixture(scope='session')
-def testvars_roles_includelist(molecule_scenario_directory):
+def testvars_roles_includelist():
     '''environment variable TESTVARS_ROLES_INCLUDE'''
     try:
         includelist = os.environ['TESTVARS_ROLES_INCLUDE']
@@ -130,7 +140,7 @@ def testvars_roles_includelist(molecule_scenario_directory):
 
 
 @pytest.fixture(scope='session')
-def testvars_roles_playbooks(molecule_scenario_directory):
+def testvars_roles_playbooks():
     '''environment variable TESTVARS_ROLES_PLAYBOOKS'''
     try:
         playbooks = os.environ['TESTVARS_ROLES_PLAYBOOKS']
@@ -234,10 +244,12 @@ def moleculeenv(
 @pytest.fixture(scope='session')
 def moleculeplay(
         ansibleinventory,
+        ansible_vault_password_file,
         moleculeenv):
     '''Expose ansible python api to run playbooks against a molecule host.'''
     return MoleculePlay(
         ansibleinventory,
+        ansible_vault_password_file,
         moleculeenv)
 
 
