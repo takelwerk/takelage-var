@@ -1,4 +1,4 @@
 ---
 skip_list:
   - '106'  # Role name {} does not match ``^[a-z][a-z0-9_]+$`` pattern
-    - fqcn-builtins # not using fully qualified collection names
+  - fqcn-builtins # not using fully qualified collection names
