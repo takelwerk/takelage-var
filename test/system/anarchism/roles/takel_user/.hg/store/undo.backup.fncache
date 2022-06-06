@@ -11,4 +11,3 @@ data/files/profile.i
 data/tasks/configure.yml.i
 data/tasks/main.yml.i
 data/files/vimrc.i
-data/.hgignore.i

@@ -12,3 +12,4 @@ data/files/bashrc.i
 data/defaults/main.yml.i
 data/molecule/default/system/test_takel_anarchism_system.py.i
 data/molecule/default/tests/__pycache__/test_takel_anarchism_install.cpython-39-pytest-6.2.5.pyc.i
+data/tasks/configure.yml.i
