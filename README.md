@@ -6,13 +6,13 @@
 # takelage-var
 
 *takelage-var* provides the [pytest](https://pytest.org/)
-plugin [python-takeltest](https://pypi.org/project/pytest-takeltest/)
+plugin [pytest-takeltest](https://pypi.org/project/pytest-takeltest/)
 for the takelage devops workflow.
 The takelage devops workflow helps devops engineers
 build, test and deploy os images.
 
 The pytest plugin 
-[testinfra](https://testinfra.readthedocs.io/en/latest/)
+[pytest-testinfra](https://testinfra.readthedocs.io/en/latest/)
 allows to write unit tests in python to test
 your servers configured by the management tool 
 [ansible](https://www.ansible.com/).
