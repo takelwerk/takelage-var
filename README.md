@@ -354,7 +354,7 @@ def test_takeltest_moleculebook(host, moleculebook):
 ```
 
 See 
-[takel-gem](https://github.com/takelwerk/takelage-dev/blob/master/ansible/roles/takel-gem/molecule/default/system/test_takel-gem_system.py)
+[takel-gem](https://github.com/takelwerk/takelage-dev/blob/main/ansible/roles/takel_gem/molecule/default/system/test_takel_gem_system.py)
 for a real-world example where moleculebook is used 
 to avoid a molecule ``prepare.yml`` playbook
 which otherwise needs to be copied 
