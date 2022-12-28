@@ -27,7 +27,7 @@ It provides access to variables and secrets and helps to not only
 unit test your ansible roles but to
 integration and system test your whole ansible project.
 
-testinfra wraps 
+pytest-testinfra wraps 
 [cli](https://philpep.org/blog/infrastructure-testing-with-testinfra) 
 calls to the ansible executable.
 pytest-takeltest uses the ansible python
