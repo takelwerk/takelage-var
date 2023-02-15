@@ -1,6 +1,6 @@
 ---
 - name: (install) install packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ takel_anarchism_deb_install_packages }}"
     state: present
     update_cache: true

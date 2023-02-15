@@ -1,6 +1,6 @@
 ---
 - name: (configure) configure root user
-  include_role:
+  ansible.builtin.include_role:
     name: takel_user
   vars:
     takel_user_name: root
@@ -9,7 +9,7 @@
     takel_user_create: false
 
 - name: (install) copy anarchism .bashrc.d file
-  copy:
+  ansible.builtin.copy:
     src: anarchism
     dest: /root/.bashrc.d/anarchism
     owner: root
