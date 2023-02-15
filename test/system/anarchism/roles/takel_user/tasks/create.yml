@@ -1,16 +1,16 @@
 ---
 - name: "(create: {{ takel_user_name }}) create group"
-  group:
+  ansible.builtin.group:
     name: "{{ takel_user_group | default(takel_user_name) }}"
     gid: "{{ takel_user_gid | default(omit) }}"
 
 - name: "(create: {{ takel_user_name }}) create groups"
-  group:
+  ansible.builtin.group:
     name: "{{ item }}"
   loop: "{{ takel_user_groups }}"
 
 - name: "(create: {{ takel_user_name }}) create user"
-  user:
+  ansible.builtin.user:
     name: "{{ takel_user_name }}"
     uid: "{{ takel_user_uid | default(omit) }}"
     comment: "{{ takel_user_comment | default(omit) }}"

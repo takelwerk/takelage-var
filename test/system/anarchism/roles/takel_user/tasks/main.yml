@@ -1,6 +1,6 @@
 ---
 - name: (main) include create
-  import_tasks: create.yml
+  ansible.builtin.import_tasks: create.yml
   when: takel_user_create
   tags:
     - takel
@@ -8,14 +8,14 @@
     - takel_user_create
 
 - name: (main) include bashrc
-  import_tasks: bashrc.yml
+  ansible.builtin.import_tasks: bashrc.yml
   tags:
     - takel
     - takel_user
     - takel_user_bashrc
 
 - name: (main) include configure
-  import_tasks: configure.yml
+  ansible.builtin.import_tasks: configure.yml
   tags:
     - takel
     - takel_user

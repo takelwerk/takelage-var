@@ -1,6 +1,6 @@
 ---
 - name: "(bashrc: {{ takel_user_name }}) copy .bashrc file"
-  copy:
+  ansible.builtin.copy:
     src: bashrc
     dest: "{{ takel_user_home }}/.bashrc"
     owner: "{{ takel_user_name }}"
@@ -8,7 +8,7 @@
     mode: 0644
 
 - name: "(bashrc: {{ takel_user_name }}) create .bashrc.d directory"
-  file:
+  ansible.builtin.file:
     dest: "{{ takel_user_home }}/.bashrc.d"
     state: directory
     owner: "{{ takel_user_name }}"
@@ -16,7 +16,7 @@
     mode: 0755
 
 - name: "(bashrc: {{ takel_user_name }}) copy .bashrc.d files"
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ takel_user_home }}/.bashrc.d/{{ item }}"
     owner: "{{ takel_user_name }}"
