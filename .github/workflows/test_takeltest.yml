@@ -1,29 +1,26 @@
-name: Build, test and deploy project
+name: test takeltest
 
 on:
-  push: # trigger on git push
+  schedule: # run daily at 1 pm CET
+    - cron:  '0 2 * * *'
   workflow_dispatch: # allow manual trigger
 
 jobs:
-  build-and-test-and-deploy-project:
-    runs-on: ubuntu-20.04
-    if: startsWith(github.ref, 'refs/tags/')
+  test-takeltest:
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install mutagen
         run: |
-          wget -O /tmp/mutagen.tar.gz https://github.com/mutagen-io/mutagen/releases/download/v0.12.0/mutagen_linux_amd64_v0.12.0.tar.gz
+          wget --header="Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -O /tmp/mutagen.tar.gz https://github.com/mutagen-io/mutagen/releases/download/v0.16.4/mutagen_linux_amd64_v0.16.4.tar.gz
           sudo tar xvfz /tmp/mutagen.tar.gz -C /usr/local/bin
 
-      - name: Create pypi config file
-        run: echo -e "[pypi]\nusername = __token__\npassword = ${{ secrets.PIP_PASSWORD }}" > .pypirc
-
       - name: Set up ruby
-        uses: ruby/setup-ruby@v1.61.1
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: ruby
 
       - name: Install tau
         run: gem install takeltau
@@ -38,9 +35,6 @@ jobs:
 
       - name: Start an instance of takelage
         run: tau docker container daemon
-
-      - name: Move pypi config file
-        run: tau docker container command "mv /project/.pypirc $HOME"
 
       - name: Install dev version of takeltest
         run: |
@@ -58,6 +52,3 @@ jobs:
 
       - name: Build pip package
         run: tau docker container command "rake package:make"
-
-      - name: Upload pip package
-        run: tau docker container command "rake package:upload"
