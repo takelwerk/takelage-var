@@ -5,7 +5,7 @@
     dest: "{{ takel_user_home }}/.vimrc"
     owner: "{{ takel_user_name }}"
     group: "{{ takel_user_group }}"
-    mode: 0644
+    mode: '0644'
 
 - name: "(configure: {{ takel_user_name }}) add ssh key to authorized keys"
   ansible.posix.authorized_key:

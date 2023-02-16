@@ -14,4 +14,4 @@
     dest: /root/.bashrc.d/anarchism
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
