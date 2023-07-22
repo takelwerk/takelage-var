@@ -1,11 +1,6 @@
 ---
 driver:
   name: docker
-lint: |
-  set -e
-  yamllint .
-  ansible-lint .
-  flake8
 platforms:
   - name: molecule-takel-anarchism
     image: takelwerk/takelslim
@@ -40,7 +35,6 @@ scenario:
   destroy_sequence:
     - destroy
   test_sequence:
-    - lint
     - destroy
     - syntax
     - create
