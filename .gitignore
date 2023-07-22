@@ -5,11 +5,13 @@ dist
 *.egg
 .eggs
 **/.hg/cache/*
+.idea
 *.py~
 *.pyc
 __pycache__
 .pypirc
 .pytest_cache
 pytestdebug.log
+.rake_tasks~
 takelage.yml
 .tox
