@@ -47,8 +47,8 @@ jobs:
 
       - name: Install dev version of takeltest
         run: |
-          tau docker container command "sudo pip3 uninstall --yes takeltest"
-          tau docker container command "sudo pip3 install /project"
+          tau docker container command "sudo pip3 uninstall --yes takeltest --break-system-packages"
+          tau docker container command "sudo pip3 install /project --break-system-packages"
 
       - name: Lint ruby
         run: tau docker container command "rake rubylint"
