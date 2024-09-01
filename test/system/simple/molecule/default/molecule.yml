@@ -2,11 +2,13 @@
 driver:
   name: docker
 platforms:
-  - name: molecule-takeltest-vault-default
-    image: takelwerk/takelbase
-    command: /lib/systemd/systemd
-    privileged: true
+  - name: molecule-takeltest-simple-default
+    image: takelwerk/takelslim
+    command: /usr/bin/tail -f /dev/null
+    privileged: false
     pre_build_image: true
+    groups:
+      - private
 provisioner:
   name: ansible
   config_options:
@@ -14,14 +16,10 @@ provisioner:
       interpreter_python: auto_silent
   playbooks:
     converge: ../../site.yml
-  env:
-    ANSIBLE_VAULT_PASSWORD_FILE: molecule/default/my_ansible_vault_password_file
 verifier:
   name: testinfra
   options:
     s: true
-  env:
-    ANSIBLE_VAULT_PASSWORD_FILE: molecule/default/my_ansible_vault_password_file
 scenario:
   create_sequence:
     - create

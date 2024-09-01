@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 import pytest
-from takeltest.ansibleres import AnsibleInventory
+from takeltest.moleculeinventory import MoleculeInventory
 from takeltest.moleculeenv import MoleculeEnv
 from takeltest.moleculelog import MoleculeLog
 from takeltest.moleculeplay import MoleculePlay
@@ -100,16 +100,6 @@ def extra_vars(request):
 
 
 @pytest.fixture(scope='session')
-def ansible_vault_password_file():
-    '''environment variable ANSIBLE_VAULT_PASSWORD_FILE'''
-    try:
-        ansible_vault_password_file = os.environ['ANSIBLE_VAULT_PASSWORD_FILE']
-    except KeyError:
-        return ''
-    return ansible_vault_password_file
-
-
-@pytest.fixture(scope='session')
 def testvars_roles_blocklist():
     '''environment variable TESTVARS_ROLES_BLOCK'''
     try:
@@ -162,14 +152,26 @@ def testvars_extra_vars(molecule_scenario_directory):
 
 
 ###########################################################
-# fixtures: ansible resources
+# fixtures: molecule inventory
 ###########################################################
 
 
 @pytest.fixture(scope='session')
-def ansibleinventory(inventory_file):
-    return AnsibleInventory(
-        inventory_file).get()
+def inventory_file(molecule_ephemeral_directory):
+    '''Molecule managed ansible inventory file.'''
+    inventory_file = molecule_ephemeral_directory / 'inventory/ansible_inventory.yml'
+    inventory_dir = molecule_ephemeral_directory / 'inventory'
+    inventory_dir.mkdir(exist_ok=True)
+    if not inventory_file.is_file():
+        inventory = "localhost"
+        inventory_file.write_text(inventory)
+    return inventory_file
+
+
+@pytest.fixture(scope='session')
+def moleculeinventory(inventory_file):
+    return MoleculeInventory(
+        inventory_file)
 
 
 ###########################################################
@@ -203,19 +205,6 @@ def molecule_scenario_directory(tmp_path_factory):
 
 
 @pytest.fixture(scope='session')
-def inventory_file(molecule_ephemeral_directory):
-    '''Molecule managed ansible inventory file.'''
-    inventory_file = molecule_ephemeral_directory / \
-        'inventory/ansible_inventory.yml'
-    inventory_dir = molecule_ephemeral_directory / 'inventory'
-    inventory_dir.mkdir(exist_ok=True)
-    if not inventory_file.is_file():
-        inventory = "localhost"
-        inventory_file.write_text(inventory)
-    return inventory_file
-
-
-@pytest.fixture(scope='session')
 def moleculeenv(
         moleculelog,
         molecule_ephemeral_directory,
@@ -243,25 +232,21 @@ def moleculeenv(
 
 @pytest.fixture(scope='session')
 def moleculeplay(
-        ansibleinventory,
-        ansible_vault_password_file,
         moleculeenv):
     '''Expose ansible python api to run playbooks against a molecule host.'''
     return MoleculePlay(
-        ansibleinventory,
-        ansible_vault_password_file,
         moleculeenv)
 
 
 @pytest.fixture(scope='session')
 def moleculebook(
         testvars_extra_vars,
-        ansibleinventory,
+        moleculeinventory,
         moleculeplay):
     '''Run an ansible playbook against a molecule host.'''
     return MoleculeBook(
         testvars_extra_vars,
-        ansibleinventory,
+        moleculeinventory,
         moleculeplay)
 
 
@@ -304,7 +289,7 @@ def testpass(moleculebook):
 @pytest.fixture(scope='session')
 def multitestvars(
         request,
-        ansibleinventory,
+        moleculeinventory,
         moleculelog,
         debug_jsonvars,
         moleculebook,
@@ -316,7 +301,7 @@ def multitestvars(
     multitestvars = MultiTestVars.get_cache(request, cache_key)
     if multitestvars is None:
         multitestvars_object = MultiTestVars(
-            ansibleinventory,
+            moleculeinventory,
             moleculelog,
             debug_jsonvars,
             moleculebook,

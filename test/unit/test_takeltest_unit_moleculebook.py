@@ -1,7 +1,5 @@
 import pytest
 import takeltest
-from takeltest.exceptions import MoleculeBookRunError
-
 
 def test_takeltest_unit_moleculebook_is_not_none(moleculebook):
     assert moleculebook is not None
@@ -66,19 +64,32 @@ def test_takeltest_unit_moleculebook_create_gather_roles(
     assert playbook == playbook_roles
 
 
-def test_takeltest_unit_moleculebook_add_task_debug(moleculebook):
-    playbook_task_debug = \
-        {'name': 'ansible playbook',
-         'hosts': 'localhost',
-         'gather_facts': 'True',
-         'vars_files': [],
-         'roles': [],
-         'tasks': [{'action': {'module': 'debug',
-                               'args': {'msg': 'Happy testing!'}}}]}
+def test_takeltest_unit_moleculebook_add_task_debug_msg(moleculebook):
     moleculebook.create()
-    moleculebook.add_task_debug("Happy testing!")
-    playbook = moleculebook._playbook
-    assert playbook == playbook_task_debug
+    moleculebook.add_task_debug_msg("Happy testing!")
+    runner = moleculebook.run()
+    for event in runner.events:
+        try:
+            msg = event['event_data']['res']['msg']
+            break
+        except (IndexError, KeyError):
+            continue
+    assert 'Happy testing!' == msg
+
+
+def test_takeltest_unit_moleculebook_get_vars_default(moleculebook):
+    vars = moleculebook.get_vars()
+    assert 'localhost' in vars['inventory_hostname']
+
+
+def test_takeltest_unit_moleculebook_run_task_get_vars(moleculebook):
+    moleculebook.create()
+    playbook = moleculebook.get()
+    playbook = playbook | {'vars': {'myvar': 'myvalue', 'myvarref': '{{ myvar }}'}}
+    playbook['gather_facts'] = 'False'
+    moleculebook.set(playbook)
+    vars = moleculebook.get_vars()
+    assert vars['myvarref'] == 'myvalue'
 
 
 def test_takeltest_unit_moleculebook_add_task_include_vars_dir(moleculebook):
@@ -102,77 +113,6 @@ def test_takeltest_unit_moleculebook_run(moleculebook, monkeypatch):
                         lambda x, y: 'my_playbook_result')
     playbook_result = moleculebook.run()
     assert playbook_result == 'my_playbook_result'
-
-
-def test_takeltest_unit_moleculebook_get_vars_default(moleculebook):
-    vars = moleculebook.get_vars()
-    assert 'inventory_file' in vars
-
-
-def test_takeltest_unit_moleculebook_get_vars_gather_facts(moleculebook):
-    vars = moleculebook.get_vars(gather_facts=True)
-    assert 'ansible_facts' in vars
-
-
-def test_takeltest_unit_moleculebook_get_vars_no_gather_facts(moleculebook):
-    vars = moleculebook.get_vars(gather_facts=False)
-    assert 'inventory_file' in vars
-
-
-def test_takeltest_unit_moleculebook_get_vars_no_gather_facts_index_error(
-        moleculebook,
-        monkeypatch):
-    monkeypatch.setattr(takeltest.moleculebook.MoleculeBook,
-                        'run',
-                        lambda x: [])
-    with pytest.raises(
-            MoleculeBookRunError,
-            match=r'Unable to gather ansible vars\..*'):
-        moleculebook.get_vars(gather_facts=False)
-
-
-def test_takeltest_unit_moleculebook_get_vars_no_gather_facts_key_error(
-        moleculebook,
-        monkeypatch):
-    monkeypatch.setattr(takeltest.moleculebook.MoleculeBook,
-                        'run',
-                        lambda x: [{}, {}])
-    with pytest.raises(
-            MoleculeBookRunError,
-            match=r'Unable to gather ansible vars\..*'):
-        moleculebook.get_vars(gather_facts=False)
-
-
-def test_takeltest_unit_moleculebook_get_vars_gather_facts_index_error(
-        moleculebook,
-        monkeypatch):
-    monkeypatch.setattr(takeltest.moleculebook.MoleculeBook,
-                        'run',
-                        lambda x: [])
-    with pytest.raises(MoleculeBookRunError) as excinfo:
-        moleculebook.get_vars()
-    exception_msg = excinfo.value.args[0]
-    assert exception_msg == 'Unable to gather ansible vars and facts.'
-
-
-def test_takeltest_unit_moleculebook_get_vars_gather_facts_key_error(
-        moleculebook,
-        monkeypatch):
-    monkeypatch.setattr(takeltest.moleculebook.MoleculeBook,
-                        'run',
-                        lambda x: [{}, {}])
-    with pytest.raises(MoleculeBookRunError) as excinfo:
-        moleculebook.get_vars()
-    exception_msg = excinfo.value.args[0]
-    assert exception_msg == 'Unable to gather ansible vars and facts.'
-
-
-def test_takeltest_unit_moleculebook_exception_moleculebookrunerror():
-    msg = 'my_msg'
-    with pytest.raises(MoleculeBookRunError) as excinfo:
-        raise MoleculeBookRunError(msg)
-    exception_msg = excinfo.value.args[0]
-    assert exception_msg == 'my_msg'
 
 
 def test_takeltest_unit_get_molecule_scenario_directory(moleculebook):

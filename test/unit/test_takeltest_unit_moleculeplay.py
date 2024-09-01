@@ -22,4 +22,18 @@ def test_takeltest_unit_moleculeplay_run_playbook_minimal(moleculeplay):
          'hosts': 'localhost',
          'gather_facts': 'False'}
     result = moleculeplay.run_playbook(playbook_minimal)
-    assert result == []
+    assert result == 0
+
+
+def test_takeltest_unit_moleculeplay_run_playbook_debug(moleculeplay):
+    args = dict(msg='hello world')
+    task_debug = dict(action=dict(module='ansible.builtin.debug', args=args))
+    playbook_debug = \
+        {
+            'name': 'ansible debug playbook',
+            'hosts': 'localhost',
+            'gather_facts': 'False',
+            'tasks': [ task_debug ]
+         }
+    result = moleculeplay.run_playbook(playbook_debug)
+    assert result == 0

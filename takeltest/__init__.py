@@ -1,5 +1,3 @@
-import takeltest.ansibleres
-import takeltest.ansiblerun
 from takeltest.boilerplate import hosts  # noqa F401
 import takeltest.exceptions
 import takeltest.jsonvars

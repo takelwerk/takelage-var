@@ -1,14 +1,11 @@
-from takeltest.exceptions import MoleculeBookRunError
-
-
 class MoleculeBook(object):
     '''Run an ansible playbook against a molecule host'''
 
     def __init__(self,
                  testvars_extra_vars,
-                 ansibleinventory,
+                 moleculeinventory,
                  moleculeplay):
-        self._hosts = ansibleinventory.hosts
+        self._hosts = moleculeinventory.hosts()
         self._moleculeplay = moleculeplay
         self._testvars_extra_vars = testvars_extra_vars
         self._playbook = dict()
@@ -52,10 +49,15 @@ class MoleculeBook(object):
 
         self._playbook = playbook
 
-    def add_task_debug(self, msg):
+    def add_task_debug_msg(self, msg):
         '''Add a task using the ansible debug module'''
-        task = dict(action=dict(module='debug', args=dict(msg=msg)))
+        task = dict(action=dict(module='ansible.builtin.debug', args=dict(msg=msg)))
         self._playbook['tasks'].append(task)
+
+    def first_task_debug_var(self, var):
+        '''Add a first task using the ansible debug module'''
+        task = dict(action=dict(module='ansible.builtin.debug', args=dict(var=var)))
+        self._playbook['tasks'].insert(0, task)
 
     def add_task_include_vars_dir(self, vars_dir):
         '''Add a task using the ansible include_vars module'''
@@ -85,40 +87,23 @@ class MoleculeBook(object):
         '''
         vars = dict()
 
-        # self.create sets gather_facts=True by default so the ansible facts
-        # of the default molecule host will be in result[0]['ansible_facts']
-        self.create(
-            gather_facts=gather_facts,
-            extra_vars=extra_vars,
-            host=host)
+        if not self._playbook:
+            self.create(
+                gather_facts=gather_facts,
+                extra_vars=extra_vars,
+                host=host)
 
-        # the ansible variables will be in result[1]['msg']
-        self.add_task_debug('{{ vars }}')
+        # this is where the magic happens:
+        # calling the debug module this way yields all variables
+        self.first_task_debug_var('{{ vars }}')
 
-        result = self.run()
+        runner = self.run()
 
-        if gather_facts:
+        for event in runner.events:
             try:
-                vars = result[1]['msg']
+                return event['event_data']['res']["<class 'dict'>"]
             except (IndexError, KeyError):
-                raise MoleculeBookRunError(
-                    'Unable to gather ansible vars and facts.')
-        else:
-            try:
-                vars = result[0]['msg']
-            except (IndexError, KeyError):
-                raise MoleculeBookRunError(
-                    'Unable to gather ansible vars.')
-
-        try:
-            ansible_hostname = vars['ansible_play_hosts'][0]
-            hostvars = vars['hostvars'][ansible_hostname]
-            del vars['hostvars']
-            vars.update(hostvars)
-        except (IndexError, KeyError):
-            pass
-
-        return vars
+                continue
 
     def run(self):
         '''Run the ansible playbook'''
