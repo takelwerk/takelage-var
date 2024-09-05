@@ -19,7 +19,7 @@ def test_takeltest_unit_moleculebook_create_default(moleculebook):
     playbook_default = \
         {'name': 'ansible playbook',
          'hosts': 'localhost',
-         'gather_facts': 'True',
+         'gather_facts': 'False',
          'vars_files': [],
          'roles': [],
          'tasks': []}
@@ -34,7 +34,7 @@ def test_takeltest_unit_moleculebook_create_extra_vars(
     playbook_extra_vars = \
         {'name': 'ansible playbook',
          'hosts': 'localhost',
-         'gather_facts': 'True',
+         'gather_facts': 'False',
          'vars_files': ['my_extra_vars.yml'],
          'roles': [],
          'tasks': []}
@@ -52,11 +52,11 @@ def test_takeltest_unit_moleculebook_create_gather_roles(
     playbook_roles = \
         {'name': 'ansible playbook',
          'hosts': 'localhost',
-         'gather_facts': 'True',
+         'gather_facts': 'False',
          'vars_files': [],
          'roles': [{'name': 'my_role', 'when': 'False'}],
          'tasks': []}
-    monkeypatch.setattr(takeltest.moleculeplay.MoleculePlay,
+    monkeypatch.setattr(takeltest.moleculebook.MoleculeBook,
                         'get_roles',
                         lambda x: ['my_role'])
     moleculebook.create(gather_roles=True)
@@ -82,21 +82,11 @@ def test_takeltest_unit_moleculebook_get_vars_default(moleculebook):
     assert 'localhost' in vars['inventory_hostname']
 
 
-def test_takeltest_unit_moleculebook_run_task_get_vars(moleculebook):
-    moleculebook.create()
-    playbook = moleculebook.get()
-    playbook = playbook | {'vars': {'myvar': 'myvalue', 'myvarref': '{{ myvar }}'}}
-    playbook['gather_facts'] = 'False'
-    moleculebook.set(playbook)
-    vars = moleculebook.get_vars()
-    assert vars['myvarref'] == 'myvalue'
-
-
 def test_takeltest_unit_moleculebook_add_task_include_vars_dir(moleculebook):
     playbook_task_debug = \
         {'name': 'ansible playbook',
          'hosts': 'localhost',
-         'gather_facts': 'True',
+         'gather_facts': 'False',
          'vars_files': [],
          'roles': [],
          'tasks': [{'action': {'module': 'include_vars',
@@ -105,22 +95,6 @@ def test_takeltest_unit_moleculebook_add_task_include_vars_dir(moleculebook):
     moleculebook.add_task_include_vars_dir("my_custom_vars")
     playbook = moleculebook._playbook
     assert playbook == playbook_task_debug
-
-
-def test_takeltest_unit_moleculebook_run(moleculebook, monkeypatch):
-    monkeypatch.setattr(takeltest.moleculeplay.MoleculePlay,
-                        'run_playbook',
-                        lambda x, y: 'my_playbook_result')
-    playbook_result = moleculebook.run()
-    assert playbook_result == 'my_playbook_result'
-
-
-def test_takeltest_unit_get_molecule_scenario_directory(moleculebook):
-    moleculeplay_mcd = \
-        moleculebook._moleculeplay.get_molecule_scenario_directory()
-    moleculebook_mcd = \
-        moleculebook._get_molecule_scenario_directory_()
-    assert moleculebook_mcd == moleculeplay_mcd
 
 
 def test_takeltest_unit_moleculebook_testvars_extra_vars_no_files(

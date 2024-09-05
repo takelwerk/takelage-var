@@ -1,5 +1,5 @@
 import ansible_runner
-import json
+
 
 class MoleculeInventory(object):
 
@@ -12,7 +12,11 @@ class MoleculeInventory(object):
             inventories=[str(inventory_file)],
             response_format='json'
         )
-        self._hosts = out['ungrouped']['hosts']
+        try:
+            self._hosts = out['private']['hosts']
+        except (KeyError):
+            self._hosts = ['localhost']
+
 
     def get(self):
         return self._inventory

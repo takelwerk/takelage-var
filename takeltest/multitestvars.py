@@ -1,6 +1,3 @@
-import json
-
-
 class MultiTestVars(object):
     '''Expose ansible variabless of a molecule scenario.
 
@@ -12,11 +9,7 @@ class MultiTestVars(object):
     def __init__(
             self,
             moleculeinventory,
-            moleculelog,
-            debug_jsonvars,
             moleculebook,
-            jsonvars,
-            gather_facts,
             extra_vars):
 
         # this variable will be returned by the multitestvars fixture
@@ -26,32 +19,9 @@ class MultiTestVars(object):
             host = str(ansiblehost)
 
             # get ansible variables
-            testvars_unresolved = moleculebook.get_vars(
-                gather_facts,
+            self._multitestvars[host] = moleculebook.get_vars(
                 extra_vars,
                 host)
-
-            # convert python variables to json
-            testvars_unresolved_json = json.dumps(testvars_unresolved)
-
-            # set jsonvars to unresolved testvars
-            jsonvars.set(testvars_unresolved_json)
-
-            # resolve unresolved json testvars
-            jsonvars.resolve()
-
-            # print jsonvars debug info if command line flag is specified
-            if debug_jsonvars:
-                moleculelog.debug(jsonvars.get_debug())
-
-            # get resolved testvars from jsonvars
-            testvars_resolved_json = jsonvars.get()
-
-            # convert json vars to python
-            testvars = json.loads(testvars_resolved_json)
-
-            # save testvars
-            self._multitestvars[host] = testvars
 
     def get_multitestvars(self):
         return self._multitestvars

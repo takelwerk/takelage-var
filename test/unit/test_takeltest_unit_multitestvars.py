@@ -1,31 +1,14 @@
-import pytest
 import re
 import takeltest
 from takeltest.multitestvars import MultiTestVars
-from takeltest.exceptions import AnsibleRunError
 
 
-def test_takeltest_unit_multitestvars_is_not_none(
-        ansibleinventory,
-        moleculelog,
-        debug_jsonvars,
-        moleculebook,
-        jsonvars,
-        gather_facts,
-        extra_vars):
-    with pytest.raises(AnsibleRunError):
-        MultiTestVars(
-            ansibleinventory,
-            moleculelog,
-            debug_jsonvars,
-            moleculebook,
-            jsonvars,
-            gather_facts,
-            extra_vars).get_testvars()
+def test_takeltest_unit_multitestvars_cache_key(cache_key):
+    assert re.match('multitestvars/+', cache_key)
 
 
 def test_takeltest_unit_multitestvars_resolve_vars(
-        ansibleinventory,
+        moleculeinventory,
         moleculelog,
         debug_jsonvars,
         moleculebook,
@@ -40,7 +23,7 @@ def test_takeltest_unit_multitestvars_resolve_vars(
     monkeypatch.setattr(
         takeltest.moleculebook.MoleculeBook,
         'get_vars',
-        lambda w, x, y, z: testvars_unresolved)
+        lambda x, y, z: testvars_unresolved)
     monkeypatch.setattr(
         takeltest.jsonvars.JsonVars,
         'resolve',
@@ -49,18 +32,12 @@ def test_takeltest_unit_multitestvars_resolve_vars(
         takeltest.jsonvars.JsonVars,
         'get',
         lambda x: jsonvars_resolved)
-    gather_facts = False
     extra_vars = ''
     multitestvars = MultiTestVars(
-        ansibleinventory,
+        moleculeinventory,
         moleculelog,
         debug_jsonvars,
         moleculebook,
         jsonvars,
-        gather_facts,
         extra_vars).get_multitestvars()
     assert multitestvars['localhost'] == testvars_resolved
-
-
-def test_takeltest_unit_multitestvars_cache_key(cache_key):
-    assert re.match('multitestvars/+', cache_key)

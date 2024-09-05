@@ -3,25 +3,9 @@ from pathlib import Path
 import pytest
 from takeltest.moleculeinventory import MoleculeInventory
 from takeltest.moleculeenv import MoleculeEnv
-from takeltest.moleculelog import MoleculeLog
-from takeltest.moleculeplay import MoleculePlay
 from takeltest.moleculebook import MoleculeBook
 from takeltest.multitestvars import MultiTestVars
-from takeltest.templates import Templates
-from takeltest.jsonvars import JsonVars
 from takeltest.pathlist import PathList
-from takeltest.testpass import TestPass
-
-
-###########################################################
-# global cleanup function
-###########################################################
-
-
-@pytest.fixture(scope="session", autouse=True)
-def cleanup(request, moleculelog):
-    if request.config.getoption("--debug"):
-        request.addfinalizer(moleculelog.print_debug)
 
 
 ###########################################################
@@ -163,7 +147,7 @@ def inventory_file(molecule_ephemeral_directory):
     inventory_dir = molecule_ephemeral_directory / 'inventory'
     inventory_dir.mkdir(exist_ok=True)
     if not inventory_file.is_file():
-        inventory = "localhost"
+        inventory = "private:\n  hosts:\n    localhost:"
         inventory_file.write_text(inventory)
     return inventory_file
 
@@ -177,11 +161,6 @@ def moleculeinventory(inventory_file):
 ###########################################################
 # fixtures: molecule resources
 ###########################################################
-
-
-@pytest.fixture(scope='session')
-def moleculelog():
-    return MoleculeLog()
 
 
 @pytest.fixture(scope='session')
@@ -206,7 +185,6 @@ def molecule_scenario_directory(tmp_path_factory):
 
 @pytest.fixture(scope='session')
 def moleculeenv(
-        moleculelog,
         molecule_ephemeral_directory,
         molecule_scenario_directory,
         gather_roles,
@@ -215,7 +193,6 @@ def moleculeenv(
         testvars_roles_includelist,
         testvars_roles_playbooks):
     return MoleculeEnv(
-        moleculelog,
         molecule_ephemeral_directory,
         molecule_scenario_directory,
         gather_roles,
@@ -226,47 +203,25 @@ def moleculeenv(
 
 
 ###########################################################
-# fixtures: ansible python api
+# fixtures: ansible runner python api
 ###########################################################
-
-
-@pytest.fixture(scope='session')
-def moleculeplay(
-        moleculeenv):
-    '''Expose ansible python api to run playbooks against a molecule host.'''
-    return MoleculePlay(
-        moleculeenv)
 
 
 @pytest.fixture(scope='session')
 def moleculebook(
         testvars_extra_vars,
         moleculeinventory,
-        moleculeplay):
+        moleculeenv):
     '''Run an ansible playbook against a molecule host.'''
     return MoleculeBook(
         testvars_extra_vars,
         moleculeinventory,
-        moleculeplay)
+        moleculeenv)
 
 
 ###########################################################
 # fixtures: testvars helpers
 ###########################################################
-
-
-@pytest.fixture(scope='session')
-def templates(moleculebook):
-    return Templates(moleculebook)
-
-
-@pytest.fixture(scope='session')
-def jsonvars(
-        templates,
-        gather_molecule):
-    return JsonVars(
-        templates,
-        gather_molecule)
 
 
 @pytest.fixture(scope='session')
@@ -281,20 +236,10 @@ def cache_key(molecule_ephemeral_directory):
 
 
 @pytest.fixture(scope='session')
-def testpass(moleculebook):
-    '''Provide access to the ansible passwordstore lookup plugin.'''
-    return TestPass(moleculebook).testpass
-
-
-@pytest.fixture(scope='session')
 def multitestvars(
         request,
         moleculeinventory,
-        moleculelog,
-        debug_jsonvars,
         moleculebook,
-        jsonvars,
-        gather_facts,
         extra_vars,
         cache_key):
     '''Expose ansible variables and facts of a molecule test scenario.'''
@@ -302,11 +247,7 @@ def multitestvars(
     if multitestvars is None:
         multitestvars_object = MultiTestVars(
             moleculeinventory,
-            moleculelog,
-            debug_jsonvars,
             moleculebook,
-            jsonvars,
-            gather_facts,
             extra_vars)
         multitestvars = multitestvars_object.get_multitestvars()
         multitestvars_object.set_cache(request, cache_key)

@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+cmd_dev_pip_install_editable = "sudo pip uninstall --yes " \
+  "pytest-takeltest " \
+  "--break-system-packages && " \
+  "sudo pip install " \
+  "--editable /project " \
+  "--break-system-packages"
+
+namespace :dev do
+  desc 'Install local development code as editable pip package'
+  task :install do
+    @commands << cmd_dev_pip_install_editable
+  end
+end

@@ -1,12 +1,15 @@
+import ansible_runner
+
+
 class MoleculeBook(object):
     '''Run an ansible playbook against a molecule host'''
 
     def __init__(self,
                  testvars_extra_vars,
                  moleculeinventory,
-                 moleculeplay):
+                 moleculeenv):
         self._hosts = moleculeinventory.hosts()
-        self._moleculeplay = moleculeplay
+        self._moleculeenv = moleculeenv
         self._testvars_extra_vars = testvars_extra_vars
         self._playbook = dict()
         self.create()
@@ -19,8 +22,14 @@ class MoleculeBook(object):
         '''Set an ansible playbook'''
         self._playbook = playbook
 
+    def get_molecule_scenario_directory(self):
+        return self._moleculeenv.get_molecule_scenario_directory()
+
+    def get_roles(self):
+        return self._moleculeenv.get_roles()
+
     def create(self,
-               gather_facts=True,
+               gather_facts=False,
                gather_roles=True,
                extra_vars=True,
                host=None):
@@ -44,30 +53,38 @@ class MoleculeBook(object):
 
         # include roles
         if gather_roles:
-            for role in self._moleculeplay.get_roles():
+            for role in self.get_roles():
                 playbook['roles'].append(dict(name=role, when='False'))
 
         self._playbook = playbook
 
-    def add_task_debug_msg(self, msg):
+    def add_task_debug_msg(self, msg, playbook, name='Debug'):
         '''Add a task using the ansible debug module'''
-        task = dict(action=dict(module='ansible.builtin.debug', args=dict(msg=msg)))
-        self._playbook['tasks'].append(task)
+        task = { 'name': name,
+                 'ansible.builtin.debug': { 'msg': msg }}
+        playbook['tasks'].append(task)
+        return playbook
 
-    def first_task_debug_var(self, var):
-        '''Add a first task using the ansible debug module'''
-        task = dict(action=dict(module='ansible.builtin.debug', args=dict(var=var)))
-        self._playbook['tasks'].insert(0, task)
+    def add_task_get_vars(self, playbook, name='Get vars'):
+        '''Add a task using the ansible debug module to gather variables'''
+        msg = "{{ vars }}"
+        task = { 'name': name,
+                 'ansible.builtin.debug': {
+                     'msg': msg }}
+        playbook['tasks'].append(task)
+        return playbook
 
-    def add_task_include_vars_dir(self, vars_dir):
+    def add_task_include_vars_dir(self, vars_dir, playbook, name='Include vars'):
         '''Add a task using the ansible include_vars module'''
         args = dict(dir=str(vars_dir))
-        task = dict(action=dict(module='include_vars', args=args))
-        self._playbook['tasks'].append(task)
+        task = { 'name': name,
+                 'ansible.builtin.include_vars': {
+                     'dir': vars_dir }}
+        playbook['tasks'].append(task)
+        return playbook
 
     def get_vars(
             self,
-            gather_facts=True,
             extra_vars=True,
             host=None):
         '''Return ansible facts and vars of a molecule host.
@@ -83,34 +100,38 @@ class MoleculeBook(object):
             host (string)
 
         Returns:
-            vars (dict): resolved ansible variables and facts
+            dict: resolved ansible variables and facts
         '''
-        vars = dict()
 
-        if not self._playbook:
-            self.create(
-                gather_facts=gather_facts,
-                extra_vars=extra_vars,
-                host=host)
+        playbook = self._playbook
+        playbook['gather_facts'] = True
+        playbook['roles'] = []
 
         # this is where the magic happens:
         # calling the debug module this way yields all variables
-        self.first_task_debug_var('{{ vars }}')
+        self.add_task_get_vars(playbook, 'moleculebook_get_vars')
 
-        runner = self.run()
+        runner = self.run(playbook)
 
         for event in runner.events:
             try:
-                return event['event_data']['res']["<class 'dict'>"]
+                if event['event'] == 'runner_on_ok':
+                    if event['event_data']['task'] == 'moleculebook_get_vars':
+                        host = next(iter(event['event_data']['res']['msg']['hostvars']))
+                        return event['event_data']['res']['msg']['hostvars'][host]
             except (IndexError, KeyError):
                 continue
 
-    def run(self):
+    def run(self, playbook):
         '''Run the ansible playbook'''
-        return self._moleculeplay.run_playbook(self._playbook)
+        private_data_dir = self._moleculeenv.get_molecule_ephemeral_directory()
+        r = ansible_runner.run(
+            private_data_dir=private_data_dir,
+            playbook=playbook)
+        return r
 
     def _get_extra_vars_(self):
         return self._testvars_extra_vars
 
     def _get_molecule_scenario_directory_(self):
-        return self._moleculeplay.get_molecule_scenario_directory()
+        return self._get_molecule_scenario_directory()

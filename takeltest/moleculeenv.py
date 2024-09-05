@@ -8,7 +8,6 @@ class MoleculeEnv(object):
 
     def __init__(
             self,
-            moleculelog,
             molecule_ephemeral_directory,
             molecule_scenario_directory,
             gather_roles,
@@ -24,9 +23,6 @@ class MoleculeEnv(object):
         self._testvars_roles_includelist = testvars_roles_includelist
         self._testvars_roles_playbooks = testvars_roles_playbooks
         self._configure_roles_()
-        self._moleculelog = moleculelog
-        self._moleculelog.debug(self._get_molecule_vars_config_())
-        self._moleculelog.debug('Using roles: ' + ','.join(self.get_roles()))
 
     def get_molecule_ephemeral_directory(self):
         return self._molecule_ephemeral_directory
