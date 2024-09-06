@@ -3,8 +3,6 @@ import takeltest
 testinfra_hosts = takeltest.hosts()
 
 
-import pytest
-@pytest.mark.run_only_this
 def test_takel_anarchism_system_fortune_greeting(host, testvars):
     if 'fortune-anarchism' in testvars['takel_anarchism_deb_install_packages']:
         with host.sudo():
