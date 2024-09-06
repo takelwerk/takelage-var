@@ -61,26 +61,29 @@ class MoleculeBook(object):
 
     def add_task_debug_msg(self, msg, playbook, name='Debug'):
         '''Add a task using the ansible debug module'''
-        task = { 'name': name,
-                 'ansible.builtin.debug': { 'msg': msg }}
+        task = {'name': name,
+                'ansible.builtin.debug': {'msg': msg}}
         playbook[0]['tasks'].append(task)
         return playbook
 
     def add_task_get_vars(self, playbook, name='Get vars'):
         '''Add a task using the ansible debug module to gather variables'''
         msg = "{{ vars }}"
-        task = { 'name': name,
-                 'ansible.builtin.debug': {
-                     'msg': msg }}
+        task = {'name': name,
+                'ansible.builtin.debug': {
+                    'msg': msg}}
         playbook[0]['tasks'].append(task)
         return playbook
 
-    def add_task_include_vars_dir(self, vars_dir, playbook, name='Include vars'):
+    def add_task_include_vars_dir(
+            self,
+            vars_dir,
+            playbook,
+            name='Include vars'):
         '''Add a task using the ansible include_vars module'''
-        args = dict(dir=str(vars_dir))
-        task = { 'name': name,
-                 'ansible.builtin.include_vars': {
-                     'dir': vars_dir }}
+        task = {'name': name,
+                'ansible.builtin.include_vars': {
+                    'dir': vars_dir}}
         playbook[0]['tasks'].append(task)
         return playbook
 
@@ -117,9 +120,13 @@ class MoleculeBook(object):
             try:
                 if event['event'] == 'runner_on_ok':
                     if event['event_data']['task'] == 'moleculebook_get_vars':
-                        # Merge and overwrite all variables (some still unresolved)
+                        # Merge and overwrite all variables
+                        # (some still unresolved)
                         # with the (resolved) hostvars
-                        return event['event_data']['res']['msg'] | event['event_data']['res']['msg']['hostvars'][host]
+                        return (
+                            event['event_data']['res']['msg'] |
+                            event['event_data']['res']['msg']['hostvars'][host]
+                        )
             except (IndexError, KeyError):
                 continue
 

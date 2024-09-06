@@ -24,7 +24,7 @@ class MoleculeInventory(object):
             for host_group in host_groups:
                 for host in out[host_group]['hosts']:
                     self._hosts.append(host)
-        except:
+        except (IndexError, KeyError):
             pass
 
         if not self._hosts:

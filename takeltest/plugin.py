@@ -110,11 +110,19 @@ def testvars_extra_vars(molecule_scenario_directory):
 @pytest.fixture(scope='session')
 def inventory_file(molecule_ephemeral_directory):
     '''Molecule managed ansible inventory file.'''
-    inventory_file = molecule_ephemeral_directory / 'inventory/ansible_inventory.yml'
+    inventory_file = (molecule_ephemeral_directory /
+                      'inventory/ansible_inventory.yml')
     inventory_dir = molecule_ephemeral_directory / 'inventory'
     inventory_dir.mkdir(exist_ok=True)
     if not inventory_file.is_file():
-        inventory = "---\nall:\n  hosts:\n    localhost: &id001\n      ansible_connection: local\nprivate:\n  hosts:\n    localhost: *id001"
+        inventory = ("---\n"
+                     "all:\n"
+                     "  hosts:\n"
+                     "    localhost: &id001\n"
+                     "      ansible_connection: local\n"
+                     "private:\n"
+                     "  hosts:\n"
+                     "    localhost: *id001")
         inventory_file.write_text(inventory)
     return inventory_file
 
