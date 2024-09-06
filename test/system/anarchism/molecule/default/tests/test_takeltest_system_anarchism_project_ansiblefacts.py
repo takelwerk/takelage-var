@@ -8,4 +8,4 @@ def test_takeltest_system_ansiblefacts_present(host, testvars):
 
 
 def test_takeltest_system_ansiblefacts_reference(host, testvars):
-    assert testvars['project_factref'] is str
+    assert type(testvars['project_factref']) is str
