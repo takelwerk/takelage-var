@@ -61,10 +61,6 @@ cmd_test_system_sidecar_molecule_role_default = 'cd ' \
   'test/system/sidecar/molecule/playbooks/roles/my_sidecar_role && ' \
   'ANSIBLE_ROLES_PATH=../ molecule test'
 
-cmd_test_system_vault_default = 'cd ' \
-  'test/system/vault && ' \
-  'molecule test'
-
 desc 'Run tests'
 task test: %w[
   test:unit
@@ -79,7 +75,6 @@ task test: %w[
   test:system:env:role_defaults
   test:system:multi:default
   test:system:sidecar:default
-  test:system:vault:default
 ]
 
 # rubocop:disable Metrics/BlockLength
@@ -152,13 +147,6 @@ namespace :test do
       desc 'Run system tests sidecar'
       task :default do
         @commands << cmd_test_system_sidecar_molecule_role_default
-      end
-    end
-
-    namespace :vault do
-      desc 'Run system tests vault'
-      task :default do
-        @commands << cmd_test_system_vault_default
       end
     end
   end

@@ -17,21 +17,6 @@ def pytest_addoption(parser):
     parser.addini('log', 'test')
     testvars_optiongroup = parser.getgroup("testvars")
     testvars_optiongroup.addoption(
-        "--testvars-debug-jsonvars",
-        action="store_true",
-        default=False,
-        help="print jsonvars debug information")
-    testvars_optiongroup.addoption(
-        "--testvars-no-gather-facts",
-        action="store_false",
-        default=True,
-        help="do not gather ansible_facts")
-    testvars_optiongroup.addoption(
-        "--testvars-no-gather-molecule",
-        action="store_false",
-        default=True,
-        help="do not resolve molecule vars")
-    testvars_optiongroup.addoption(
         "--testvars-no-gather-roles",
         action="store_false",
         default=True,
@@ -46,24 +31,6 @@ def pytest_addoption(parser):
 ###########################################################
 # fixtures: testvars option booleans
 ###########################################################
-
-
-@pytest.fixture(scope='session')
-def debug_jsonvars(request):
-    '''testvars option --testvars-debug-jsonvars'''
-    return request.config.getoption("--testvars-debug-jsonvars")
-
-
-@pytest.fixture(scope='session')
-def gather_facts(request):
-    '''testvars option --testvars-no-gather-facts'''
-    return request.config.getoption("--testvars-no-gather-facts")
-
-
-@pytest.fixture(scope='session')
-def gather_molecule(request):
-    '''testvars option --testvars-no-gather-molecule'''
-    return request.config.getoption("--testvars-no-gather-molecule")
 
 
 @pytest.fixture(scope='session')
@@ -147,7 +114,7 @@ def inventory_file(molecule_ephemeral_directory):
     inventory_dir = molecule_ephemeral_directory / 'inventory'
     inventory_dir.mkdir(exist_ok=True)
     if not inventory_file.is_file():
-        inventory = "private:\n  hosts:\n    localhost:"
+        inventory = "---\nall:\n  hosts:\n    localhost: &id001\n      ansible_connection: local\nprivate:\n  hosts:\n    localhost: *id001"
         inventory_file.write_text(inventory)
     return inventory_file
 

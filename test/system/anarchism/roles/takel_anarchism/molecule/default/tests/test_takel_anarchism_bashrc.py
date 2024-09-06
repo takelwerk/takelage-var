@@ -3,7 +3,7 @@ import takeltest
 testinfra_hosts = takeltest.hosts()
 
 
-def test_takel_anarchism_bashrc_source(host, testvars):
+def test_takel_anarchism_bashrc_source(host):
     with host.sudo():
         file = host.file('/root/.bashrc')
         expected = '''\
@@ -18,7 +18,7 @@ fi'''
         assert expected in file.content_string
 
 
-def test_takel_anarchism_bashrc_file(host, testvars):
+def test_takel_anarchism_bashrc_file(host):
     with host.sudo():
         file = host.file('/root/.bashrc')
 
@@ -29,7 +29,7 @@ def test_takel_anarchism_bashrc_file(host, testvars):
         assert file.mode == 0o644
 
 
-def test_takel_anarchism_bashrc_directory(host, testvars):
+def test_takel_anarchism_bashrc_directory(host):
     with host.sudo():
         dir = host.file('/root/.bashrc.d')
 

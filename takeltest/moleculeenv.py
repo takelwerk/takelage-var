@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 from ruamel.yaml import YAML
 from ruamel.yaml.scanner import ScannerError
@@ -54,6 +55,15 @@ class MoleculeEnv(object):
 
         roles = sorted([d.name for d in roles_dir.iterdir() if d.is_dir()])
         return roles
+
+    def write_playbook(
+            self,
+            playbook):
+        '''Write playbook to disk'''
+        project_dir = self._molecule_ephemeral_directory / 'project'
+        project_dir.mkdir(exist_ok=True)
+        playbook_file = self._molecule_ephemeral_directory / 'project/site.yml'
+        playbook_file.write_text(json.dumps(playbook))
 
     def _configure_roles_(self):
         '''Create symlinks to roles'''

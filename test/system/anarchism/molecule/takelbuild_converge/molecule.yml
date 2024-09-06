@@ -19,8 +19,6 @@ provisioner:
       group_vars: ../../group_vars/
 verifier:
   name: testinfra
-  options:
-    s: true
   env:
     TESTVARS_ROLES_INCLUDE: takel_user
   additional_files_or_dirs:

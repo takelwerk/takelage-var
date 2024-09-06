@@ -17,11 +17,7 @@ class MultiTestVars(object):
 
         for ansiblehost in moleculeinventory.hosts():
             host = str(ansiblehost)
-
-            # get ansible variables
-            self._multitestvars[host] = moleculebook.get_vars(
-                extra_vars,
-                host)
+            self._multitestvars[host] = moleculebook.get_vars(host)
 
     def get_multitestvars(self):
         return self._multitestvars
