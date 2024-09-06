@@ -136,7 +136,7 @@ class MoleculeBook(object):
         private_data_dir = self._moleculeenv.get_molecule_ephemeral_directory()
         r = ansible_runner.run(
             private_data_dir=private_data_dir,
-            playbook='site.yml',
+            playbook='site.json',
             quiet=True)
         return r
 

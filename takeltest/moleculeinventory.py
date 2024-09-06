@@ -19,12 +19,15 @@ class MoleculeInventory(object):
         try:
             for host_group in out['all']['children']:
                 host_groups.append(host_group)
-
-            for host_group in host_groups:
-                for host in out[host_group]['hosts']:
-                    self._hosts.append(host)
         except (IndexError, KeyError):
             pass
+
+        for host_group in host_groups:
+            try:
+                for host in out[host_group]['hosts']:
+                    self._hosts.append(host)
+            except (IndexError, KeyError):
+                continue
 
         if not self._hosts:
             self._hosts = ['localhost']

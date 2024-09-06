@@ -62,7 +62,7 @@ class MoleculeEnv(object):
         '''Write playbook to disk'''
         project_dir = self._molecule_ephemeral_directory / 'project'
         project_dir.mkdir(exist_ok=True)
-        playbook_file = self._molecule_ephemeral_directory / 'project/site.yml'
+        playbook_file = self._molecule_ephemeral_directory / 'project/site.json'
         playbook_file.write_text(json.dumps(playbook))
 
     def _configure_roles_(self):

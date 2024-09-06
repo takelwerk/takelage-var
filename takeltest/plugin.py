@@ -215,15 +215,13 @@ def multitestvars(
         request,
         moleculeinventory,
         moleculebook,
-        extra_vars,
         cache_key):
     '''Expose ansible variables and facts of a molecule test scenario.'''
     multitestvars = MultiTestVars.get_cache(request, cache_key)
     if multitestvars is None:
         multitestvars_object = MultiTestVars(
             moleculeinventory,
-            moleculebook,
-            extra_vars)
+            moleculebook)
         multitestvars = multitestvars_object.get_multitestvars()
         multitestvars_object.set_cache(request, cache_key)
     return multitestvars

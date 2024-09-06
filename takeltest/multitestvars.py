@@ -9,15 +9,15 @@ class MultiTestVars(object):
     def __init__(
             self,
             moleculeinventory,
-            moleculebook,
-            extra_vars):
+            moleculebook):
 
         # this variable will be returned by the multitestvars fixture
         self._multitestvars = dict()
 
         for ansiblehost in moleculeinventory.hosts():
             host = str(ansiblehost)
-            self._multitestvars[host] = moleculebook.get_vars(host)
+            vars = moleculebook.get_vars(host)
+            self._multitestvars[host] = vars
 
     def get_multitestvars(self):
         return self._multitestvars
