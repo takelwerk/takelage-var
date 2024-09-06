@@ -1,5 +1,5 @@
-import pytest
 import takeltest
+
 
 def test_takeltest_unit_moleculebook_is_not_none(moleculebook):
     assert moleculebook is not None
@@ -67,7 +67,8 @@ def test_takeltest_unit_moleculebook_create_gather_roles(
 def test_takeltest_unit_moleculebook_add_task_debug_msg(moleculebook):
     msg = ''
     moleculebook.create()
-    moleculebook.set(moleculebook.add_task_debug_msg('Happy testing!', moleculebook.get(), 'add_task_debug_msg'))
+    moleculebook.set(moleculebook.add_task_debug_msg(
+        'Happy testing!', moleculebook.get(), 'add_task_debug_msg'))
     runner = moleculebook.run(moleculebook.get())
     for event in runner.events:
         try:
@@ -97,7 +98,8 @@ def test_takeltest_unit_moleculebook_add_task_include_vars_dir(moleculebook):
                'ansible.builtin.include_vars': {
                    'dir': 'my_custom_vars'}}]}]
     moleculebook.create()
-    moleculebook.set(moleculebook.add_task_include_vars_dir('my_custom_vars', moleculebook.get(), 'add_task_include_vars_dir'))
+    moleculebook.set(moleculebook.add_task_include_vars_dir(
+        'my_custom_vars', moleculebook.get(), 'add_task_include_vars_dir'))
     playbook = moleculebook._playbook
     assert playbook == playbook_task_debug
 

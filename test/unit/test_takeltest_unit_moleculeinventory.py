@@ -1,6 +1,3 @@
-import pytest
-
-
 def test_takeltest_unit_moleculeinventory_is_not_none(moleculeinventory):
     assert moleculeinventory is not None
 

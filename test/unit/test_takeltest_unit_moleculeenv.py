@@ -139,7 +139,8 @@ def test_takeltest_unit_moleculeenv_no_gather_roles(tmp_path):
     assert moleculeenv.get_roles() == []
 
 
-def test_takeltest_unit_moleculeenv_roles_from_custom_converge_playboook(tmp_path):
+def test_takeltest_unit_moleculeenv_roles_from_custom_converge_playboook(
+        tmp_path):
     my_molecule_yml = """\
 ---
 provisioner:
@@ -240,7 +241,8 @@ provisioner:
     assert moleculeenv.get_roles() == ['my_role']
 
 
-def test_takeltest_unit_moleculeenv_roles_from_default_converge_playboook(tmp_path):
+def test_takeltest_unit_moleculeenv_roles_from_default_converge_playboook(
+        tmp_path):
     my_playbook = """\
 ---
 - name: converge
@@ -538,7 +540,7 @@ def test_takeltest_unit_moleculeenv_get_roles_fallback_molecule(tmp_path):
     med.mkdir()
 
     msd = tmp_path / 'molecule/playbooks/roles' \
-          / 'my_role_1/molecule/molecule_scenario_directory'
+        / 'my_role_1/molecule/molecule_scenario_directory'
     msd.mkdir(parents=True)
 
     gather_roles = True
@@ -654,7 +656,8 @@ def test_takeltest_unit_moleculeenv_vars_config_host_vars(tmp_path):
     assert molecule_vars_config == expected_config
 
 
-def test_takeltest_unit_moleculeenv_vars_config_host_vars_and_group_vars(tmp_path):
+def test_takeltest_unit_moleculeenv_vars_config_host_vars_and_group_vars(
+        tmp_path):
     med = tmp_path / 'molecule_ephemeral_directory'
     med.mkdir()
 

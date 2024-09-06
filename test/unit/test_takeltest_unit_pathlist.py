@@ -6,7 +6,8 @@ def test_takeltest_unit_pathlist_roles_blocklist(testvars_roles_blocklist):
     assert testvars_roles_blocklist is not None
 
 
-def test_takeltest_unit_pathlist_roles_exclusivelist(testvars_roles_exclusivelist):
+def test_takeltest_unit_pathlist_roles_exclusivelist(
+        testvars_roles_exclusivelist):
     assert testvars_roles_exclusivelist is not None
 
 
