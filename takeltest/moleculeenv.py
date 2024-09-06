@@ -133,6 +133,14 @@ class MoleculeEnv(object):
             exist_ok=True)
         for role in roles:
             self._create_symlink_('roles/' + role)
+        (self.get_molecule_ephemeral_directory() / 'project').mkdir(
+            exist_ok=True)
+        source = self.get_molecule_ephemeral_directory() / 'roles'
+        target = self.get_molecule_ephemeral_directory() / 'project/roles'
+        try:
+            target.symlink_to(source)
+        except FileExistsError:
+            pass
 
     def _create_symlink_(self, path):
         '''Create symlink from molecule ephemeral dir to project dir.'''

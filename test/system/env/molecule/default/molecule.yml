@@ -16,8 +16,6 @@ provisioner:
     converge: ../../site.yml
 verifier:
   name: testinfra
-  options:
-    s: true
   env:
     TESTVARS_ROLES_EXCLUSIVE: curl:vim
 scenario:

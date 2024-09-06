@@ -16,8 +16,6 @@ provisioner:
     converge: ../../site.yml
 verifier:
   name: testinfra
-  options:
-    s: true
   additional_files_or_dirs:
     # integgration
     # exclude

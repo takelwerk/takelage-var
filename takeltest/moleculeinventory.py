@@ -15,10 +15,9 @@ class MoleculeInventory(object):
 
         self._hosts = []
         host_groups = []
+
         try:
             for host_group in out['all']['children']:
-                if host_group == 'ungrouped':
-                    continue
                 host_groups.append(host_group)
 
             for host_group in host_groups:

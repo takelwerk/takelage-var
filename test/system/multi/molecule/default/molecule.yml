@@ -34,7 +34,7 @@ verifier:
     # testvars-no-extra-vars: true
     # m: debug
     # p: cacheprovider  # enable cache
-    s: true
+    # s: true
     # v: true
   env:
     TESTVARS_EXTRA_VARS: "../../vars:../../extra_vars/extra_vars.yml"

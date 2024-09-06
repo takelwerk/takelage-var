@@ -15,7 +15,7 @@ provisioner:
 verifier:
   name: testinfra
   options:
-    s: true
+    m: run_only_this
   additional_files_or_dirs:
     - ../system/test_*.py
   env:
