@@ -125,6 +125,10 @@ class MoleculeBook(object):
         runner = self.run(playbook)
         vars = self._get_vars_from_event_data(runner, host, task_name)
 
+        # we write the resolved vars to disk again
+        # you can inspect them at ~|.cache/molecule/.../env/extravars
+        self._moleculeenv.write_extravars(vars)
+
         return vars
 
     def run(self, playbook):
