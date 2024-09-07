@@ -21,8 +21,6 @@ provisioner:
     converge: ../../site.yml
 verifier:
   name: testinfra
-  options:
-    m: run_this_only
   env:
     TESTVARS_EXTRA_VARS: "../../vars:../../extra_vars/extra_vars.yml"
     TESTVARS_ROLES_INCLUDE: takel_user

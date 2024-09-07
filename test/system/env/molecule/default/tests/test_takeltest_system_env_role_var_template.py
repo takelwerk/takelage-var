@@ -1,5 +1,3 @@
-import takeltest
-
 def test_takeltest_system_env_role_var_template_resolves(
         testvars):
     curl_my_var = testvars['curl_my_var']

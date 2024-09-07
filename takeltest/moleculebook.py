@@ -110,6 +110,10 @@ class MoleculeBook(object):
         playbook[0]['gather_facts'] = True
         task_name = 'moleculebook_get_vars'
 
+        # make sure that the variables from the last run
+        # do not interfere with the next run
+        self._moleculeenv.remove_extravars()
+
         # this is where the magic happens:
         # calling the debug module this way yields all variables
         self.add_task_get_vars(playbook, task_name)
@@ -155,8 +159,8 @@ class MoleculeBook(object):
                         # (some still unresolved)
                         # with the (resolved) hostvars
                         return (
-                                event['event_data']['res']['msg'] |
-                                event['event_data']['res']['msg']['hostvars'][host]
+                            event['event_data']['res']['msg'] |
+                            event['event_data']['res']['msg']['hostvars'][host]
                         )
             except (IndexError, KeyError):
                 continue
