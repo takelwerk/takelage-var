@@ -25,6 +25,7 @@ verifier:
     - ../../../roles/*/molecule/default/system/test_*.py
   env:
     TESTVARS_ROLES_INCLUDE: curl:vim
+    PYTEST_ADDOPTS: '--color=yes'
 scenario:
   create_sequence:
     - create

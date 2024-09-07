@@ -21,6 +21,7 @@ verifier:
   name: testinfra
   env:
     TESTVARS_ROLES_INCLUDE: takel_user
+    PYTEST_ADDOPTS: '--color=yes'
   additional_files_or_dirs:
     # integration
     - ../../../roles/takel_anarchism/molecule/default/tests/test_*.py

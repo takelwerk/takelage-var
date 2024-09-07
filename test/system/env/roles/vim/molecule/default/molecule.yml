@@ -22,6 +22,8 @@ verifier:
     s: true
   additional_files_or_dirs:
     - ../system/test_*.py
+  env:
+    PYTEST_ADDOPTS: '--color=yes'
 scenario:
   create_sequence:
     - create

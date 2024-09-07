@@ -23,6 +23,8 @@ verifier:
     # system
     - ../system/test_*.py
     - ../../../roles/*/molecule/default/system/test_*.py
+  env:
+    PYTEST_ADDOPTS: '--color=yes'
 scenario:
   create_sequence:
     - create

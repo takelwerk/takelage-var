@@ -20,6 +20,8 @@ verifier:
   name: testinfra
   options:
     s: true
+  env:
+    PYTEST_ADDOPTS: '--color=yes'
 scenario:
   create_sequence:
     - create

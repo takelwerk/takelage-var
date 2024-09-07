@@ -38,6 +38,7 @@ verifier:
     # v: true
   env:
     TESTVARS_EXTRA_VARS: "../../vars:../../extra_vars/extra_vars.yml"
+    PYTEST_ADDOPTS: '--color=yes'
   additional_files_or_dirs:
     # integgration
     - ../../../roles/anarchism/molecule/default/tests/test_*.py
