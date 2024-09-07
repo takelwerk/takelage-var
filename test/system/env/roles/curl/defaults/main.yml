@@ -1,3 +1,6 @@
 ---
 curl_packages:
   - curl
+
+curl_my_var: 'curl_my_value'
+curl_my_ref: "{{ curl_my_var }}"

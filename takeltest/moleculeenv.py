@@ -3,6 +3,7 @@ from pathlib import Path
 from ruamel.yaml import YAML
 from ruamel.yaml.scanner import ScannerError
 import subprocess
+import yaml
 
 
 class MoleculeEnv(object):
@@ -64,6 +65,13 @@ class MoleculeEnv(object):
         project_dir.mkdir(exist_ok=True)
         playbook_file = self._molecule_ephemeral_directory / 'project/site.json'
         playbook_file.write_text(json.dumps(playbook))
+
+    def write_extravars(self, vars):
+        # extravars = "---\ncurl_my_var: 'curl_my_value'\ncurl_my_ref: \"{{ curl_my_var }}\""
+        envdir = self._molecule_ephemeral_directory / 'env'
+        envdir.mkdir(exist_ok=True)
+        extravars = self._molecule_ephemeral_directory / 'env/extravars'
+        extravars.write_text("---\n" + yaml.dump(vars))
 
     def _configure_roles_(self):
         '''Create symlinks to roles'''

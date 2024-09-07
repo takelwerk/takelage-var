@@ -12,7 +12,7 @@ def test_takeltest_unit_moleculebook_get(moleculebook):
 def test_takeltest_unit_moleculebook_set(moleculebook):
     playbook = "\n---\n- name: localplay\n  hosts: localhost"
     moleculebook.set(playbook)
-    assert moleculebook._playbook == playbook
+    assert playbook == moleculebook._playbook
 
 
 def test_takeltest_unit_moleculebook_create_default(moleculebook):
@@ -25,7 +25,7 @@ def test_takeltest_unit_moleculebook_create_default(moleculebook):
           'tasks': []}]
     moleculebook.create()
     playbook = moleculebook._playbook
-    assert playbook == playbook_default
+    assert playbook_default == playbook
 
 
 def test_takeltest_unit_moleculebook_create_extra_vars(
@@ -43,7 +43,7 @@ def test_takeltest_unit_moleculebook_create_extra_vars(
                         lambda x: ['my_extra_vars.yml'])
     moleculebook.create(extra_vars=True)
     playbook = moleculebook._playbook
-    assert playbook == playbook_extra_vars
+    assert playbook_extra_vars == playbook
 
 
 def test_takeltest_unit_moleculebook_create_gather_roles(
@@ -61,7 +61,7 @@ def test_takeltest_unit_moleculebook_create_gather_roles(
                         lambda x: ['my_role'])
     moleculebook.create(gather_roles=True)
     playbook = moleculebook._playbook
-    assert playbook == playbook_roles
+    assert playbook_roles == playbook
 
 
 def test_takeltest_unit_moleculebook_add_task_debug_msg(moleculebook):
@@ -101,7 +101,7 @@ def test_takeltest_unit_moleculebook_add_task_include_vars_dir(moleculebook):
     moleculebook.set(moleculebook.add_task_include_vars_dir(
         'my_custom_vars', moleculebook.get(), 'add_task_include_vars_dir'))
     playbook = moleculebook._playbook
-    assert playbook == playbook_task_debug
+    assert playbook_task_debug == playbook
 
 
 def test_takeltest_unit_moleculebook_testvars_extra_vars_no_files(

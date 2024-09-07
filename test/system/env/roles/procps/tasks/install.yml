@@ -2,3 +2,5 @@
 - name: "(install) apt-get install {{ procps_packages | join(' ') }}"
   apt:
     name: "{{ procps_packages }}"
+    update_cache: true
+    cache_valid_time: 3600

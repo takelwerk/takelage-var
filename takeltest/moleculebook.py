@@ -55,8 +55,7 @@ class MoleculeBook(object):
         # include roles
         if gather_roles:
             for role in self.get_roles():
-                playbook[0]['roles'].append(dict(name=role, when='False'))
-
+                playbook[0]['roles'].append({'name': role, 'when': 'False'})
         self._playbook = playbook
 
     def add_task_debug_msg(self, msg, playbook, name='Debug'):
@@ -109,26 +108,24 @@ class MoleculeBook(object):
         playbook = self._playbook
         playbook[0]['hosts'] = host
         playbook[0]['gather_facts'] = True
+        task_name = 'moleculebook_get_vars'
 
         # this is where the magic happens:
         # calling the debug module this way yields all variables
-        self.add_task_get_vars(playbook, 'moleculebook_get_vars')
+        self.add_task_get_vars(playbook, task_name)
 
         runner = self.run(playbook)
+        vars = self._get_vars_from_event_data(runner, host, task_name)
 
-        for event in runner.events:
-            try:
-                if event['event'] == 'runner_on_ok':
-                    if event['event_data']['task'] == 'moleculebook_get_vars':
-                        # Merge and overwrite all variables
-                        # (some still unresolved)
-                        # with the (resolved) hostvars
-                        return (
-                            event['event_data']['res']['msg'] |
-                            event['event_data']['res']['msg']['hostvars'][host]
-                        )
-            except (IndexError, KeyError):
-                continue
+        # some (role) variables may not be resolved yet
+        # so we write all vars to env/extravars
+        # (where they do get resolved)
+        # and run ansible again
+        self._moleculeenv.write_extravars(vars)
+        runner = self.run(playbook)
+        vars = self._get_vars_from_event_data(runner, host, task_name)
+
+        return vars
 
     def run(self, playbook):
         '''Run the ansible playbook'''
@@ -136,8 +133,7 @@ class MoleculeBook(object):
         private_data_dir = self._moleculeenv.get_molecule_ephemeral_directory()
         r = ansible_runner.run(
             private_data_dir=private_data_dir,
-            playbook='site.json',
-            quiet=True)
+            playbook='site.json')
         return r
 
     def _get_extra_vars_(self):
@@ -145,3 +141,19 @@ class MoleculeBook(object):
 
     def _get_molecule_scenario_directory_(self):
         return self._get_molecule_scenario_directory()
+
+    def _get_vars_from_event_data(self, runner, host, task_name):
+        for event in runner.events:
+            try:
+                if event['event'] == 'runner_on_ok':
+                    if event['event_data']['task'] == task_name:
+                        # Merge and overwrite all variables
+                        # (some still unresolved)
+                        # with the (resolved) hostvars
+                        return (
+                                event['event_data']['res']['msg'] |
+                                event['event_data']['res']['msg']['hostvars'][host]
+                        )
+            except (IndexError, KeyError):
+                continue
+        return dict()
