@@ -27,7 +27,7 @@ provisioner:
     converge: ../../site.yml
 verifier:
   name: testinfra
-  options:
+  # options:
     # testvars-debug-jsonvars: true
     # testvars-no-gather-facts: true
     # testvars-no-gather-molecule: true
