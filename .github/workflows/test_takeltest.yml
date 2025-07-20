@@ -53,7 +53,7 @@ jobs:
         run: tau docker container command "rake rubylint"
 
       - name: Run tests
-        run: tau docker container command "ANSIBLE_ROLES_PATH=../../ rake test"
+        run: tau docker container command "rake test"
 
       - name: Reset ownership
         run: sudo chown -R $USER $(pwd)
