@@ -19,7 +19,7 @@ cmd_test_system_anarchism_project_takelbuild_custom = 'cd ' \
 
 cmd_test_system_anarchism_role_takel_anarchism_default = 'cd ' \
   'test/system/anarchism/roles/takel_anarchism && ' \
-  'ANSIBLE_ROLES_PATH=../ molecule test'
+  'molecule test'
 
 cmd_test_system_env_project_default = 'cd ' \
   'test/system/env && ' \
@@ -35,11 +35,11 @@ cmd_test_system_env_project_blocklist_two = 'cd ' \
 
 cmd_test_system_env_role_curl_default = 'cd ' \
   'test/system/env/roles/curl && ' \
-  'ANSIBLE_ROLES_PATH=../ molecule test'
+  'molecule test'
 
 cmd_test_system_env_role_gpg_default = 'cd ' \
   'test/system/env/roles/gpg && ' \
-  'ANSIBLE_ROLES_PATH=../ molecule test'
+  'molecule test'
 
 cmd_test_system_env_project_include = 'cd ' \
   'test/system/env && ' \
@@ -47,11 +47,11 @@ cmd_test_system_env_project_include = 'cd ' \
 
 cmd_test_system_env_role_procps_default = 'cd ' \
   'test/system/env/roles/procps && ' \
-  'ANSIBLE_ROLES_PATH=../ molecule test'
+  'molecule test'
 
 cmd_test_system_env_role_vim_default = 'cd ' \
   'test/system/env/roles/vim && ' \
-  'ANSIBLE_ROLES_PATH=../ molecule test'
+  'molecule test'
 
 cmd_test_system_multi_default = 'cd ' \
   'test/system/multi && ' \
@@ -59,7 +59,7 @@ cmd_test_system_multi_default = 'cd ' \
 
 cmd_test_system_sidecar_molecule_role_default = 'cd ' \
   'test/system/sidecar/molecule/playbooks/roles/my_sidecar_role && ' \
-  'ANSIBLE_ROLES_PATH=../ molecule test'
+  'molecule test'
 
 desc 'Run tests'
 task test: %w[
