@@ -13,7 +13,7 @@ provisioner:
     defaults:
       interpreter_python: auto_silent
   env:
-    ANSIBLE_ROLES_PATH: "../../../"
+    ANSIBLE_ROLES_PATH: "../../roles/"
 verifier:
   name: testinfra
   additional_files_or_dirs:

@@ -19,6 +19,8 @@ provisioner:
       group_vars: ../../group_vars/
   playbooks:
     converge: ../../site.yml
+  env:
+    ANSIBLE_ROLES_PATH: "../../roles/"
 verifier:
   name: testinfra
   env:
