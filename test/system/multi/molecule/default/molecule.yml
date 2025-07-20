@@ -25,6 +25,8 @@ provisioner:
         example_var: true
   playbooks:
     converge: ../../site.yml
+  env:
+    ANSIBLE_ROLES_PATH: "../../../"
 verifier:
   name: testinfra
   # options:
